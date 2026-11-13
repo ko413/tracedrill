@@ -26,6 +26,7 @@
   <nav>
     <a href="{{ url('/') }}#algorithms">アルゴリズム</a>
     <a href="{{ url('/guide/') }}">読み方ガイド</a>
+    {% if has_mock_nav %}<a href="{{ url('/mock/sample/') }}">模試</a>{% endif %}
     <a href="{{ url('/about/') }}">このサイトについて</a>
   </nav>
 </header>

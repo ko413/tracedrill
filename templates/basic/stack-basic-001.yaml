@@ -1,0 +1,59 @@
+id: stack-basic-001
+title: 配列で作るスタック
+level: 2
+access: free
+pace: standard
+tags: [スタック, 大域変数, 手続, 配列]
+array_base: 1
+description: 大域の配列 stack と変数 top でスタックを表す。手続 push は値を積み、関数 pop は最後に積んだ値を取り出して返す。関数 test は、取り出した値を順に並べた整数を返す。配列の要素番号は 1 から始まる。
+
+params:
+  a: {type: int, range: [1, 9]}
+  b: {type: int, range: [1, 9]}
+  c: {type: int, range: [1, 9]}
+
+constraints:
+  - "${a} ≠ ${b}"
+  - "${b} ≠ ${c}"
+  - "${a} ≠ ${c}"
+
+source: |
+  大域: 整数型の配列: stack ← {3 個の 0}
+  大域: 整数型: top ← 0
+
+  ○push(整数型: x)
+    top ← top ＋ 1
+    stack[top] ← x   // @store
+
+  ○整数型: pop()
+    整数型: v ← stack[top]
+    top ← top － 1   // @dec
+    return v
+
+  ○整数型: test()
+    整数型: r
+    push(${a})
+    push(${b})
+    r ← pop()
+    push(${c})
+    r ← r × 10 ＋ pop()
+    r ← r × 10 ＋ pop()   // @last
+    return r
+
+call: "test()"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: store, var: stack, pass: last}
+  - {type: var_at_line, line: dec, var: top, pass: random, weight: 0.5}
+  - type: fill_blank
+    blank: "top － 1"
+    distractors:
+      - "top ＋ 1"
+      - "top"
+      - "top － 2"
+      - "v － 1"
+
+explanation: |
+  スタックは「最後に積んだ値から先に取り出す」入れ物です。top は、いちばん上の値が入っている要素番号です。
+  ${a}、${b} を積んで 1 つ取り出し、${c} を積んでから 2 つ取り出します。取り出した順に並べると ${result} です。

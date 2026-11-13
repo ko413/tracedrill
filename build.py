@@ -53,7 +53,10 @@ DEFAULTS = {
     "analytics": {"cloudflare_token": ""},
     "search_console": {"google_verification": ""},
     "ogp": {"font": "site/fonts/NotoSansJP-Bold.otf"},
+    "members": {"note_url": "", "price": 980},
 }
+MEMBERS_DIR = ROOT / "site" / "members"      # 暗号化済みの会員向けファイル（tools/members.py が作る）
+MOCK_NAME = "アルゴリズム16問模試（トレース中心）"
 
 
 # ---- 設定と原稿 ----
@@ -395,7 +398,8 @@ class Builder:
             "breadcrumbs": crumbs, "breadcrumb_json": crumb_json,
         }
         html = self.env.get_template(template).render(
-            site=site, page=page, url=self.url, build_id=self.build_id, **context)
+            site=site, page=page, url=self.url, build_id=self.build_id,
+            has_mock_nav=(MEMBERS_DIR / "sample.json").exists(), **context)
         target = self.out / path.strip("/") / filename
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(html, encoding="utf-8")
@@ -432,6 +436,7 @@ class Builder:
         guides = self.build_guides(default_image)
         self.build_simple("about", "/about/", default_image, show_contact=True)
         self.build_simple("for-teams", "/for-teams/", default_image, show_contact=True)
+        has_mock = self.build_members(default_image, len(algos))
 
         # トップ：レベルごとに問題セットを並べる（標準を先に）。同じアルゴリズムが2つのレベルに出ることがある。
         entries = [{"title": algo["title"], "summary": algo["summary"], "level": item["level"],
@@ -457,7 +462,7 @@ class Builder:
             self.warnings.append("トップの「今日の1問」に使える問題がありません")
 
         self.render("home.html", "/", title=site["name"], description=site["description"],
-                    og_image=default_image, levels=levels, guides=guides, daily=daily,
+                    og_image=default_image, levels=levels, guides=guides, daily=daily, has_mock=has_mock,
                     daily_json=json.dumps(daily, ensure_ascii=False).replace("</", "<\\/"))
         self.render("404.html", "/", filename="404.html", listed=False, title="ページが見つかりません",
                     description="お探しのページは見つかりませんでした。", og_image=default_image, noindex=True)
@@ -609,6 +614,35 @@ class Builder:
                         og_image=image, breadcrumbs=[home, index_crumb], body=index["body"],
                         children=guides, show_contact=False)
         return guides
+
+    def build_members(self, image: str, algo_count: int) -> bool:
+        """会員ページとサンプル模試。中身（site/members/）は tools/members.py が作ったものをそのまま配る。
+
+        ここでは暗号化も復号もしない。平文の会員向けデータは private/ にあり、ビルドは読まない。
+        """
+        if not MEMBERS_DIR.exists():
+            return False
+        home = {"name": "トップ", "path": "/"}
+        target = self.out / "members"
+        for source in sorted(MEMBERS_DIR.rglob("*.json")):
+            copy_to = target / source.relative_to(MEMBERS_DIR)
+            copy_to.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(source, copy_to)
+        has_sample = (MEMBERS_DIR / "sample.json").exists()
+        if has_sample:
+            title = f"無料サンプル模試｜{MOCK_NAME}"
+            self.render("mock.html", "/mock/sample/", title=title, algo_count=algo_count,
+                        description="基本情報技術者試験 科目Bのアルゴリズム16問を80分で解く無料の模試。"
+                                    "本番と同じ形式で、採点後は全問のトレース表つき解説を確認できます。",
+                        og_image=self.og_image("mock-sample", "無料サンプル模試", MOCK_NAME,
+                                               "16問・80分。採点後に全問のトレース表つき解説。"),
+                        breadcrumbs=[home, {"name": "無料サンプル模試", "path": "/mock/sample/"}])
+        if (MEMBERS_DIR / "index.json").exists() and has_sample:
+            self.render("members.html", "/members/", title="会員ページ（毎月の模試・先行公開ドリル）",
+                        description="毎月追加される16問模試とバックナンバー、新しいアルゴリズムの先行公開ドリルを解ける会員ページです。",
+                        og_image=image, breadcrumbs=[home, {"name": "会員ページ", "path": "/members/"}],
+                        mock_name=MOCK_NAME)
+        return has_sample
 
     def build_simple(self, name: str, path: str, image: str, show_contact: bool) -> None:
         meta, body = read_content(ROOT / "content" / f"{name}.md")

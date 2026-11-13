@@ -28,5 +28,10 @@ analytics:
 search_console:
   google_verification: ""     # Search Console の「HTMLタグ」方式の content 値（DNS で確認するなら空でよい）
 
+# 会員向け（模試・先行公開）。note のメンバーシップのURLを入れると、会員ページに入会ボタンが出る。
+members:
+  note_url: https://note.com/tracedrill/membership     # 例: https://note.com/ユーザー名/membership
+  price: 980
+
 ogp:
   font: site/fonts/NotoSansJP-Bold.otf

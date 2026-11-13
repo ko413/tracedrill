@@ -1,0 +1,235 @@
+{
+ "version": 1,
+ "template_id": "recursion-binary-001",
+ "seed": 43,
+ "call": "toBinary(26)",
+ "source": "○toBinary(整数型: n)\n  if (n ≧ 2)\n    toBinary(n ÷ 2 の商)\n  endif\n  (n mod 2) を出力する",
+ "trace": {
+  "names": [
+   "n"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "26",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "toBinary",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "出力（0）",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "26",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "出力（0）",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "26",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ },
+ "questions": [
+  {
+   "prompt": "プログラムを実行したとき、出力される値はどれか（複数あるときは出力順）。",
+   "answer": "{1, 1, 0, 1, 0}",
+   "explain": [
+    "出力された値は {1, 1, 0, 1, 0} です。"
+   ]
+  },
+  {
+   "prompt": "5行目を4回目に実行した直後の、変数 n の値はどれか。",
+   "answer": "13",
+   "explain": [
+    "5行目は全部で5回実行されます。",
+    "実行した直後の n は、順に 1 → 3 → 6 → 13 → 26 です。",
+    "4回目の直後なので、答えは 13 です。"
+   ]
+  },
+  {
+   "prompt": "3行目が実行される回数はどれか。",
+   "answer": "4",
+   "explain": [
+    "3行目は4回実行されます。トレース表で 3行目の行を数えると確かめられます。"
+   ]
+  }
+ ]
+}

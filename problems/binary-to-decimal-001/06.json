@@ -1,0 +1,811 @@
+{
+ "version": 1,
+ "template_id": "binary-to-decimal-001",
+ "number": 6,
+ "seed": 31,
+ "description": "関数 toDecimal は、2進数の各桁を上の桁から順に格納した文字の配列 bits を受け取り、その値を10進数の整数で返す。配列の要素番号は 1 から始まる。",
+ "call": "toDecimal({\"1\", \"0\", \"1\", \"1\", \"0\"})",
+ "source": "○整数型: toDecimal(文字型の配列: bits)\n  整数型: value ← 0\n  整数型: i\n  for (i を 1 から bitsの要素数 まで 1 ずつ増やす)\n    value ← value × 2\n    if (bits[i] ＝ \"1\")\n      value ← value ＋ 1\n    endif\n  endfor\n  return value",
+ "explanation": "1桁読むたびに、それまでの値を 2 倍してから、その桁が \"1\" なら 1 を足します。\n上の桁から順に処理すると、最後の value は 22 になります。",
+ "practice": {
+  "source": "○整数型: toDecimal(文字型の配列: bits)\n  整数型: value ← 0\n  整数型: i\n  for (i を 1 から bitsの要素数 まで 1 ずつ増やす)\n    value ← value × 2\n    if (bits[i] ＝ \"1\")\n      value ← value ＋ 1\n    endif\n  endfor\n  return value",
+  "questions": [
+   {
+    "type": "var_at_line",
+    "prompt": "5行目を5回目に実行した直後の、変数 value の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "2"
+     },
+     {
+      "label": "イ",
+      "text": "10"
+     },
+     {
+      "label": "ウ",
+      "text": "11"
+     },
+     {
+      "label": "エ",
+      "text": "22"
+     }
+    ],
+    "answer": "22",
+    "answer_label": "エ",
+    "explain": [
+     "5行目は全部で5回実行されます。",
+     "実行した直後の value は、順に 0 → 2 → 4 → 10 → 22 です。",
+     "5回目の直後なので、答えは 22 です。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": "value",
+     "step": 24,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "7行目を2回目に実行した直後の、変数 value の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "3"
+     },
+     {
+      "label": "イ",
+      "text": "4"
+     },
+     {
+      "label": "ウ",
+      "text": "5"
+     },
+     {
+      "label": "エ",
+      "text": "11"
+     }
+    ],
+    "answer": "5",
+    "answer_label": "ウ",
+    "explain": [
+     "7行目は全部で3回実行されます。",
+     "実行した直後の value は、順に 1 → 5 → 11 です。",
+     "2回目の直後なので、答えは 5 です。"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": "value",
+     "step": 16,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "toDecimal({\"1\", \"0\", \"1\", \"1\", \"0\"}) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "2"
+     },
+     {
+      "label": "イ",
+      "text": "5"
+     },
+     {
+      "label": "ウ",
+      "text": "6"
+     },
+     {
+      "label": "エ",
+      "text": "22"
+     }
+    ],
+    "answer": "22",
+    "answer_label": "エ",
+    "explain": [
+     "戻り値になる value は、0 → 1 → 2 → 4 → 5 → 10 → 11 → 22 と変わります。",
+     "10行目で返す時点の値 22 が答えです。"
+    ],
+    "focus": {
+     "line": 10,
+     "variable": null,
+     "step": 28,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "program_blank",
+  "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 toDecimal は，2進数の各桁を上の桁から順に格納した文字の配列 bits を受け取り，その値を10進数の整数で返す。配列の要素番号は 1 から始まる。",
+   "関数 toDecimal を toDecimal({\"1\", \"0\", \"1\", \"1\", \"0\"}) として呼び出すと，戻り値は 22 となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "value × i"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "value × 10"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "value ＋ 2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "value ＋ i"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "i × 2"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "value × 2"
+    ]
+   }
+  ],
+  "answer_label": "カ",
+  "answer_text": "value × 2",
+  "explain": [
+   "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+   "「value × i」→ 戻り値は 145",
+   "「value × 10」→ 戻り値は 10110",
+   "「value ＋ 2」→ 戻り値は 13",
+   "「value ＋ i」→ 戻り値は 18",
+   "「i × 2」→ 戻り値は 10",
+   "「value × 2」→ 戻り値は 22（正解）"
+  ],
+  "source": "○整数型: toDecimal(文字型の配列: bits)\n  整数型: value ← 0\n  整数型: i\n  for (i を 1 から bitsの要素数 まで 1 ずつ増やす)\n    value ← ［　ａ　］\n    if (bits[i] ＝ \"1\")\n      value ← value ＋ 1\n    endif\n  endfor\n  return value",
+  "markers": {},
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "bits",
+   "value",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      true
+     ],
+     "value": [
+      "0",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "0",
+      false
+     ],
+     "i": [
+      "未定義",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 7,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "1",
+      true
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "1",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "1",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "2",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "2",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "2",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "2",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "4",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "4",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 7,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "5",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "5",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "5",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 5,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "10",
+      true
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "10",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 7,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "11",
+      true
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "11",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "11",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 5,
+    "what": "代入",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "22",
+      true
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "22",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "22",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 27,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "22",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 28,
+    "line": 10,
+    "what": "戻る（22）",
+    "proc": "toDecimal",
+    "depth": 1,
+    "cells": {
+     "bits": [
+      "{\"1\", \"0\", \"1\", \"1\", \"0\"}",
+      false
+     ],
+     "value": [
+      "22",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

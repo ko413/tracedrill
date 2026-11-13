@@ -1,0 +1,945 @@
+{
+ "version": 1,
+ "template_id": "stack-basic-001",
+ "number": 12,
+ "seed": 12,
+ "description": "大域の配列 stack と変数 top でスタックを表す。手続 push は値を積み、関数 pop は最後に積んだ値を取り出して返す。関数 test は、取り出した値を順に並べた整数を返す。配列の要素番号は 1 から始まる。",
+ "call": "test()",
+ "source": "大域: 整数型の配列: stack ← {3 個の 0}\n大域: 整数型: top ← 0\n\n○push(整数型: x)\n  top ← top ＋ 1\n  stack[top] ← x\n\n○整数型: pop()\n  整数型: v ← stack[top]\n  top ← top － 1\n  return v\n\n○整数型: test()\n  整数型: r\n  push(1)\n  push(5)\n  r ← pop()\n  push(2)\n  r ← r × 10 ＋ pop()\n  r ← r × 10 ＋ pop()\n  return r",
+ "explanation": "スタックは「最後に積んだ値から先に取り出す」入れ物です。top は、いちばん上の値が入っている要素番号です。\n1、5 を積んで 1 つ取り出し、2 を積んでから 2 つ取り出します。取り出した順に並べると 521 です。",
+ "practice": {
+  "source": "大域: 整数型の配列: stack ← {3 個の 0}\n大域: 整数型: top ← 0\n\n○push(整数型: x)\n  top ← top ＋ 1\n  stack[top] ← x\n\n○整数型: pop()\n  整数型: v ← stack[top]\n  top ← top － 1\n  return v\n\n○整数型: test()\n  整数型: r\n  push(1)\n  push(5)\n  r ← pop()\n  push(2)\n  r ← r × 10 ＋ pop()\n  r ← r × 10 ＋ pop()\n  return r",
+  "questions": [
+   {
+    "type": "var_at_line",
+    "prompt": "6行目を3回目に実行した直後の、変数 stack の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{1, 5, 0}"
+     },
+     {
+      "label": "イ",
+      "text": "{1, 2, 0}"
+     },
+     {
+      "label": "ウ",
+      "text": "{2, 0, 1}"
+     },
+     {
+      "label": "エ",
+      "text": "{2, 1, 0}"
+     }
+    ],
+    "answer": "{1, 2, 0}",
+    "answer_label": "イ",
+    "explain": [
+     "6行目は全部で3回実行されます。",
+     "実行した直後の stack は、順に {1, 0, 0} → {1, 5, 0} → {1, 2, 0} です。",
+     "3回目の直後なので、答えは {1, 2, 0} です。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": "stack",
+     "step": 15,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "10行目を3回目に実行した直後の、変数 top の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "0"
+     },
+     {
+      "label": "イ",
+      "text": "1"
+     },
+     {
+      "label": "ウ",
+      "text": "2"
+     },
+     {
+      "label": "エ",
+      "text": "3"
+     }
+    ],
+    "answer": "0",
+    "answer_label": "ア",
+    "explain": [
+     "10行目は全部で3回実行されます。",
+     "実行した直後の top は、順に 1 → 1 → 0 です。",
+     "3回目の直後なので、答えは 0 です。"
+    ],
+    "focus": {
+     "line": 10,
+     "variable": "top",
+     "step": 22,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "test() を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "0"
+     },
+     {
+      "label": "イ",
+      "text": "5"
+     },
+     {
+      "label": "ウ",
+      "text": "52"
+     },
+     {
+      "label": "エ",
+      "text": "521"
+     }
+    ],
+    "answer": "521",
+    "answer_label": "エ",
+    "explain": [
+     "呼出しは全部で4回行われます。",
+     "奥の呼出しから順に 5 → 2 → 1 → 521 を返し、最後に返る 521 が答えです。"
+    ],
+    "focus": {
+     "line": 21,
+     "variable": null,
+     "step": 25,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "大域の配列 stack と変数 top でスタックを表す。手続 push は値を積み，関数 pop は最後に積んだ値を取り出して返す。関数 test は，取り出した値を順に並べた整数を返す。配列の要素番号は 1 から始まる。",
+   "関数 test を test() として呼び出したとき，プログラム中の α の行を3回目に実行した直後の変数 stack の値は［　ａ　］となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "{1, 2, 0}"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "{1, 5, 0}"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "{1, 0, 2}"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "{2, 0, 1}"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "{2, 1, 0}"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "{0, 2, 1}"
+    ]
+   }
+  ],
+  "answer_label": "ア",
+  "answer_text": "{1, 2, 0}",
+  "explain": [
+   "6行目は全部で3回実行されます。",
+   "実行した直後の stack は、順に {1, 0, 0} → {1, 5, 0} → {1, 2, 0} です。",
+   "3回目の直後なので、答えは {1, 2, 0} です。"
+  ],
+  "source": "大域: 整数型の配列: stack ← {3 個の 0}\n大域: 整数型: top ← 0\n\n○push(整数型: x)\n  top ← top ＋ 1\n  stack[top] ← x\n\n○整数型: pop()\n  整数型: v ← stack[top]\n  top ← top － 1\n  return v\n\n○整数型: test()\n  整数型: r\n  push(1)\n  push(5)\n  r ← pop()\n  push(2)\n  r ← r × 10 ＋ pop()\n  r ← r × 10 ＋ pop()\n  return r",
+  "markers": {
+   "6": "α"
+  },
+  "focus": {
+   "line": 6,
+   "variable": "stack",
+   "step": 15
+  }
+ },
+ "trace": {
+  "names": [
+   "stack",
+   "top",
+   "r",
+   "x",
+   "v"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 1,
+    "what": "宣言",
+    "proc": "(main)",
+    "depth": 0,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "宣言",
+    "proc": "(main)",
+    "depth": 0,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 14,
+    "what": "宣言",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "1",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "1",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 15,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 0, 0}",
+      false
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "5",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "5",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 16,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 11,
+    "what": "戻る（5）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 17,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "5",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 5, 0}",
+      false
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "2",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "2",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 18,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "5",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 11,
+    "what": "戻る（2）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 19,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "52",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 11,
+    "what": "戻る（1）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 20,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "521",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 21,
+    "what": "戻る（521）",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{1, 2, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      false
+     ],
+     "r": [
+      "521",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

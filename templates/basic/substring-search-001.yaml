@@ -1,0 +1,50 @@
+id: substring-search-001
+title: 文字列の中から並びを探す
+level: 3
+access: free
+pace: standard
+tags: [for, while, 文字, 配列, 探索, 文字列処理]
+array_base: 1
+description: 関数 find は、文字の配列 text の中で、文字の配列 pat と同じ並びが最初に現れる位置（先頭の要素番号）を返す。現れなければ 0 を返す。配列の要素番号は 1 から始まる。
+
+params:
+  text: {type: char_array, length: [5, 6], alphabet: "ab"}
+  pat: {type: char_array, length: [2, 2], alphabet: "ab"}
+
+source: |
+  ○整数型: find(文字型の配列: text, 文字型の配列: pat)
+    整数型: i, j
+    for (i を 1 から textの要素数 － patの要素数 ＋ 1 まで 1 ずつ増やす)
+      j ← 1   // @start
+      while (j ≦ patの要素数 and text[i ＋ j － 1] ＝ pat[j])   // @cmp
+        j ← j ＋ 1   // @adv
+      endwhile
+      if (j > patの要素数)
+        return i
+      endif
+    endfor
+    return 0
+
+call: "find(${text}, ${pat})"
+
+quality:
+  - "count(start) ≧ 2"
+  - "count(adv) ≧ 2"
+  - "steps ≦ 45"
+
+questions:
+  - {type: return_value}
+  - {type: exec_count, line: cmp}
+  - {type: exec_count, line: adv}
+  - type: fill_blank
+    blank: "i ＋ j － 1"
+    distractors:
+      - "i ＋ j"
+      - "j"
+      - "i"
+      - "i － j ＋ 1"
+      - "i ＋ j ＋ 1"
+
+explanation: |
+  i は text の中の「照合を始める位置」、j は pat の何文字目まで一致したかを表します。
+  1文字でも違えば while を抜け、i を 1 つ進めて pat の先頭から比べ直します。j が pat の要素数を超えたら、全部一致したということです。戻り値は ${result} です。

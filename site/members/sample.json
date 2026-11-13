@@ -1,0 +1,1063 @@
+{
+ "version": 1,
+ "id": "sample",
+ "kind": "mock",
+ "title": "サンプル模試：アルゴリズム16問模試（トレース中心）",
+ "issued": "2026-11",
+ "minutes": 80,
+ "questions": [
+  {
+   "template_id": "digit-sum-001",
+   "seed": 812893,
+   "title": "各桁の和（後判定の繰返し）",
+   "level": "入門",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 digitSum は，正の整数 n の各桁の数字の和を返す。",
+    "関数 digitSum を digitSum(87014) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: digitSum(整数型: n)</td></tr><tr data-line=\"2\"><td>  整数型: sum ← 0</td></tr><tr data-line=\"3\"><td>  do</td></tr><tr data-line=\"4\"><td>    sum ← sum ＋ n ÷ 10 の余り　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"5\"><td>    n ← n ÷ 10 の商</td></tr><tr data-line=\"6\"><td>  while (n &gt; 0)</td></tr><tr data-line=\"7\"><td>  return sum</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "5"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "6"
+     ]
+    }
+   ],
+   "answer": "オ",
+   "answer_text": "5",
+   "explain": [
+    "4行目は5回実行されます。トレース表で 4行目の行を数えると確かめられます。"
+   ],
+   "explanation": "10 で割った余りが一の位です。それを sum に足し、n を 10 で割った商に置き換えると、次の桁が一の位に来ます。\nn が 0 になるまで繰り返すと、和は 20 になります。",
+   "marker_line": 4,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: digitSum(整数型: n)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: sum ← 0</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  do</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    sum ← sum ＋ n ÷ 10 の余り</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    n ← n ÷ 10 の商</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>  while (n &gt; 0)</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>  return sum</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"n\">n</th><th data-var=\"sum\">sum</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"n\">87014</td><td class=\"changed\" data-var=\"sum\">0</td></tr><tr data-line=\"4\" data-step=\"2\"><td>2</td><td>4</td><td>代入</td><td data-var=\"n\">87014</td><td class=\"changed\" data-var=\"sum\">4</td></tr><tr data-line=\"5\" data-step=\"3\"><td>3</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"n\">8701</td><td data-var=\"sum\">4</td></tr><tr data-line=\"6\" data-step=\"4\"><td>4</td><td>6</td><td>条件判定（真）</td><td data-var=\"n\">8701</td><td data-var=\"sum\">4</td></tr><tr data-line=\"4\" data-step=\"5\"><td>5</td><td>4</td><td>代入</td><td data-var=\"n\">8701</td><td class=\"changed\" data-var=\"sum\">5</td></tr><tr data-line=\"5\" data-step=\"6\"><td>6</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"n\">870</td><td data-var=\"sum\">5</td></tr><tr data-line=\"6\" data-step=\"7\"><td>7</td><td>6</td><td>条件判定（真）</td><td data-var=\"n\">870</td><td data-var=\"sum\">5</td></tr><tr data-line=\"4\" data-step=\"8\"><td>8</td><td>4</td><td>代入</td><td data-var=\"n\">870</td><td data-var=\"sum\">5</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"n\">87</td><td data-var=\"sum\">5</td></tr><tr data-line=\"6\" data-step=\"10\"><td>10</td><td>6</td><td>条件判定（真）</td><td data-var=\"n\">87</td><td data-var=\"sum\">5</td></tr><tr data-line=\"4\" data-step=\"11\"><td>11</td><td>4</td><td>代入</td><td data-var=\"n\">87</td><td class=\"changed\" data-var=\"sum\">12</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"n\">8</td><td data-var=\"sum\">12</td></tr><tr data-line=\"6\" data-step=\"13\"><td>13</td><td>6</td><td>条件判定（真）</td><td data-var=\"n\">8</td><td data-var=\"sum\">12</td></tr><tr data-line=\"4\" data-step=\"14\"><td>14</td><td>4</td><td>代入</td><td data-var=\"n\">8</td><td class=\"changed\" data-var=\"sum\">20</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"n\">0</td><td data-var=\"sum\">20</td></tr><tr data-line=\"6\" data-step=\"16\"><td>16</td><td>6</td><td>条件判定（偽）</td><td data-var=\"n\">0</td><td data-var=\"sum\">20</td></tr><tr data-line=\"7\" data-step=\"17\"><td>17</td><td>7</td><td>戻る（20）</td><td data-var=\"n\">0</td><td data-var=\"sum\">20</td></tr></tbody></table></div>",
+   "source": "○整数型: digitSum(整数型: n)\n  整数型: sum ← 0\n  do\n    sum ← sum ＋ n ÷ 10 の余り\n    n ← n ÷ 10 の商\n  while (n > 0)\n  return sum",
+   "call": "digitSum(87014)"
+  },
+  {
+   "template_id": "linear-search-001",
+   "seed": 967041,
+   "title": "線形探索",
+   "level": "入門",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 find は，配列 data を先頭から順に調べ，target と等しい最初の要素の要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+    "関数 find を find({14, 18, 17, 15, 13, 19}, 15) として呼び出したとき，プログラム中の α の行の条件式は［　ａ　］回評価される。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: find(整数型の配列: data, 整数型: target)</td></tr><tr data-line=\"2\"><td>  整数型: i ← 1</td></tr><tr data-line=\"3\"><td>  while (i ≦ dataの要素数 and data[i] ≠ target)　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"4\"><td>    i ← i ＋ 1</td></tr><tr data-line=\"5\"><td>  endwhile</td></tr><tr data-line=\"6\"><td>  if (i ≦ dataの要素数)</td></tr><tr data-line=\"7\"><td>    return i</td></tr><tr data-line=\"8\"><td>  endif</td></tr><tr data-line=\"9\"><td>  return 0</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "5"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "6"
+     ]
+    }
+   ],
+   "answer": "エ",
+   "answer_text": "4",
+   "explain": [
+    "3行目の条件式は4回評価され、真が3回、偽が1回です。"
+   ],
+   "explanation": "先頭から1つずつ target と比べ、等しい要素が見つかるか、配列の終わりを過ぎるまで i を進めます。\n繰返しを抜けたとき、i が要素数以下なら見つかっています。ここでの戻り値は 4 です。",
+   "marker_line": 3,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: find(整数型の配列: data, 整数型: target)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: i ← 1</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  while (i ≦ dataの要素数 and data[i] ≠ target)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    i ← i ＋ 1</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  endwhile</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>  if (i ≦ dataの要素数)</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    return i</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>  endif</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>  return 0</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"target\">target</th><th data-var=\"i\">i</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td class=\"changed\" data-var=\"target\">15</td><td class=\"changed\" data-var=\"i\">1</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">1</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>代入</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td class=\"changed\" data-var=\"i\">2</td></tr><tr data-line=\"3\" data-step=\"4\"><td>4</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"5\"><td>5</td><td>4</td><td>代入</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td class=\"changed\" data-var=\"i\">3</td></tr><tr data-line=\"3\" data-step=\"6\"><td>6</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>代入</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td class=\"changed\" data-var=\"i\">4</td></tr><tr data-line=\"3\" data-step=\"8\"><td>8</td><td>3</td><td>条件判定（偽）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">4</td></tr><tr data-line=\"6\" data-step=\"9\"><td>9</td><td>6</td><td>条件判定（真）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">4</td></tr><tr data-line=\"7\" data-step=\"10\"><td>10</td><td>7</td><td>戻る（4）</td><td data-var=\"data\">{14, 18, 17, 15, 13, 19}</td><td data-var=\"target\">15</td><td data-var=\"i\">4</td></tr></tbody></table></div>",
+   "source": "○整数型: find(整数型の配列: data, 整数型: target)\n  整数型: i ← 1\n  while (i ≦ dataの要素数 and data[i] ≠ target)\n    i ← i ＋ 1\n  endwhile\n  if (i ≦ dataの要素数)\n    return i\n  endif\n  return 0",
+   "call": "find({14, 18, 17, 15, 13, 19}, 15)"
+  },
+  {
+   "template_id": "loop-sum-002",
+   "seed": 744670,
+   "title": "条件に合う要素の合計",
+   "level": "入門",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 calc は，配列 data の要素のうち k の倍数だけを合計して返す。配列の要素番号は 1 から始まる。",
+    "関数 calc を calc({4, 8, 6, 7}, 2) として呼び出したとき，プログラム中の α の行を1回目に実行した直後の変数 sum の値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: calc(整数型の配列: data, 整数型: k)</td></tr><tr data-line=\"2\"><td>  整数型: sum ← 0</td></tr><tr data-line=\"3\"><td>  整数型: i</td></tr><tr data-line=\"4\"><td>  for (i を 1 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td>    if (data[i] mod k ＝ 0)</td></tr><tr data-line=\"6\"><td>      sum ← sum ＋ data[i]　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"7\"><td>    endif</td></tr><tr data-line=\"8\"><td>  endfor</td></tr><tr data-line=\"9\"><td>  return sum</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "12"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "18"
+     ]
+    }
+   ],
+   "answer": "エ",
+   "answer_text": "4",
+   "explain": [
+    "6行目は全部で3回実行されます。",
+    "実行した直後の sum は、順に 4 → 12 → 18 です。",
+    "1回目の直後なので、答えは 4 です。"
+   ],
+   "explanation": "if の条件が真になるのは、data[i] が 2 で割り切れるときだけです。\n真になった要素だけを sum に足していくので、戻り値は 18 になります。",
+   "marker_line": 6,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: calc(整数型の配列: data, 整数型: k)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: sum ← 0</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: i</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  for (i を 1 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    if (data[i] mod k ＝ 0)</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>      sum ← sum ＋ data[i]</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    endif</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>  endfor</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>  return sum</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"k\">k</th><th data-var=\"sum\">sum</th><th data-var=\"i\">i</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{4, 8, 6, 7}</td><td class=\"changed\" data-var=\"k\">2</td><td class=\"changed\" data-var=\"sum\">0</td><td class=\"empty\" data-var=\"i\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">0</td><td data-var=\"i\">未定義</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>繰返しの初期化</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">0</td><td class=\"changed\" data-var=\"i\">1</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">0</td><td data-var=\"i\">1</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">0</td><td data-var=\"i\">1</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td class=\"changed\" data-var=\"sum\">4</td><td data-var=\"i\">1</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">4</td><td class=\"changed\" data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"8\"><td>8</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">4</td><td data-var=\"i\">2</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">4</td><td data-var=\"i\">2</td></tr><tr data-line=\"6\" data-step=\"10\"><td>10</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td class=\"changed\" data-var=\"sum\">12</td><td data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"11\"><td>11</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">12</td><td class=\"changed\" data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"12\"><td>12</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">12</td><td data-var=\"i\">3</td></tr><tr data-line=\"5\" data-step=\"13\"><td>13</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">12</td><td data-var=\"i\">3</td></tr><tr data-line=\"6\" data-step=\"14\"><td>14</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td class=\"changed\" data-var=\"sum\">18</td><td data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"15\"><td>15</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td class=\"changed\" data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"16\"><td>16</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td data-var=\"i\">4</td></tr><tr data-line=\"5\" data-step=\"17\"><td>17</td><td>5</td><td>条件判定（偽）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"18\"><td>18</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td class=\"changed\" data-var=\"i\">5</td></tr><tr data-line=\"4\" data-step=\"19\"><td>19</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td data-var=\"i\">5</td></tr><tr data-line=\"9\" data-step=\"20\"><td>20</td><td>9</td><td>戻る（18）</td><td data-var=\"data\">{4, 8, 6, 7}</td><td data-var=\"k\">2</td><td data-var=\"sum\">18</td><td data-var=\"i\">5</td></tr></tbody></table></div>",
+   "source": "○整数型: calc(整数型の配列: data, 整数型: k)\n  整数型: sum ← 0\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    if (data[i] mod k ＝ 0)\n      sum ← sum ＋ data[i]\n    endif\n  endfor\n  return sum",
+   "call": "calc({4, 8, 6, 7}, 2)"
+  },
+  {
+   "template_id": "max-index-002",
+   "seed": 440518,
+   "title": "最大値の位置",
+   "level": "入門",
+   "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+   "body": [
+    "関数 maxIndex は，配列 data の中で最も大きい要素の要素番号を返す。配列の要素番号は 1 から始まる。",
+    "関数 maxIndex を maxIndex({6, 9, 3, 2, 7}) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行され，実行した直後の変数 pos の値は［　ｂ　］となる。"
+   ],
+   "blanks": [
+    "ａ",
+    "ｂ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: maxIndex(整数型の配列: data)</td></tr><tr data-line=\"2\"><td>  整数型: pos ← 1</td></tr><tr data-line=\"3\"><td>  整数型: i</td></tr><tr data-line=\"4\"><td>  for (i を 2 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td>    if (data[i] &gt; data[pos])</td></tr><tr data-line=\"6\"><td>      pos ← i　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"7\"><td>    endif</td></tr><tr data-line=\"8\"><td>  endfor</td></tr><tr data-line=\"9\"><td>  return pos</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0",
+      "2"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "0",
+      "3"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "1",
+      "2"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "2",
+      "1"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "2",
+      "2"
+     ]
+    }
+   ],
+   "answer": "エ",
+   "answer_text": "ａ 1，ｂ 2",
+   "explain": [
+    "6行目が実行されるのは、5行目の条件が真になったときだけです。",
+    "5行目の条件は4回評価され、真になるのは1回です。したがって 6行目は1回実行されます。",
+    "6行目は全部で1回実行されます。",
+    "実行した直後の pos は 2 です。"
+   ],
+   "explanation": "pos は「これまでに見た中で最大の要素の位置」です。\nそれより大きい要素が見つかるたびに pos を書き換えるので、最後の pos は 2 になります。",
+   "marker_line": 6,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: maxIndex(整数型の配列: data)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: pos ← 1</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: i</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  for (i を 2 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    if (data[i] &gt; data[pos])</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>      pos ← i</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    endif</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>  endfor</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>  return pos</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"pos\">pos</th><th data-var=\"i\">i</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{6, 9, 3, 2, 7}</td><td class=\"changed\" data-var=\"pos\">1</td><td class=\"empty\" data-var=\"i\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">1</td><td data-var=\"i\">未定義</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>繰返しの初期化</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">1</td><td class=\"changed\" data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>代入</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td class=\"changed\" data-var=\"pos\">2</td><td data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td class=\"changed\" data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"8\"><td>8</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">3</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>条件判定（偽）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"10\"><td>10</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td class=\"changed\" data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"11\"><td>11</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">4</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>条件判定（偽）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"13\"><td>13</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td class=\"changed\" data-var=\"i\">5</td></tr><tr data-line=\"4\" data-step=\"14\"><td>14</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">5</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>条件判定（偽）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">5</td></tr><tr data-line=\"4\" data-step=\"16\"><td>16</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td class=\"changed\" data-var=\"i\">6</td></tr><tr data-line=\"4\" data-step=\"17\"><td>17</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">6</td></tr><tr data-line=\"9\" data-step=\"18\"><td>18</td><td>9</td><td>戻る（2）</td><td data-var=\"data\">{6, 9, 3, 2, 7}</td><td data-var=\"pos\">2</td><td data-var=\"i\">6</td></tr></tbody></table></div>",
+   "source": "○整数型: maxIndex(整数型の配列: data)\n  整数型: pos ← 1\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (data[i] > data[pos])\n      pos ← i\n    endif\n  endfor\n  return pos",
+   "call": "maxIndex({6, 9, 3, 2, 7})"
+  },
+  {
+   "template_id": "recursion-sum-001",
+   "seed": 382481,
+   "title": "再帰呼出しの戻り値",
+   "level": "入門",
+   "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 f は，自分自身を呼び出して値を計算する。",
+    "関数 f を f(15) として呼び出すと，戻り値は 46 となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: f(整数型: n)</td></tr><tr data-line=\"2\"><td>  if (n ≦ 1)</td></tr><tr data-line=\"3\"><td>    return 1</td></tr><tr data-line=\"4\"><td>  endif</td></tr><tr data-line=\"5\"><td>  return n ＋ f(<span class=\"blank\" data-blank=\"ａ\">［　ａ　］</span>)</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "n ÷ 2 の商"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "n － 3"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "3 － n"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "n － 5"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "n"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "n － 1"
+     ]
+    }
+   ],
+   "answer": "イ",
+   "answer_text": "n － 3",
+   "explain": [
+    "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+    "「n ÷ 2 の商」→ 戻り値は 26",
+    "「n － 3」→ 戻り値は 46（正解）",
+    "「3 － n」→ 戻り値は 16",
+    "「n － 5」→ 戻り値は 31",
+    "「n」→ 繰返しが終わらない",
+    "「n － 1」→ 戻り値は 120"
+   ],
+   "explanation": "f(15) は 15 ＋ f(15 － 3) です。n が 1 以下になるまで呼出しが続き、そこで 1 が返ります。\n戻ってくる順に足していくと 46 になります。",
+   "marker_line": null,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: f(整数型: n)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  if (n ≦ 1)</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>    return 1</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  endif</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  return n ＋ f(n － 3)</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th>手続</th><th data-var=\"n\">n</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>条件判定（偽）</td><td>f</td><td class=\"changed\" data-var=\"n\">15</td></tr><tr data-line=\"2\" data-step=\"2\"><td>2</td><td>2</td><td>条件判定（偽）</td><td>　f</td><td class=\"changed\" data-var=\"n\">12</td></tr><tr data-line=\"2\" data-step=\"3\"><td>3</td><td>2</td><td>条件判定（偽）</td><td>　　f</td><td class=\"changed\" data-var=\"n\">9</td></tr><tr data-line=\"2\" data-step=\"4\"><td>4</td><td>2</td><td>条件判定（偽）</td><td>　　　f</td><td class=\"changed\" data-var=\"n\">6</td></tr><tr data-line=\"2\" data-step=\"5\"><td>5</td><td>2</td><td>条件判定（偽）</td><td>　　　　f</td><td class=\"changed\" data-var=\"n\">3</td></tr><tr data-line=\"2\" data-step=\"6\"><td>6</td><td>2</td><td>条件判定（真）</td><td>　　　　　f</td><td class=\"changed\" data-var=\"n\">0</td></tr><tr data-line=\"3\" data-step=\"7\"><td>7</td><td>3</td><td>戻る（1）</td><td>　　　　　f</td><td data-var=\"n\">0</td></tr><tr data-line=\"5\" data-step=\"8\"><td>8</td><td>5</td><td>戻る（4）</td><td>　　　　f</td><td data-var=\"n\">3</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>戻る（10）</td><td>　　　f</td><td data-var=\"n\">6</td></tr><tr data-line=\"5\" data-step=\"10\"><td>10</td><td>5</td><td>戻る（19）</td><td>　　f</td><td data-var=\"n\">9</td></tr><tr data-line=\"5\" data-step=\"11\"><td>11</td><td>5</td><td>戻る（31）</td><td>　f</td><td data-var=\"n\">12</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>戻る（46）</td><td>f</td><td data-var=\"n\">15</td></tr></tbody></table></div>",
+   "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 1\n  endif\n  return n ＋ f(n － 3)",
+   "call": "f(15)"
+  },
+  {
+   "template_id": "while-gcd-002",
+   "seed": 289248,
+   "title": "最大公約数（互除法）",
+   "level": "入門",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 gcd は，二つの正の整数 a と b の最大公約数を返す。",
+    "関数 gcd を gcd(26, 12) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: gcd(整数型: a, 整数型: b)</td></tr><tr data-line=\"2\"><td>  整数型: r</td></tr><tr data-line=\"3\"><td>  while (b ≠ 0)</td></tr><tr data-line=\"4\"><td>    r ← a mod b　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"5\"><td>    a ← b</td></tr><tr data-line=\"6\"><td>    b ← r</td></tr><tr data-line=\"7\"><td>  endwhile</td></tr><tr data-line=\"8\"><td>  return a</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "4"
+     ]
+    }
+   ],
+   "answer": "ウ",
+   "answer_text": "2",
+   "explain": [
+    "4行目が実行されるのは、3行目の条件が真になったときだけです。",
+    "3行目の条件は3回評価され、真になるのは2回です。したがって 4行目は2回実行されます。"
+   ],
+   "explanation": "余り r を求め、a に b を、b に r を入れ直すことを、b が 0 になるまで繰り返します。\nb が 0 になったときの a が最大公約数で、ここでは 2 です。",
+   "marker_line": 4,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: gcd(整数型: a, 整数型: b)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: r</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  while (b ≠ 0)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    r ← a mod b</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    a ← b</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    b ← r</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>  endwhile</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>  return a</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"a\">a</th><th data-var=\"b\">b</th><th data-var=\"r\">r</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"a\">26</td><td class=\"changed\" data-var=\"b\">12</td><td data-var=\"r\">未定義</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>条件判定（真）</td><td data-var=\"a\">26</td><td data-var=\"b\">12</td><td data-var=\"r\">未定義</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>代入</td><td data-var=\"a\">26</td><td data-var=\"b\">12</td><td class=\"changed\" data-var=\"r\">2</td></tr><tr data-line=\"5\" data-step=\"4\"><td>4</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"a\">12</td><td data-var=\"b\">12</td><td data-var=\"r\">2</td></tr><tr data-line=\"6\" data-step=\"5\"><td>5</td><td>6</td><td>代入</td><td data-var=\"a\">12</td><td class=\"changed\" data-var=\"b\">2</td><td data-var=\"r\">2</td></tr><tr data-line=\"3\" data-step=\"6\"><td>6</td><td>3</td><td>条件判定（真）</td><td data-var=\"a\">12</td><td data-var=\"b\">2</td><td data-var=\"r\">2</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>代入</td><td data-var=\"a\">12</td><td data-var=\"b\">2</td><td class=\"changed\" data-var=\"r\">0</td></tr><tr data-line=\"5\" data-step=\"8\"><td>8</td><td>5</td><td>代入</td><td class=\"changed\" data-var=\"a\">2</td><td data-var=\"b\">2</td><td data-var=\"r\">0</td></tr><tr data-line=\"6\" data-step=\"9\"><td>9</td><td>6</td><td>代入</td><td data-var=\"a\">2</td><td class=\"changed\" data-var=\"b\">0</td><td data-var=\"r\">0</td></tr><tr data-line=\"3\" data-step=\"10\"><td>10</td><td>3</td><td>条件判定（偽）</td><td data-var=\"a\">2</td><td data-var=\"b\">0</td><td data-var=\"r\">0</td></tr><tr data-line=\"8\" data-step=\"11\"><td>11</td><td>8</td><td>戻る（2）</td><td data-var=\"a\">2</td><td data-var=\"b\">0</td><td data-var=\"r\">0</td></tr></tbody></table></div>",
+   "source": "○整数型: gcd(整数型: a, 整数型: b)\n  整数型: r\n  while (b ≠ 0)\n    r ← a mod b\n    a ← b\n    b ← r\n  endwhile\n  return a",
+   "call": "gcd(26, 12)"
+  },
+  {
+   "template_id": "array-reverse-001",
+   "seed": 538760,
+   "title": "配列の並びを逆にする",
+   "level": "基礎",
+   "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 reverse は，配列 data の要素の並びを逆順にして返す。配列の要素番号は 1 から始まる。",
+    "関数 reverse を reverse({8, 5, 1, 6, 9, 4, 7, 2, 3}) として呼び出すと，戻り値は {3, 2, 7, 4, 9, 6, 1, 5, 8} となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型の配列: reverse(整数型の配列: data)</td></tr><tr data-line=\"2\"><td>  整数型: n ← dataの要素数</td></tr><tr data-line=\"3\"><td>  整数型: i, tmp</td></tr><tr data-line=\"4\"><td>  for (i を 1 から <span class=\"blank\" data-blank=\"ａ\">［　ａ　］</span> まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td>    tmp ← data[i]</td></tr><tr data-line=\"6\"><td>    data[i] ← data[n － i ＋ 1]</td></tr><tr data-line=\"7\"><td>    data[n － i ＋ 1] ← tmp</td></tr><tr data-line=\"8\"><td>  endfor</td></tr><tr data-line=\"9\"><td>  return data</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "n ÷ 2 の商"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "n"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "n ÷ 2 の商 － 1"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "n － 1"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "n ＋ 1"
+     ]
+    }
+   ],
+   "answer": "ア",
+   "answer_text": "n ÷ 2 の商",
+   "explain": [
+    "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+    "「n ÷ 2 の商」→ 戻り値は {3, 2, 7, 4, 9, 6, 1, 5, 8}（正解）",
+    "「n」→ 戻り値は {8, 5, 1, 6, 9, 4, 7, 2, 3}",
+    "「n ÷ 2 の商 － 1」→ 戻り値は {3, 2, 7, 6, 9, 4, 1, 5, 8}",
+    "「n － 1」→ 戻り値は {3, 5, 1, 6, 9, 4, 7, 2, 8}",
+    "「1」→ 戻り値は {3, 5, 1, 6, 9, 4, 7, 2, 8}",
+    "「n ＋ 1」→ 途中で止まる（配列の範囲外です（要素番号 10、要素数 9））"
+   ],
+   "explanation": "先頭側と末尾側の要素を、外側から順に入れ替えます。\n入替えは要素数の半分の回数で止めます。最後まで続けると、入れ替えたものを元に戻してしまうためです。",
+   "marker_line": null,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型の配列: reverse(整数型の配列: data)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: n ← dataの要素数</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: i, tmp</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  for (i を 1 から n ÷ 2 の商 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    tmp ← data[i]</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    data[i] ← data[n － i ＋ 1]</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    data[n － i ＋ 1] ← tmp</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>  endfor</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>  return data</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"n\">n</th><th data-var=\"i\">i</th><th data-var=\"tmp\">tmp</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{8, 5, 1, 6, 9, 4, 7, 2, 3}</td><td class=\"changed\" data-var=\"n\">9</td><td class=\"empty\" data-var=\"i\">—</td><td class=\"empty\" data-var=\"tmp\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"data\">{8, 5, 1, 6, 9, 4, 7, 2, 3}</td><td data-var=\"n\">9</td><td data-var=\"i\">未定義</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>繰返しの初期化</td><td data-var=\"data\">{8, 5, 1, 6, 9, 4, 7, 2, 3}</td><td data-var=\"n\">9</td><td class=\"changed\" data-var=\"i\">1</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{8, 5, 1, 6, 9, 4, 7, 2, 3}</td><td data-var=\"n\">9</td><td data-var=\"i\">1</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>代入</td><td data-var=\"data\">{8, 5, 1, 6, 9, 4, 7, 2, 3}</td><td data-var=\"n\">9</td><td data-var=\"i\">1</td><td class=\"changed\" data-var=\"tmp\">8</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 5, 1, 6, 9, 4, 7, 2, 3}</td><td data-var=\"n\">9</td><td data-var=\"i\">1</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"7\" data-step=\"7\"><td>7</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 5, 1, 6, 9, 4, 7, 2, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">1</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"4\" data-step=\"8\"><td>8</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 5, 1, 6, 9, 4, 7, 2, 8}</td><td data-var=\"n\">9</td><td class=\"changed\" data-var=\"i\">2</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"4\" data-step=\"9\"><td>9</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 5, 1, 6, 9, 4, 7, 2, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">2</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"5\" data-step=\"10\"><td>10</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 5, 1, 6, 9, 4, 7, 2, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">2</td><td class=\"changed\" data-var=\"tmp\">5</td></tr><tr data-line=\"6\" data-step=\"11\"><td>11</td><td>6</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 1, 6, 9, 4, 7, 2, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">2</td><td data-var=\"tmp\">5</td></tr><tr data-line=\"7\" data-step=\"12\"><td>12</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 1, 6, 9, 4, 7, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">2</td><td data-var=\"tmp\">5</td></tr><tr data-line=\"4\" data-step=\"13\"><td>13</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 1, 6, 9, 4, 7, 5, 8}</td><td data-var=\"n\">9</td><td class=\"changed\" data-var=\"i\">3</td><td data-var=\"tmp\">5</td></tr><tr data-line=\"4\" data-step=\"14\"><td>14</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 1, 6, 9, 4, 7, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">3</td><td data-var=\"tmp\">5</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 1, 6, 9, 4, 7, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"tmp\">1</td></tr><tr data-line=\"6\" data-step=\"16\"><td>16</td><td>6</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 7, 6, 9, 4, 7, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">3</td><td data-var=\"tmp\">1</td></tr><tr data-line=\"7\" data-step=\"17\"><td>17</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 7, 6, 9, 4, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">3</td><td data-var=\"tmp\">1</td></tr><tr data-line=\"4\" data-step=\"18\"><td>18</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 7, 6, 9, 4, 1, 5, 8}</td><td data-var=\"n\">9</td><td class=\"changed\" data-var=\"i\">4</td><td data-var=\"tmp\">1</td></tr><tr data-line=\"4\" data-step=\"19\"><td>19</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 7, 6, 9, 4, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">4</td><td data-var=\"tmp\">1</td></tr><tr data-line=\"5\" data-step=\"20\"><td>20</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 7, 6, 9, 4, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">4</td><td class=\"changed\" data-var=\"tmp\">6</td></tr><tr data-line=\"6\" data-step=\"21\"><td>21</td><td>6</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 7, 4, 9, 4, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">4</td><td data-var=\"tmp\">6</td></tr><tr data-line=\"7\" data-step=\"22\"><td>22</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{3, 2, 7, 4, 9, 6, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">4</td><td data-var=\"tmp\">6</td></tr><tr data-line=\"4\" data-step=\"23\"><td>23</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 7, 4, 9, 6, 1, 5, 8}</td><td data-var=\"n\">9</td><td class=\"changed\" data-var=\"i\">5</td><td data-var=\"tmp\">6</td></tr><tr data-line=\"4\" data-step=\"24\"><td>24</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{3, 2, 7, 4, 9, 6, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">5</td><td data-var=\"tmp\">6</td></tr><tr data-line=\"9\" data-step=\"25\"><td>25</td><td>9</td><td>戻る（{3, 2, 7, 4, 9, 6, 1, 5, 8}）</td><td data-var=\"data\">{3, 2, 7, 4, 9, 6, 1, 5, 8}</td><td data-var=\"n\">9</td><td data-var=\"i\">5</td><td data-var=\"tmp\">6</td></tr></tbody></table></div>",
+   "source": "○整数型の配列: reverse(整数型の配列: data)\n  整数型: n ← dataの要素数\n  整数型: i, tmp\n  for (i を 1 から n ÷ 2 の商 まで 1 ずつ増やす)\n    tmp ← data[i]\n    data[i] ← data[n － i ＋ 1]\n    data[n － i ＋ 1] ← tmp\n  endfor\n  return data",
+   "call": "reverse({8, 5, 1, 6, 9, 4, 7, 2, 3})"
+  },
+  {
+   "template_id": "binary-search-001",
+   "seed": 537247,
+   "title": "二分探索",
+   "level": "基礎",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 search は，昇順に並んだ配列 data から target を探し，見つかった要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+    "関数 search を search({4, 10, 12, 16, 17, 18}, 10) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: search(整数型の配列: data, 整数型: target)</td></tr><tr data-line=\"2\"><td>  整数型: low ← 1</td></tr><tr data-line=\"3\"><td>  整数型: high ← dataの要素数</td></tr><tr data-line=\"4\"><td>  整数型: middle</td></tr><tr data-line=\"5\"><td>  while (low ≦ high)</td></tr><tr data-line=\"6\"><td>    middle ← (low ＋ high) ÷ 2 の商　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"7\"><td>    if (data[middle] &lt; target)</td></tr><tr data-line=\"8\"><td>      low ← middle ＋ 1</td></tr><tr data-line=\"9\"><td>    elseif (data[middle] &gt; target)</td></tr><tr data-line=\"10\"><td>      high ← middle － 1</td></tr><tr data-line=\"11\"><td>    else</td></tr><tr data-line=\"12\"><td>      return middle</td></tr><tr data-line=\"13\"><td>    endif</td></tr><tr data-line=\"14\"><td>  endwhile</td></tr><tr data-line=\"15\"><td>  return 0</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "5"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "6"
+     ]
+    }
+   ],
+   "answer": "ウ",
+   "answer_text": "3",
+   "explain": [
+    "6行目は3回実行されます。トレース表で 6行目の行を数えると確かめられます。"
+   ],
+   "explanation": "探す範囲の真ん中 middle と target を比べ、範囲を半分ずつ狭めていきます。\ndata[middle] が target と等しくなったときの middle、つまり 2 が戻り値です。",
+   "marker_line": 6,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: search(整数型の配列: data, 整数型: target)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: low ← 1</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: high ← dataの要素数</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  整数型: middle</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  while (low ≦ high)</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    middle ← (low ＋ high) ÷ 2 の商</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    if (data[middle] &lt; target)</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>      low ← middle ＋ 1</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>    elseif (data[middle] &gt; target)</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>      high ← middle － 1</td></tr><tr data-line=\"11\"><td class=\"no\">11</td><td>    else</td></tr><tr data-line=\"12\"><td class=\"no\">12</td><td>      return middle</td></tr><tr data-line=\"13\"><td class=\"no\">13</td><td>    endif</td></tr><tr data-line=\"14\"><td class=\"no\">14</td><td>  endwhile</td></tr><tr data-line=\"15\"><td class=\"no\">15</td><td>  return 0</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"target\">target</th><th data-var=\"low\">low</th><th data-var=\"high\">high</th><th data-var=\"middle\">middle</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td class=\"changed\" data-var=\"target\">10</td><td class=\"changed\" data-var=\"low\">1</td><td class=\"empty\" data-var=\"high\">—</td><td class=\"empty\" data-var=\"middle\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td class=\"changed\" data-var=\"high\">6</td><td class=\"empty\" data-var=\"middle\">—</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>宣言</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">6</td><td data-var=\"middle\">未定義</td></tr><tr data-line=\"5\" data-step=\"4\"><td>4</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">6</td><td data-var=\"middle\">未定義</td></tr><tr data-line=\"6\" data-step=\"5\"><td>5</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">6</td><td class=\"changed\" data-var=\"middle\">3</td></tr><tr data-line=\"7\" data-step=\"6\"><td>6</td><td>7</td><td>条件判定（偽）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">6</td><td data-var=\"middle\">3</td></tr><tr data-line=\"9\" data-step=\"7\"><td>7</td><td>9</td><td>条件判定（真）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">6</td><td data-var=\"middle\">3</td></tr><tr data-line=\"10\" data-step=\"8\"><td>8</td><td>10</td><td>代入</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td class=\"changed\" data-var=\"high\">2</td><td data-var=\"middle\">3</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">2</td><td data-var=\"middle\">3</td></tr><tr data-line=\"6\" data-step=\"10\"><td>10</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">2</td><td class=\"changed\" data-var=\"middle\">1</td></tr><tr data-line=\"7\" data-step=\"11\"><td>11</td><td>7</td><td>条件判定（真）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">1</td><td data-var=\"high\">2</td><td data-var=\"middle\">1</td></tr><tr data-line=\"8\" data-step=\"12\"><td>12</td><td>8</td><td>代入</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td class=\"changed\" data-var=\"low\">2</td><td data-var=\"high\">2</td><td data-var=\"middle\">1</td></tr><tr data-line=\"5\" data-step=\"13\"><td>13</td><td>5</td><td>条件判定（真）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">2</td><td data-var=\"high\">2</td><td data-var=\"middle\">1</td></tr><tr data-line=\"6\" data-step=\"14\"><td>14</td><td>6</td><td>代入</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">2</td><td data-var=\"high\">2</td><td class=\"changed\" data-var=\"middle\">2</td></tr><tr data-line=\"7\" data-step=\"15\"><td>15</td><td>7</td><td>条件判定（偽）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">2</td><td data-var=\"high\">2</td><td data-var=\"middle\">2</td></tr><tr data-line=\"9\" data-step=\"16\"><td>16</td><td>9</td><td>条件判定（偽）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">2</td><td data-var=\"high\">2</td><td data-var=\"middle\">2</td></tr><tr data-line=\"12\" data-step=\"17\"><td>17</td><td>12</td><td>戻る（2）</td><td data-var=\"data\">{4, 10, 12, 16, 17, 18}</td><td data-var=\"target\">10</td><td data-var=\"low\">2</td><td data-var=\"high\">2</td><td data-var=\"middle\">2</td></tr></tbody></table></div>",
+   "source": "○整数型: search(整数型の配列: data, 整数型: target)\n  整数型: low ← 1\n  整数型: high ← dataの要素数\n  整数型: middle\n  while (low ≦ high)\n    middle ← (low ＋ high) ÷ 2 の商\n    if (data[middle] < target)\n      low ← middle ＋ 1\n    elseif (data[middle] > target)\n      high ← middle － 1\n    else\n      return middle\n    endif\n  endwhile\n  return 0",
+   "call": "search({4, 10, 12, 16, 17, 18}, 10)"
+  },
+  {
+   "template_id": "bubble-pass-002",
+   "seed": 666082,
+   "title": "隣どうしの比較と交換（1巡）",
+   "level": "基礎",
+   "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 onePass は，配列 data の隣り合う要素を先頭から順に比べ，左が大きければ入れ替える。配列の要素番号は 1 から始まる。",
+    "関数 onePass を onePass({7, 8, 4, 9}) として呼び出すと，戻り値は {7, 4, 8, 9} となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型の配列: onePass(整数型の配列: data)</td></tr><tr data-line=\"2\"><td>  整数型: j, tmp</td></tr><tr data-line=\"3\"><td>  for (j を 1 から dataの要素数 － 1 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td>    if (<span class=\"blank\" data-blank=\"ａ\">［　ａ　］</span>)</td></tr><tr data-line=\"5\"><td>      tmp ← data[j]</td></tr><tr data-line=\"6\"><td>      data[j] ← data[j ＋ 1]</td></tr><tr data-line=\"7\"><td>      data[j ＋ 1] ← tmp</td></tr><tr data-line=\"8\"><td>    endif</td></tr><tr data-line=\"9\"><td>  endfor</td></tr><tr data-line=\"10\"><td>  return data</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "data[j] > data[j － 1]"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "j > data[j ＋ 1]"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "data[j] > data[1]"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "data[j ＋ 1] > data[j]"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "data[j] < data[j ＋ 1]"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "data[j] > data[j ＋ 1]"
+     ]
+    }
+   ],
+   "answer": "カ",
+   "answer_text": "data[j] > data[j ＋ 1]",
+   "explain": [
+    "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+    "「data[j] > data[j － 1]」→ 途中で止まる（配列の範囲外です（要素番号 0、要素数 4））",
+    "「j > data[j ＋ 1]」→ 戻り値は {7, 8, 4, 9}",
+    "「data[j] > data[1]」→ 戻り値は {7, 4, 9, 8}",
+    "「data[j ＋ 1] > data[j]」→ 戻り値は {8, 7, 9, 4}",
+    "「data[j] < data[j ＋ 1]」→ 戻り値は {8, 7, 9, 4}",
+    "「data[j] > data[j ＋ 1]」→ 戻り値は {7, 4, 8, 9}（正解）"
+   ],
+   "explanation": "1巡すると、最も大きい要素が末尾まで運ばれます。\nそれ以外の要素は、途中で入れ替わった分だけ動きます。",
+   "marker_line": null,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型の配列: onePass(整数型の配列: data)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: j, tmp</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  for (j を 1 から dataの要素数 － 1 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    if (data[j] &gt; data[j ＋ 1])</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>      tmp ← data[j]</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>      data[j] ← data[j ＋ 1]</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>      data[j ＋ 1] ← tmp</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>    endif</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>  endfor</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>  return data</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"j\">j</th><th data-var=\"tmp\">tmp</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">未定義</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>繰返しの初期化</td><td data-var=\"data\">{7, 8, 4, 9}</td><td class=\"changed\" data-var=\"j\">1</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"3\" data-step=\"3\"><td>3</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">1</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">1</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"3\" data-step=\"5\"><td>5</td><td>3</td><td>繰返しの更新</td><td data-var=\"data\">{7, 8, 4, 9}</td><td class=\"changed\" data-var=\"j\">2</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"3\" data-step=\"6\"><td>6</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">2</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">2</td><td data-var=\"tmp\">未定義</td></tr><tr data-line=\"5\" data-step=\"8\"><td>8</td><td>5</td><td>代入</td><td data-var=\"data\">{7, 8, 4, 9}</td><td data-var=\"j\">2</td><td class=\"changed\" data-var=\"tmp\">8</td></tr><tr data-line=\"6\" data-step=\"9\"><td>9</td><td>6</td><td>代入</td><td class=\"changed\" data-var=\"data\">{7, 4, 4, 9}</td><td data-var=\"j\">2</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"7\" data-step=\"10\"><td>10</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{7, 4, 8, 9}</td><td data-var=\"j\">2</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"3\" data-step=\"11\"><td>11</td><td>3</td><td>繰返しの更新</td><td data-var=\"data\">{7, 4, 8, 9}</td><td class=\"changed\" data-var=\"j\">3</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"3\" data-step=\"12\"><td>12</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{7, 4, 8, 9}</td><td data-var=\"j\">3</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"4\" data-step=\"13\"><td>13</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{7, 4, 8, 9}</td><td data-var=\"j\">3</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"3\" data-step=\"14\"><td>14</td><td>3</td><td>繰返しの更新</td><td data-var=\"data\">{7, 4, 8, 9}</td><td class=\"changed\" data-var=\"j\">4</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"3\" data-step=\"15\"><td>15</td><td>3</td><td>条件判定（偽）</td><td data-var=\"data\">{7, 4, 8, 9}</td><td data-var=\"j\">4</td><td data-var=\"tmp\">8</td></tr><tr data-line=\"10\" data-step=\"16\"><td>16</td><td>10</td><td>戻る（{7, 4, 8, 9}）</td><td data-var=\"data\">{7, 4, 8, 9}</td><td data-var=\"j\">4</td><td data-var=\"tmp\">8</td></tr></tbody></table></div>",
+   "source": "○整数型の配列: onePass(整数型の配列: data)\n  整数型: j, tmp\n  for (j を 1 から dataの要素数 － 1 まで 1 ずつ増やす)\n    if (data[j] > data[j ＋ 1])\n      tmp ← data[j]\n      data[j] ← data[j ＋ 1]\n      data[j ＋ 1] ← tmp\n    endif\n  endfor\n  return data",
+   "call": "onePass({7, 8, 4, 9})"
+  },
+  {
+   "template_id": "insertion-sort-002",
+   "seed": 270530,
+   "title": "挿入ソート",
+   "level": "基礎",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 sort は，配列 data を昇順に整列して返す。2 番目以降の要素を順に取り出し，それより前の整列済みの部分の正しい位置に挿入する。配列の要素番号は 1 から始まる。",
+    "関数 sort を sort({9, 5, 2}) として呼び出したとき，プログラム中の α の行を2回目に実行した直後の変数 data の値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型の配列: sort(整数型の配列: data)</td></tr><tr data-line=\"2\"><td>  整数型: i, j, key</td></tr><tr data-line=\"3\"><td>  for (i を 2 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td>    key ← data[i]</td></tr><tr data-line=\"5\"><td>    j ← i － 1</td></tr><tr data-line=\"6\"><td>    while (j ≧ 1 and data[j] &gt; key)</td></tr><tr data-line=\"7\"><td>      data[j ＋ 1] ← data[j]</td></tr><tr data-line=\"8\"><td>      j ← j － 1</td></tr><tr data-line=\"9\"><td>    endwhile</td></tr><tr data-line=\"10\"><td>    data[j ＋ 1] ← key　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"11\"><td>  endfor</td></tr><tr data-line=\"12\"><td>  return data</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "{5, 9, 2}"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "{9, 5, 2}"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "{2, 5, 9}"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "{2, 9, 5}"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "{5, 2, 9}"
+     ]
+    }
+   ],
+   "answer": "ウ",
+   "answer_text": "{2, 5, 9}",
+   "explain": [
+    "10行目は全部で2回実行されます。",
+    "実行した直後の data は、順に {5, 9, 2} → {2, 5, 9} です。",
+    "2回目の直後なので、答えは {2, 5, 9} です。"
+   ],
+   "explanation": "取り出した要素 key より大きい要素を、右へ1つずつずらして場所を空け、空いた所に key を入れます。\nずらす回数は、key より大きい要素が前にいくつあるかで決まります。",
+   "marker_line": 10,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型の配列: sort(整数型の配列: data)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: i, j, key</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  for (i を 2 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    key ← data[i]</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    j ← i － 1</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    while (j ≧ 1 and data[j] &gt; key)</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>      data[j ＋ 1] ← data[j]</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>      j ← j － 1</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>    endwhile</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>    data[j ＋ 1] ← key</td></tr><tr data-line=\"11\"><td class=\"no\">11</td><td>  endfor</td></tr><tr data-line=\"12\"><td class=\"no\">12</td><td>  return data</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"i\">i</th><th data-var=\"j\">j</th><th data-var=\"key\">key</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{9, 5, 2}</td><td data-var=\"i\">未定義</td><td data-var=\"j\">未定義</td><td data-var=\"key\">未定義</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>繰返しの初期化</td><td data-var=\"data\">{9, 5, 2}</td><td class=\"changed\" data-var=\"i\">2</td><td data-var=\"j\">未定義</td><td data-var=\"key\">未定義</td></tr><tr data-line=\"3\" data-step=\"3\"><td>3</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{9, 5, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">未定義</td><td data-var=\"key\">未定義</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>代入</td><td data-var=\"data\">{9, 5, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">未定義</td><td class=\"changed\" data-var=\"key\">5</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>代入</td><td data-var=\"data\">{9, 5, 2}</td><td data-var=\"i\">2</td><td class=\"changed\" data-var=\"j\">1</td><td data-var=\"key\">5</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>条件判定（真）</td><td data-var=\"data\">{9, 5, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">1</td><td data-var=\"key\">5</td></tr><tr data-line=\"7\" data-step=\"7\"><td>7</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{9, 9, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">1</td><td data-var=\"key\">5</td></tr><tr data-line=\"8\" data-step=\"8\"><td>8</td><td>8</td><td>代入</td><td data-var=\"data\">{9, 9, 2}</td><td data-var=\"i\">2</td><td class=\"changed\" data-var=\"j\">0</td><td data-var=\"key\">5</td></tr><tr data-line=\"6\" data-step=\"9\"><td>9</td><td>6</td><td>条件判定（偽）</td><td data-var=\"data\">{9, 9, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">0</td><td data-var=\"key\">5</td></tr><tr data-line=\"10\" data-step=\"10\"><td>10</td><td>10</td><td>代入</td><td class=\"changed\" data-var=\"data\">{5, 9, 2}</td><td data-var=\"i\">2</td><td data-var=\"j\">0</td><td data-var=\"key\">5</td></tr><tr data-line=\"3\" data-step=\"11\"><td>11</td><td>3</td><td>繰返しの更新</td><td data-var=\"data\">{5, 9, 2}</td><td class=\"changed\" data-var=\"i\">3</td><td data-var=\"j\">0</td><td data-var=\"key\">5</td></tr><tr data-line=\"3\" data-step=\"12\"><td>12</td><td>3</td><td>条件判定（真）</td><td data-var=\"data\">{5, 9, 2}</td><td data-var=\"i\">3</td><td data-var=\"j\">0</td><td data-var=\"key\">5</td></tr><tr data-line=\"4\" data-step=\"13\"><td>13</td><td>4</td><td>代入</td><td data-var=\"data\">{5, 9, 2}</td><td data-var=\"i\">3</td><td data-var=\"j\">0</td><td class=\"changed\" data-var=\"key\">2</td></tr><tr data-line=\"5\" data-step=\"14\"><td>14</td><td>5</td><td>代入</td><td data-var=\"data\">{5, 9, 2}</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"j\">2</td><td data-var=\"key\">2</td></tr><tr data-line=\"6\" data-step=\"15\"><td>15</td><td>6</td><td>条件判定（真）</td><td data-var=\"data\">{5, 9, 2}</td><td data-var=\"i\">3</td><td data-var=\"j\">2</td><td data-var=\"key\">2</td></tr><tr data-line=\"7\" data-step=\"16\"><td>16</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{5, 9, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">2</td><td data-var=\"key\">2</td></tr><tr data-line=\"8\" data-step=\"17\"><td>17</td><td>8</td><td>代入</td><td data-var=\"data\">{5, 9, 9}</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"j\">1</td><td data-var=\"key\">2</td></tr><tr data-line=\"6\" data-step=\"18\"><td>18</td><td>6</td><td>条件判定（真）</td><td data-var=\"data\">{5, 9, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">1</td><td data-var=\"key\">2</td></tr><tr data-line=\"7\" data-step=\"19\"><td>19</td><td>7</td><td>代入</td><td class=\"changed\" data-var=\"data\">{5, 5, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">1</td><td data-var=\"key\">2</td></tr><tr data-line=\"8\" data-step=\"20\"><td>20</td><td>8</td><td>代入</td><td data-var=\"data\">{5, 5, 9}</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"j\">0</td><td data-var=\"key\">2</td></tr><tr data-line=\"6\" data-step=\"21\"><td>21</td><td>6</td><td>条件判定（偽）</td><td data-var=\"data\">{5, 5, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">0</td><td data-var=\"key\">2</td></tr><tr data-line=\"10\" data-step=\"22\"><td>22</td><td>10</td><td>代入</td><td class=\"changed\" data-var=\"data\">{2, 5, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">0</td><td data-var=\"key\">2</td></tr><tr data-line=\"3\" data-step=\"23\"><td>23</td><td>3</td><td>繰返しの更新</td><td data-var=\"data\">{2, 5, 9}</td><td class=\"changed\" data-var=\"i\">4</td><td data-var=\"j\">0</td><td data-var=\"key\">2</td></tr><tr data-line=\"3\" data-step=\"24\"><td>24</td><td>3</td><td>条件判定（偽）</td><td data-var=\"data\">{2, 5, 9}</td><td data-var=\"i\">4</td><td data-var=\"j\">0</td><td data-var=\"key\">2</td></tr><tr data-line=\"12\" data-step=\"25\"><td>25</td><td>12</td><td>戻る（{2, 5, 9}）</td><td data-var=\"data\">{2, 5, 9}</td><td data-var=\"i\">4</td><td data-var=\"j\">0</td><td data-var=\"key\">2</td></tr></tbody></table></div>",
+   "source": "○整数型の配列: sort(整数型の配列: data)\n  整数型: i, j, key\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    key ← data[i]\n    j ← i － 1\n    while (j ≧ 1 and data[j] > key)\n      data[j ＋ 1] ← data[j]\n      j ← j － 1\n    endwhile\n    data[j ＋ 1] ← key\n  endfor\n  return data",
+   "call": "sort({9, 5, 2})"
+  },
+  {
+   "template_id": "longest-run-002",
+   "seed": 667823,
+   "title": "同じ文字が続く最長の長さ",
+   "level": "基礎",
+   "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+   "body": [
+    "関数 longestRun は，文字の配列 s の中で，同じ文字が連続する部分の最長の長さを返す。配列の要素番号は 1 から始まる。",
+    "関数 longestRun を longestRun({\"a\", \"b\", \"b\", \"b\", \"b\"}) として呼び出すと，プログラム中の α の行は［　ａ　］回実行され，戻り値は［　ｂ　］となる。"
+   ],
+   "blanks": [
+    "ａ",
+    "ｂ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: longestRun(文字型の配列: s)</td></tr><tr data-line=\"2\"><td>  整数型: best ← 1</td></tr><tr data-line=\"3\"><td>  整数型: run ← 1</td></tr><tr data-line=\"4\"><td>  整数型: i</td></tr><tr data-line=\"5\"><td>  for (i を 2 から sの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"6\"><td>    if (s[i] ＝ s[i － 1])</td></tr><tr data-line=\"7\"><td>      run ← run ＋ 1</td></tr><tr data-line=\"8\"><td>    else</td></tr><tr data-line=\"9\"><td>      run ← 1　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"10\"><td>    endif</td></tr><tr data-line=\"11\"><td>    if (run &gt; best)</td></tr><tr data-line=\"12\"><td>      best ← run</td></tr><tr data-line=\"13\"><td>    endif</td></tr><tr data-line=\"14\"><td>  endfor</td></tr><tr data-line=\"15\"><td>  return best</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0",
+      "1"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "0",
+      "2"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "0",
+      "4"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "1",
+      "1"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "1",
+      "4"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "2",
+      "4"
+     ]
+    }
+   ],
+   "answer": "オ",
+   "answer_text": "ａ 1，ｂ 4",
+   "explain": [
+    "9行目は1回実行されます。トレース表で 9行目の行を数えると確かめられます。",
+    "戻り値になる best は、1 → 2 → 3 → 4 と変わります。",
+    "15行目で返す時点の値 4 が答えです。"
+   ],
+   "explanation": "run は「今続いている同じ文字の長さ」、best は「これまでの最長」です。\n前の文字と同じなら run を 1 増やし、違えば 1 に戻します。最長の長さは 4 です。",
+   "marker_line": 9,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: longestRun(文字型の配列: s)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: best ← 1</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: run ← 1</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  整数型: i</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  for (i を 2 から sの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    if (s[i] ＝ s[i － 1])</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>      run ← run ＋ 1</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>    else</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>      run ← 1</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>    endif</td></tr><tr data-line=\"11\"><td class=\"no\">11</td><td>    if (run &gt; best)</td></tr><tr data-line=\"12\"><td class=\"no\">12</td><td>      best ← run</td></tr><tr data-line=\"13\"><td class=\"no\">13</td><td>    endif</td></tr><tr data-line=\"14\"><td class=\"no\">14</td><td>  endfor</td></tr><tr data-line=\"15\"><td class=\"no\">15</td><td>  return best</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"s\">s</th><th data-var=\"best\">best</th><th data-var=\"run\">run</th><th data-var=\"i\">i</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td class=\"changed\" data-var=\"best\">1</td><td class=\"empty\" data-var=\"run\">—</td><td class=\"empty\" data-var=\"i\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td class=\"changed\" data-var=\"run\">1</td><td class=\"empty\" data-var=\"i\">—</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>宣言</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">未定義</td></tr><tr data-line=\"5\" data-step=\"4\"><td>4</td><td>5</td><td>繰返しの初期化</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td class=\"changed\" data-var=\"i\">2</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>条件判定（偽）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"9\" data-step=\"7\"><td>7</td><td>9</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"11\" data-step=\"8\"><td>8</td><td>11</td><td>条件判定（偽）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">2</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>繰返しの更新</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td class=\"changed\" data-var=\"i\">3</td></tr><tr data-line=\"5\" data-step=\"10\"><td>10</td><td>5</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">3</td></tr><tr data-line=\"6\" data-step=\"11\"><td>11</td><td>6</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">1</td><td data-var=\"i\">3</td></tr><tr data-line=\"7\" data-step=\"12\"><td>12</td><td>7</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td class=\"changed\" data-var=\"run\">2</td><td data-var=\"i\">3</td></tr><tr data-line=\"11\" data-step=\"13\"><td>13</td><td>11</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">1</td><td data-var=\"run\">2</td><td data-var=\"i\">3</td></tr><tr data-line=\"12\" data-step=\"14\"><td>14</td><td>12</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td class=\"changed\" data-var=\"best\">2</td><td data-var=\"run\">2</td><td data-var=\"i\">3</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>繰返しの更新</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">2</td><td data-var=\"run\">2</td><td class=\"changed\" data-var=\"i\">4</td></tr><tr data-line=\"5\" data-step=\"16\"><td>16</td><td>5</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">2</td><td data-var=\"run\">2</td><td data-var=\"i\">4</td></tr><tr data-line=\"6\" data-step=\"17\"><td>17</td><td>6</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">2</td><td data-var=\"run\">2</td><td data-var=\"i\">4</td></tr><tr data-line=\"7\" data-step=\"18\"><td>18</td><td>7</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">2</td><td class=\"changed\" data-var=\"run\">3</td><td data-var=\"i\">4</td></tr><tr data-line=\"11\" data-step=\"19\"><td>19</td><td>11</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">2</td><td data-var=\"run\">3</td><td data-var=\"i\">4</td></tr><tr data-line=\"12\" data-step=\"20\"><td>20</td><td>12</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td class=\"changed\" data-var=\"best\">3</td><td data-var=\"run\">3</td><td data-var=\"i\">4</td></tr><tr data-line=\"5\" data-step=\"21\"><td>21</td><td>5</td><td>繰返しの更新</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">3</td><td data-var=\"run\">3</td><td class=\"changed\" data-var=\"i\">5</td></tr><tr data-line=\"5\" data-step=\"22\"><td>22</td><td>5</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">3</td><td data-var=\"run\">3</td><td data-var=\"i\">5</td></tr><tr data-line=\"6\" data-step=\"23\"><td>23</td><td>6</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">3</td><td data-var=\"run\">3</td><td data-var=\"i\">5</td></tr><tr data-line=\"7\" data-step=\"24\"><td>24</td><td>7</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">3</td><td class=\"changed\" data-var=\"run\">4</td><td data-var=\"i\">5</td></tr><tr data-line=\"11\" data-step=\"25\"><td>25</td><td>11</td><td>条件判定（真）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">3</td><td data-var=\"run\">4</td><td data-var=\"i\">5</td></tr><tr data-line=\"12\" data-step=\"26\"><td>26</td><td>12</td><td>代入</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td class=\"changed\" data-var=\"best\">4</td><td data-var=\"run\">4</td><td data-var=\"i\">5</td></tr><tr data-line=\"5\" data-step=\"27\"><td>27</td><td>5</td><td>繰返しの更新</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">4</td><td data-var=\"run\">4</td><td class=\"changed\" data-var=\"i\">6</td></tr><tr data-line=\"5\" data-step=\"28\"><td>28</td><td>5</td><td>条件判定（偽）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">4</td><td data-var=\"run\">4</td><td data-var=\"i\">6</td></tr><tr data-line=\"15\" data-step=\"29\"><td>29</td><td>15</td><td>戻る（4）</td><td data-var=\"s\">{&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;}</td><td data-var=\"best\">4</td><td data-var=\"run\">4</td><td data-var=\"i\">6</td></tr></tbody></table></div>",
+   "source": "○整数型: longestRun(文字型の配列: s)\n  整数型: best ← 1\n  整数型: run ← 1\n  整数型: i\n  for (i を 2 から sの要素数 まで 1 ずつ増やす)\n    if (s[i] ＝ s[i － 1])\n      run ← run ＋ 1\n    else\n      run ← 1\n    endif\n    if (run > best)\n      best ← run\n    endif\n  endfor\n  return best",
+   "call": "longestRun({\"a\", \"b\", \"b\", \"b\", \"b\"})"
+  },
+  {
+   "template_id": "tally-002",
+   "seed": 435857,
+   "title": "値ごとの個数を数える",
+   "level": "基礎",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 tally は，配列 data に 1 から kinds までの整数がそれぞれ何個あるかを数え，個数の配列を返す。data の要素は 1 以上 kinds 以下の整数である。配列の要素番号は 1 から始まる。",
+    "関数 tally を tally({3, 2, 2, 2, 1}, 3) として呼び出すと，戻り値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型の配列: tally(整数型の配列: data, 整数型: kinds)</td></tr><tr data-line=\"2\"><td>  整数型の配列: count ← {kinds 個の 0}</td></tr><tr data-line=\"3\"><td>  整数型: i</td></tr><tr data-line=\"4\"><td>  for (i を 1 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td>    count[data[i]] ← count[data[i]] ＋ 1</td></tr><tr data-line=\"6\"><td>  endfor</td></tr><tr data-line=\"7\"><td>  return count</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "{1, 3, 1}"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "{0, 0, 1}"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "{3, 1, 1}"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "{1, 1, 3}"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "{0, 1, 1}"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "{0, 0, 0}"
+     ]
+    }
+   ],
+   "answer": "ア",
+   "answer_text": "{1, 3, 1}",
+   "explain": [
+    "戻り値になる count は、{0, 0, 0} → {0, 0, 1} → {0, 1, 1} → {0, 2, 1} → {0, 3, 1} → {1, 3, 1} と変わります。",
+    "7行目で返す時点の値 {1, 3, 1} が答えです。"
+   ],
+   "explanation": "data[i] の値を、そのまま count の要素番号として使います。値が 2 なら count[2] を 1 増やします。\n戻り値は {1, 3, 1} です。",
+   "marker_line": null,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型の配列: tally(整数型の配列: data, 整数型: kinds)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型の配列: count ← {kinds 個の 0}</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: i</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  for (i を 1 から dataの要素数 まで 1 ずつ増やす)</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    count[data[i]] ← count[data[i]] ＋ 1</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>  endfor</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>  return count</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"data\">data</th><th data-var=\"kinds\">kinds</th><th data-var=\"count\">count</th><th data-var=\"i\">i</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"data\">{3, 2, 2, 2, 1}</td><td class=\"changed\" data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{0, 0, 0}</td><td class=\"empty\" data-var=\"i\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 0, 0}</td><td data-var=\"i\">未定義</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>繰返しの初期化</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 0, 0}</td><td class=\"changed\" data-var=\"i\">1</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 0, 0}</td><td data-var=\"i\">1</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{0, 0, 1}</td><td data-var=\"i\">1</td></tr><tr data-line=\"4\" data-step=\"6\"><td>6</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 0, 1}</td><td class=\"changed\" data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"7\"><td>7</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 0, 1}</td><td data-var=\"i\">2</td></tr><tr data-line=\"5\" data-step=\"8\"><td>8</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{0, 1, 1}</td><td data-var=\"i\">2</td></tr><tr data-line=\"4\" data-step=\"9\"><td>9</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 1, 1}</td><td class=\"changed\" data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"10\"><td>10</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 1, 1}</td><td data-var=\"i\">3</td></tr><tr data-line=\"5\" data-step=\"11\"><td>11</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{0, 2, 1}</td><td data-var=\"i\">3</td></tr><tr data-line=\"4\" data-step=\"12\"><td>12</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 2, 1}</td><td class=\"changed\" data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"13\"><td>13</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 2, 1}</td><td data-var=\"i\">4</td></tr><tr data-line=\"5\" data-step=\"14\"><td>14</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{0, 3, 1}</td><td data-var=\"i\">4</td></tr><tr data-line=\"4\" data-step=\"15\"><td>15</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 3, 1}</td><td class=\"changed\" data-var=\"i\">5</td></tr><tr data-line=\"4\" data-step=\"16\"><td>16</td><td>4</td><td>条件判定（真）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{0, 3, 1}</td><td data-var=\"i\">5</td></tr><tr data-line=\"5\" data-step=\"17\"><td>17</td><td>5</td><td>代入</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td class=\"changed\" data-var=\"count\">{1, 3, 1}</td><td data-var=\"i\">5</td></tr><tr data-line=\"4\" data-step=\"18\"><td>18</td><td>4</td><td>繰返しの更新</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{1, 3, 1}</td><td class=\"changed\" data-var=\"i\">6</td></tr><tr data-line=\"4\" data-step=\"19\"><td>19</td><td>4</td><td>条件判定（偽）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{1, 3, 1}</td><td data-var=\"i\">6</td></tr><tr data-line=\"7\" data-step=\"20\"><td>20</td><td>7</td><td>戻る（{1, 3, 1}）</td><td data-var=\"data\">{3, 2, 2, 2, 1}</td><td data-var=\"kinds\">3</td><td data-var=\"count\">{1, 3, 1}</td><td data-var=\"i\">6</td></tr></tbody></table></div>",
+   "source": "○整数型の配列: tally(整数型の配列: data, 整数型: kinds)\n  整数型の配列: count ← {kinds 個の 0}\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    count[data[i]] ← count[data[i]] ＋ 1\n  endfor\n  return count",
+   "call": "tally({3, 2, 2, 2, 1}, 3)"
+  },
+  {
+   "template_id": "merge-sorted-001",
+   "seed": 854913,
+   "title": "整列済みの配列の併合",
+   "level": "中級",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 merge は，昇順に並んだ二つの配列 a と b を，昇順を保ったまま一つの配列にまとめて返す。配列の要素番号は 1 から始まる。",
+    "関数 merge を merge({5, 6, 9}, {3, 5, 8}) として呼び出したとき，プログラム中の α の行を1回目に実行した直後の変数 i の値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型の配列: merge(整数型の配列: a, 整数型の配列: b)</td></tr><tr data-line=\"2\"><td>  整数型の配列: c ← {}</td></tr><tr data-line=\"3\"><td>  整数型: i ← 1</td></tr><tr data-line=\"4\"><td>  整数型: j ← 1</td></tr><tr data-line=\"5\"><td>  while (i ≦ aの要素数 and j ≦ bの要素数)</td></tr><tr data-line=\"6\"><td>    if (a[i] ≦ b[j])</td></tr><tr data-line=\"7\"><td>      cの末尾に a[i] を追加する</td></tr><tr data-line=\"8\"><td>      i ← i ＋ 1</td></tr><tr data-line=\"9\"><td>    else</td></tr><tr data-line=\"10\"><td>      cの末尾に b[j] を追加する　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"11\"><td>      j ← j ＋ 1</td></tr><tr data-line=\"12\"><td>    endif</td></tr><tr data-line=\"13\"><td>  endwhile</td></tr><tr data-line=\"14\"><td>  while (i ≦ aの要素数)</td></tr><tr data-line=\"15\"><td>    cの末尾に a[i] を追加する</td></tr><tr data-line=\"16\"><td>    i ← i ＋ 1</td></tr><tr data-line=\"17\"><td>  endwhile</td></tr><tr data-line=\"18\"><td>  while (j ≦ bの要素数)</td></tr><tr data-line=\"19\"><td>    cの末尾に b[j] を追加する</td></tr><tr data-line=\"20\"><td>    j ← j ＋ 1</td></tr><tr data-line=\"21\"><td>  endwhile</td></tr><tr data-line=\"22\"><td>  return c</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "5"
+     ]
+    }
+   ],
+   "answer": "イ",
+   "answer_text": "1",
+   "explain": [
+    "10行目は全部で3回実行されます。",
+    "実行した直後の i は、順に 1 → 2 → 3 です。",
+    "1回目の直後なので、答えは 1 です。"
+   ],
+   "explanation": "i は a の、j は b の「まだ取り出していない先頭」を指します。二つの先頭を比べて小さいほうを c の末尾に移し、移したほうの番号を 1 進めます。\nどちらかが空になったら、残りをそのまま末尾に移します。結果は {3, 5, 5, 6, 8, 9} です。",
+   "marker_line": 10,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型の配列: merge(整数型の配列: a, 整数型の配列: b)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型の配列: c ← {}</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  整数型: i ← 1</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  整数型: j ← 1</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  while (i ≦ aの要素数 and j ≦ bの要素数)</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>    if (a[i] ≦ b[j])</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>      cの末尾に a[i] を追加する</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>      i ← i ＋ 1</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>    else</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>      cの末尾に b[j] を追加する</td></tr><tr data-line=\"11\"><td class=\"no\">11</td><td>      j ← j ＋ 1</td></tr><tr data-line=\"12\"><td class=\"no\">12</td><td>    endif</td></tr><tr data-line=\"13\"><td class=\"no\">13</td><td>  endwhile</td></tr><tr data-line=\"14\"><td class=\"no\">14</td><td>  while (i ≦ aの要素数)</td></tr><tr data-line=\"15\"><td class=\"no\">15</td><td>    cの末尾に a[i] を追加する</td></tr><tr data-line=\"16\"><td class=\"no\">16</td><td>    i ← i ＋ 1</td></tr><tr data-line=\"17\"><td class=\"no\">17</td><td>  endwhile</td></tr><tr data-line=\"18\"><td class=\"no\">18</td><td>  while (j ≦ bの要素数)</td></tr><tr data-line=\"19\"><td class=\"no\">19</td><td>    cの末尾に b[j] を追加する</td></tr><tr data-line=\"20\"><td class=\"no\">20</td><td>    j ← j ＋ 1</td></tr><tr data-line=\"21\"><td class=\"no\">21</td><td>  endwhile</td></tr><tr data-line=\"22\"><td class=\"no\">22</td><td>  return c</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"a\">a</th><th data-var=\"b\">b</th><th data-var=\"c\">c</th><th data-var=\"i\">i</th><th data-var=\"j\">j</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"a\">{5, 6, 9}</td><td class=\"changed\" data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{}</td><td class=\"empty\" data-var=\"i\">—</td><td class=\"empty\" data-var=\"j\">—</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>宣言</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{}</td><td class=\"changed\" data-var=\"i\">1</td><td class=\"empty\" data-var=\"j\">—</td></tr><tr data-line=\"4\" data-step=\"3\"><td>3</td><td>4</td><td>宣言</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{}</td><td data-var=\"i\">1</td><td class=\"changed\" data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"4\"><td>4</td><td>5</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{}</td><td data-var=\"i\">1</td><td data-var=\"j\">1</td></tr><tr data-line=\"6\" data-step=\"5\"><td>5</td><td>6</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{}</td><td data-var=\"i\">1</td><td data-var=\"j\">1</td></tr><tr data-line=\"10\" data-step=\"6\"><td>6</td><td>10</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3}</td><td data-var=\"i\">1</td><td data-var=\"j\">1</td></tr><tr data-line=\"11\" data-step=\"7\"><td>7</td><td>11</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3}</td><td data-var=\"i\">1</td><td class=\"changed\" data-var=\"j\">2</td></tr><tr data-line=\"5\" data-step=\"8\"><td>8</td><td>5</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3}</td><td data-var=\"i\">1</td><td data-var=\"j\">2</td></tr><tr data-line=\"6\" data-step=\"9\"><td>9</td><td>6</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3}</td><td data-var=\"i\">1</td><td data-var=\"j\">2</td></tr><tr data-line=\"7\" data-step=\"10\"><td>10</td><td>7</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3, 5}</td><td data-var=\"i\">1</td><td data-var=\"j\">2</td></tr><tr data-line=\"8\" data-step=\"11\"><td>11</td><td>8</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5}</td><td class=\"changed\" data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5}</td><td data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"6\" data-step=\"13\"><td>13</td><td>6</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5}</td><td data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"10\" data-step=\"14\"><td>14</td><td>10</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3, 5, 5}</td><td data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"11\" data-step=\"15\"><td>15</td><td>11</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5}</td><td data-var=\"i\">2</td><td class=\"changed\" data-var=\"j\">3</td></tr><tr data-line=\"5\" data-step=\"16\"><td>16</td><td>5</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5}</td><td data-var=\"i\">2</td><td data-var=\"j\">3</td></tr><tr data-line=\"6\" data-step=\"17\"><td>17</td><td>6</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5}</td><td data-var=\"i\">2</td><td data-var=\"j\">3</td></tr><tr data-line=\"7\" data-step=\"18\"><td>18</td><td>7</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3, 5, 5, 6}</td><td data-var=\"i\">2</td><td data-var=\"j\">3</td></tr><tr data-line=\"8\" data-step=\"19\"><td>19</td><td>8</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6}</td><td class=\"changed\" data-var=\"i\">3</td><td data-var=\"j\">3</td></tr><tr data-line=\"5\" data-step=\"20\"><td>20</td><td>5</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6}</td><td data-var=\"i\">3</td><td data-var=\"j\">3</td></tr><tr data-line=\"6\" data-step=\"21\"><td>21</td><td>6</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6}</td><td data-var=\"i\">3</td><td data-var=\"j\">3</td></tr><tr data-line=\"10\" data-step=\"22\"><td>22</td><td>10</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3, 5, 5, 6, 8}</td><td data-var=\"i\">3</td><td data-var=\"j\">3</td></tr><tr data-line=\"11\" data-step=\"23\"><td>23</td><td>11</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8}</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"j\">4</td></tr><tr data-line=\"5\" data-step=\"24\"><td>24</td><td>5</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8}</td><td data-var=\"i\">3</td><td data-var=\"j\">4</td></tr><tr data-line=\"14\" data-step=\"25\"><td>25</td><td>14</td><td>条件判定（真）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8}</td><td data-var=\"i\">3</td><td data-var=\"j\">4</td></tr><tr data-line=\"15\" data-step=\"26\"><td>26</td><td>15</td><td>追加</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td class=\"changed\" data-var=\"c\">{3, 5, 5, 6, 8, 9}</td><td data-var=\"i\">3</td><td data-var=\"j\">4</td></tr><tr data-line=\"16\" data-step=\"27\"><td>27</td><td>16</td><td>代入</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8, 9}</td><td class=\"changed\" data-var=\"i\">4</td><td data-var=\"j\">4</td></tr><tr data-line=\"14\" data-step=\"28\"><td>28</td><td>14</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8, 9}</td><td data-var=\"i\">4</td><td data-var=\"j\">4</td></tr><tr data-line=\"18\" data-step=\"29\"><td>29</td><td>18</td><td>条件判定（偽）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8, 9}</td><td data-var=\"i\">4</td><td data-var=\"j\">4</td></tr><tr data-line=\"22\" data-step=\"30\"><td>30</td><td>22</td><td>戻る（{3, 5, 5, 6, 8, 9}）</td><td data-var=\"a\">{5, 6, 9}</td><td data-var=\"b\">{3, 5, 8}</td><td data-var=\"c\">{3, 5, 5, 6, 8, 9}</td><td data-var=\"i\">4</td><td data-var=\"j\">4</td></tr></tbody></table></div>",
+   "source": "○整数型の配列: merge(整数型の配列: a, 整数型の配列: b)\n  整数型の配列: c ← {}\n  整数型: i ← 1\n  整数型: j ← 1\n  while (i ≦ aの要素数 and j ≦ bの要素数)\n    if (a[i] ≦ b[j])\n      cの末尾に a[i] を追加する\n      i ← i ＋ 1\n    else\n      cの末尾に b[j] を追加する\n      j ← j ＋ 1\n    endif\n  endwhile\n  while (i ≦ aの要素数)\n    cの末尾に a[i] を追加する\n    i ← i ＋ 1\n  endwhile\n  while (j ≦ bの要素数)\n    cの末尾に b[j] を追加する\n    j ← j ＋ 1\n  endwhile\n  return c",
+   "call": "merge({5, 6, 9}, {3, 5, 8})"
+  },
+  {
+   "template_id": "recursion-binary-001",
+   "seed": 836602,
+   "title": "再帰で2進数を出力する",
+   "level": "中級",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "手続 toBinary は，1 以上の整数 n を受け取り，自分自身を呼び出しながら値を出力する。",
+    "関数 toBinary を toBinary(40) として呼び出したとき，プログラム中の α の行を1回目に実行した直後の変数 n の値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○toBinary(整数型: n)</td></tr><tr data-line=\"2\"><td>  if (n ≧ 2)</td></tr><tr data-line=\"3\"><td>    toBinary(n ÷ 2 の商)</td></tr><tr data-line=\"4\"><td>  endif</td></tr><tr data-line=\"5\"><td>  (n mod 2) を出力する　<span class=\"marker\">/*** α ***/</span></td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "0"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "1"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "2"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "3"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "4"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "5"
+     ]
+    }
+   ],
+   "answer": "イ",
+   "answer_text": "1",
+   "explain": [
+    "5行目は全部で6回実行されます。",
+    "実行した直後の n は、順に 1 → 2 → 5 → 10 → 20 → 40 です。",
+    "1回目の直後なので、答えは 1 です。"
+   ],
+   "explanation": "出力する行は再帰呼出しの後ろにあるので、いちばん深い呼出し（n が 1）から先に出力されます。\nn を 2 で割った商を順に書き出し、下から n mod 2 を読むと、出力は {1, 0, 1, 0, 0, 0} です。40 の2進数表記と同じ並びになります。",
+   "marker_line": 5,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○toBinary(整数型: n)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  if (n ≧ 2)</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>    toBinary(n ÷ 2 の商)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  endif</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  (n mod 2) を出力する</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th>手続</th><th data-var=\"n\">n</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>条件判定（真）</td><td>toBinary</td><td class=\"changed\" data-var=\"n\">40</td></tr><tr data-line=\"2\" data-step=\"2\"><td>2</td><td>2</td><td>条件判定（真）</td><td>　toBinary</td><td class=\"changed\" data-var=\"n\">20</td></tr><tr data-line=\"2\" data-step=\"3\"><td>3</td><td>2</td><td>条件判定（真）</td><td>　　toBinary</td><td class=\"changed\" data-var=\"n\">10</td></tr><tr data-line=\"2\" data-step=\"4\"><td>4</td><td>2</td><td>条件判定（真）</td><td>　　　toBinary</td><td class=\"changed\" data-var=\"n\">5</td></tr><tr data-line=\"2\" data-step=\"5\"><td>5</td><td>2</td><td>条件判定（真）</td><td>　　　　toBinary</td><td class=\"changed\" data-var=\"n\">2</td></tr><tr data-line=\"2\" data-step=\"6\"><td>6</td><td>2</td><td>条件判定（偽）</td><td>　　　　　toBinary</td><td class=\"changed\" data-var=\"n\">1</td></tr><tr data-line=\"5\" data-step=\"7\"><td>7</td><td>5</td><td>出力（1）</td><td>　　　　　toBinary</td><td data-var=\"n\">1</td></tr><tr data-line=\"3\" data-step=\"8\"><td>8</td><td>3</td><td>呼出し</td><td>　　　　toBinary</td><td data-var=\"n\">2</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>出力（0）</td><td>　　　　toBinary</td><td data-var=\"n\">2</td></tr><tr data-line=\"3\" data-step=\"10\"><td>10</td><td>3</td><td>呼出し</td><td>　　　toBinary</td><td data-var=\"n\">5</td></tr><tr data-line=\"5\" data-step=\"11\"><td>11</td><td>5</td><td>出力（1）</td><td>　　　toBinary</td><td data-var=\"n\">5</td></tr><tr data-line=\"3\" data-step=\"12\"><td>12</td><td>3</td><td>呼出し</td><td>　　toBinary</td><td data-var=\"n\">10</td></tr><tr data-line=\"5\" data-step=\"13\"><td>13</td><td>5</td><td>出力（0）</td><td>　　toBinary</td><td data-var=\"n\">10</td></tr><tr data-line=\"3\" data-step=\"14\"><td>14</td><td>3</td><td>呼出し</td><td>　toBinary</td><td data-var=\"n\">20</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>出力（0）</td><td>　toBinary</td><td data-var=\"n\">20</td></tr><tr data-line=\"3\" data-step=\"16\"><td>16</td><td>3</td><td>呼出し</td><td>toBinary</td><td data-var=\"n\">40</td></tr><tr data-line=\"5\" data-step=\"17\"><td>17</td><td>5</td><td>出力（0）</td><td>toBinary</td><td data-var=\"n\">40</td></tr></tbody></table></div>",
+   "source": "○toBinary(整数型: n)\n  if (n ≧ 2)\n    toBinary(n ÷ 2 の商)\n  endif\n  (n mod 2) を出力する",
+   "call": "toBinary(40)"
+  },
+  {
+   "template_id": "recursion-fib-001",
+   "seed": 869604,
+   "title": "2つに枝分かれする再帰",
+   "level": "中級",
+   "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+   "body": [
+    "関数 f は，自分自身を 2 回呼び出して値を計算する。",
+    "関数 f を f(5) として呼び出すと，戻り値は［　ａ　］となる。"
+   ],
+   "blanks": [
+    "ａ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: f(整数型: n)</td></tr><tr data-line=\"2\"><td>  if (n ≦ 1)</td></tr><tr data-line=\"3\"><td>    return 3</td></tr><tr data-line=\"4\"><td>  endif</td></tr><tr data-line=\"5\"><td>  return f(n － 1) ＋ f(n － 3)</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "5"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "16"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "17"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "18"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "19"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "20"
+     ]
+    }
+   ],
+   "answer": "エ",
+   "answer_text": "18",
+   "explain": [
+    "呼出しは全部で11回行われます。",
+    "奥の呼出しから順に 3 → 3 → 6 → 3 → 9 → 3 → 12 → 3 → 3 → 6 → 18 を返し、最後に返る 18 が答えです。"
+   ],
+   "explanation": "f(5) は f(5 － 1) と f(5 － 3) の和です。呼出しを木の形に書き出し、n が 1 以下になった所に 3 を書いて、下から足し上げます。\n戻り値は 18 です。",
+   "marker_line": null,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: f(整数型: n)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  if (n ≦ 1)</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>    return 3</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>  endif</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>  return f(n － 1) ＋ f(n － 3)</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th>手続</th><th data-var=\"n\">n</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>条件判定（偽）</td><td>f</td><td class=\"changed\" data-var=\"n\">5</td></tr><tr data-line=\"2\" data-step=\"2\"><td>2</td><td>2</td><td>条件判定（偽）</td><td>　f</td><td class=\"changed\" data-var=\"n\">4</td></tr><tr data-line=\"2\" data-step=\"3\"><td>3</td><td>2</td><td>条件判定（偽）</td><td>　　f</td><td class=\"changed\" data-var=\"n\">3</td></tr><tr data-line=\"2\" data-step=\"4\"><td>4</td><td>2</td><td>条件判定（偽）</td><td>　　　f</td><td class=\"changed\" data-var=\"n\">2</td></tr><tr data-line=\"2\" data-step=\"5\"><td>5</td><td>2</td><td>条件判定（真）</td><td>　　　　f</td><td class=\"changed\" data-var=\"n\">1</td></tr><tr data-line=\"3\" data-step=\"6\"><td>6</td><td>3</td><td>戻る（3）</td><td>　　　　f</td><td data-var=\"n\">1</td></tr><tr data-line=\"2\" data-step=\"7\"><td>7</td><td>2</td><td>条件判定（真）</td><td>　　　　f</td><td class=\"changed\" data-var=\"n\">-1</td></tr><tr data-line=\"3\" data-step=\"8\"><td>8</td><td>3</td><td>戻る（3）</td><td>　　　　f</td><td data-var=\"n\">-1</td></tr><tr data-line=\"5\" data-step=\"9\"><td>9</td><td>5</td><td>戻る（6）</td><td>　　　f</td><td data-var=\"n\">2</td></tr><tr data-line=\"2\" data-step=\"10\"><td>10</td><td>2</td><td>条件判定（真）</td><td>　　　f</td><td class=\"changed\" data-var=\"n\">0</td></tr><tr data-line=\"3\" data-step=\"11\"><td>11</td><td>3</td><td>戻る（3）</td><td>　　　f</td><td data-var=\"n\">0</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>戻る（9）</td><td>　　f</td><td data-var=\"n\">3</td></tr><tr data-line=\"2\" data-step=\"13\"><td>13</td><td>2</td><td>条件判定（真）</td><td>　　f</td><td class=\"changed\" data-var=\"n\">1</td></tr><tr data-line=\"3\" data-step=\"14\"><td>14</td><td>3</td><td>戻る（3）</td><td>　　f</td><td data-var=\"n\">1</td></tr><tr data-line=\"5\" data-step=\"15\"><td>15</td><td>5</td><td>戻る（12）</td><td>　f</td><td data-var=\"n\">4</td></tr><tr data-line=\"2\" data-step=\"16\"><td>16</td><td>2</td><td>条件判定（偽）</td><td>　f</td><td class=\"changed\" data-var=\"n\">2</td></tr><tr data-line=\"2\" data-step=\"17\"><td>17</td><td>2</td><td>条件判定（真）</td><td>　　f</td><td data-var=\"n\">1</td></tr><tr data-line=\"3\" data-step=\"18\"><td>18</td><td>3</td><td>戻る（3）</td><td>　　f</td><td data-var=\"n\">1</td></tr><tr data-line=\"2\" data-step=\"19\"><td>19</td><td>2</td><td>条件判定（真）</td><td>　　f</td><td class=\"changed\" data-var=\"n\">-1</td></tr><tr data-line=\"3\" data-step=\"20\"><td>20</td><td>3</td><td>戻る（3）</td><td>　　f</td><td data-var=\"n\">-1</td></tr><tr data-line=\"5\" data-step=\"21\"><td>21</td><td>5</td><td>戻る（6）</td><td>　f</td><td data-var=\"n\">2</td></tr><tr data-line=\"5\" data-step=\"22\"><td>22</td><td>5</td><td>戻る（18）</td><td>f</td><td data-var=\"n\">5</td></tr></tbody></table></div>",
+   "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 3\n  endif\n  return f(n － 1) ＋ f(n － 3)",
+   "call": "f(5)"
+  },
+  {
+   "template_id": "substring-search-001",
+   "seed": 523169,
+   "title": "文字列の中から並びを探す",
+   "level": "中級",
+   "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+   "body": [
+    "関数 find は，文字の配列 text の中で，文字の配列 pat と同じ並びが最初に現れる位置（先頭の要素番号）を返す。現れなければ 0 を返す。配列の要素番号は 1 から始まる。",
+    "関数 find を find({\"a\", \"b\", \"a\", \"b\", \"a\", \"a\"}, {\"a\", \"a\"}) として呼び出すと，プログラム中の α の行の条件式は［　ａ　］回評価され，戻り値は［　ｂ　］となる。"
+   ],
+   "blanks": [
+    "ａ",
+    "ｂ"
+   ],
+   "program_html": "<div class=\"scroll-x\"><table class=\"giji-code plain\"><tr data-line=\"1\"><td>○整数型: find(文字型の配列: text, 文字型の配列: pat)</td></tr><tr data-line=\"2\"><td>  整数型: i, j</td></tr><tr data-line=\"3\"><td>  for (i を 1 から textの要素数 － patの要素数 ＋ 1 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td>    j ← 1</td></tr><tr data-line=\"5\"><td>    while (j ≦ patの要素数 and text[i ＋ j － 1] ＝ pat[j])　<span class=\"marker\">/*** α ***/</span></td></tr><tr data-line=\"6\"><td>      j ← j ＋ 1</td></tr><tr data-line=\"7\"><td>    endwhile</td></tr><tr data-line=\"8\"><td>    if (j &gt; patの要素数)</td></tr><tr data-line=\"9\"><td>      return i</td></tr><tr data-line=\"10\"><td>    endif</td></tr><tr data-line=\"11\"><td>  endfor</td></tr><tr data-line=\"12\"><td>  return 0</td></tr></table></div>",
+   "choices": [
+    {
+     "label": "ア",
+     "texts": [
+      "8",
+      "4"
+     ]
+    },
+    {
+     "label": "イ",
+     "texts": [
+      "8",
+      "5"
+     ]
+    },
+    {
+     "label": "ウ",
+     "texts": [
+      "9",
+      "3"
+     ]
+    },
+    {
+     "label": "エ",
+     "texts": [
+      "9",
+      "4"
+     ]
+    },
+    {
+     "label": "オ",
+     "texts": [
+      "9",
+      "5"
+     ]
+    },
+    {
+     "label": "カ",
+     "texts": [
+      "10",
+      "4"
+     ]
+    }
+   ],
+   "answer": "オ",
+   "answer_text": "ａ 9，ｂ 5",
+   "explain": [
+    "5行目の条件式は9回評価され、真が4回、偽が5回です。",
+    "戻り値になる i は、1 → 2 → 3 → 4 → 5 と変わります。",
+    "9行目で返す時点の値 5 が答えです。"
+   ],
+   "explanation": "i は text の中の「照合を始める位置」、j は pat の何文字目まで一致したかを表します。\n1文字でも違えば while を抜け、i を 1 つ進めて pat の先頭から比べ直します。j が pat の要素数を超えたら、全部一致したということです。戻り値は 5 です。",
+   "marker_line": 5,
+   "review_html": "<div class=\"scroll-x\"><table class=\"giji-code\"><tr data-line=\"1\"><td class=\"no\">1</td><td>○整数型: find(文字型の配列: text, 文字型の配列: pat)</td></tr><tr data-line=\"2\"><td class=\"no\">2</td><td>  整数型: i, j</td></tr><tr data-line=\"3\"><td class=\"no\">3</td><td>  for (i を 1 から textの要素数 － patの要素数 ＋ 1 まで 1 ずつ増やす)</td></tr><tr data-line=\"4\"><td class=\"no\">4</td><td>    j ← 1</td></tr><tr data-line=\"5\"><td class=\"no\">5</td><td>    while (j ≦ patの要素数 and text[i ＋ j － 1] ＝ pat[j])</td></tr><tr data-line=\"6\"><td class=\"no\">6</td><td>      j ← j ＋ 1</td></tr><tr data-line=\"7\"><td class=\"no\">7</td><td>    endwhile</td></tr><tr data-line=\"8\"><td class=\"no\">8</td><td>    if (j &gt; patの要素数)</td></tr><tr data-line=\"9\"><td class=\"no\">9</td><td>      return i</td></tr><tr data-line=\"10\"><td class=\"no\">10</td><td>    endif</td></tr><tr data-line=\"11\"><td class=\"no\">11</td><td>  endfor</td></tr><tr data-line=\"12\"><td class=\"no\">12</td><td>  return 0</td></tr></table></div><div class=\"giji-trace-wrap scroll-x\"><table class=\"giji-trace\"><thead><tr><th>#</th><th>行</th><th>したこと</th><th data-var=\"text\">text</th><th data-var=\"pat\">pat</th><th data-var=\"i\">i</th><th data-var=\"j\">j</th></tr></thead><tbody><tr data-line=\"2\" data-step=\"1\"><td>1</td><td>2</td><td>宣言</td><td class=\"changed\" data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">未定義</td><td data-var=\"j\">未定義</td></tr><tr data-line=\"3\" data-step=\"2\"><td>2</td><td>3</td><td>繰返しの初期化</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"i\">1</td><td data-var=\"j\">未定義</td></tr><tr data-line=\"3\" data-step=\"3\"><td>3</td><td>3</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td data-var=\"j\">未定義</td></tr><tr data-line=\"4\" data-step=\"4\"><td>4</td><td>4</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td class=\"changed\" data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"5\"><td>5</td><td>5</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td data-var=\"j\">1</td></tr><tr data-line=\"6\" data-step=\"6\"><td>6</td><td>6</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td class=\"changed\" data-var=\"j\">2</td></tr><tr data-line=\"5\" data-step=\"7\"><td>7</td><td>5</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td data-var=\"j\">2</td></tr><tr data-line=\"8\" data-step=\"8\"><td>8</td><td>8</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">1</td><td data-var=\"j\">2</td></tr><tr data-line=\"3\" data-step=\"9\"><td>9</td><td>3</td><td>繰返しの更新</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"3\" data-step=\"10\"><td>10</td><td>3</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">2</td><td data-var=\"j\">2</td></tr><tr data-line=\"4\" data-step=\"11\"><td>11</td><td>4</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">2</td><td class=\"changed\" data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"12\"><td>12</td><td>5</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">2</td><td data-var=\"j\">1</td></tr><tr data-line=\"8\" data-step=\"13\"><td>13</td><td>8</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">2</td><td data-var=\"j\">1</td></tr><tr data-line=\"3\" data-step=\"14\"><td>14</td><td>3</td><td>繰返しの更新</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"i\">3</td><td data-var=\"j\">1</td></tr><tr data-line=\"3\" data-step=\"15\"><td>15</td><td>3</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td data-var=\"j\">1</td></tr><tr data-line=\"4\" data-step=\"16\"><td>16</td><td>4</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"17\"><td>17</td><td>5</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td data-var=\"j\">1</td></tr><tr data-line=\"6\" data-step=\"18\"><td>18</td><td>6</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td class=\"changed\" data-var=\"j\">2</td></tr><tr data-line=\"5\" data-step=\"19\"><td>19</td><td>5</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td data-var=\"j\">2</td></tr><tr data-line=\"8\" data-step=\"20\"><td>20</td><td>8</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">3</td><td data-var=\"j\">2</td></tr><tr data-line=\"3\" data-step=\"21\"><td>21</td><td>3</td><td>繰返しの更新</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"i\">4</td><td data-var=\"j\">2</td></tr><tr data-line=\"3\" data-step=\"22\"><td>22</td><td>3</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">4</td><td data-var=\"j\">2</td></tr><tr data-line=\"4\" data-step=\"23\"><td>23</td><td>4</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">4</td><td class=\"changed\" data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"24\"><td>24</td><td>5</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">4</td><td data-var=\"j\">1</td></tr><tr data-line=\"8\" data-step=\"25\"><td>25</td><td>8</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">4</td><td data-var=\"j\">1</td></tr><tr data-line=\"3\" data-step=\"26\"><td>26</td><td>3</td><td>繰返しの更新</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td class=\"changed\" data-var=\"i\">5</td><td data-var=\"j\">1</td></tr><tr data-line=\"3\" data-step=\"27\"><td>27</td><td>3</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">1</td></tr><tr data-line=\"4\" data-step=\"28\"><td>28</td><td>4</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">1</td></tr><tr data-line=\"5\" data-step=\"29\"><td>29</td><td>5</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">1</td></tr><tr data-line=\"6\" data-step=\"30\"><td>30</td><td>6</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td class=\"changed\" data-var=\"j\">2</td></tr><tr data-line=\"5\" data-step=\"31\"><td>31</td><td>5</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">2</td></tr><tr data-line=\"6\" data-step=\"32\"><td>32</td><td>6</td><td>代入</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td class=\"changed\" data-var=\"j\">3</td></tr><tr data-line=\"5\" data-step=\"33\"><td>33</td><td>5</td><td>条件判定（偽）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">3</td></tr><tr data-line=\"8\" data-step=\"34\"><td>34</td><td>8</td><td>条件判定（真）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">3</td></tr><tr data-line=\"9\" data-step=\"35\"><td>35</td><td>9</td><td>戻る（5）</td><td data-var=\"text\">{&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;a&quot;}</td><td data-var=\"pat\">{&quot;a&quot;, &quot;a&quot;}</td><td data-var=\"i\">5</td><td data-var=\"j\">3</td></tr></tbody></table></div>",
+   "source": "○整数型: find(文字型の配列: text, 文字型の配列: pat)\n  整数型: i, j\n  for (i を 1 から textの要素数 － patの要素数 ＋ 1 まで 1 ずつ増やす)\n    j ← 1\n    while (j ≦ patの要素数 and text[i ＋ j － 1] ＝ pat[j])\n      j ← j ＋ 1\n    endwhile\n    if (j > patの要素数)\n      return i\n    endif\n  endfor\n  return 0",
+   "call": "find({\"a\", \"b\", \"a\", \"b\", \"a\", \"a\"}, {\"a\", \"a\"})"
+  }
+ ]
+}

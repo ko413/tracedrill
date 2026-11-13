@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="members" id="members-app" data-members-base="{{ url('/members/') }}" data-sample="{{ url('/members/sample.json') }}" data-note-url="{{ site.members.note_url }}">
+<h1>{{ page.title }}</h1>
+<div class="prose">
+  <p class="lead">科目Bのアルゴリズム分野と同じ16問を、80分で解く無料の模試です。登録は要りません。</p>
+  <ul>
+    <li>本番と同じく、行番号のないプログラムを読み、解答群から選びます。</li>
+    <li>採点すると、各問の正解・解説と、全ステップのトレース表を確認できます。</li>
+    <li>出題は{{ algo_count }}種類のアルゴリズムから、やさしい順に並べています。情報セキュリティの問題は含みません。</li>
+  </ul>
+  <p class="note">問題はこのサイトが自動生成したオリジナル問題で、IPAの試験問題ではありません。合否の目安を示すものではありません。</p>
+</div>
+<section id="mock-app" hidden></section>
+<noscript><p>模試を解くには、JavaScript を有効にしてください。1問ずつの練習は<a href="{{ url('/') }}#algorithms">アルゴリズムの一覧</a>からどうぞ。</p></noscript>
+<p><a href="{{ url('/members/') }}">毎月の模試とバックナンバー（会員ページ）</a></p>
+</article>
+<script defer src="{{ url('/static/member.js') }}?v={{ build_id }}"></script>
+<script defer src="{{ url('/static/mock.js') }}?v={{ build_id }}"></script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="members" id="members-app" data-members-base="{{ url('/members/') }}" data-note-url="{{ site.members.note_url }}">
+<h1>会員ページ</h1>
+<div id="member-intro" class="prose">
+  <p class="lead">毎月の模試と、新しいアルゴリズムの先行公開ドリルを解けます。月額{{ site.members.price }}円（税込）。</p>
+  <ul>
+    <li><strong>{{ mock_name }}</strong>：本番と同じ形式（行番号なし・解答群から選ぶ）の16問を80分で解きます。毎月1回分を追加します。</li>
+    <li><strong>バックナンバー</strong>：これまでの模試を、入会した月に関係なくすべて解けます。</li>
+    <li><strong>先行公開ドリル</strong>：スタック、キュー、リストなどの新しい問題を、無料公開の1か月前に解けます。</li>
+    <li>すべての問題に、行番号つきのプログラムと全ステップのトレース表が付きます。</li>
+  </ul>
+  <p>まずは無料の<a href="{{ url('/mock/sample/') }}">サンプル模試</a>をお試しください。無料の練習問題は、これまでどおりすべて無料で使えます。</p>
+  <h2>使い方</h2>
+  <ol>
+    <li>note のメンバーシップに入会します（支払いと解約は note で行います）。</li>
+    <li>note の会員限定記事にある「今月の合言葉」を、下の欄に入力します。</li>
+    <li>合言葉は毎月変わります。新しい合言葉は、同じ会員限定記事でお知らせします。</li>
+  </ol>
+</div>
+<div id="member-status"></div>
+<section id="mock-app" hidden></section>
+<noscript><p>会員ページを使うには、JavaScript を有効にしてください。</p></noscript>
+</article>
+<script defer src="{{ url('/static/member.js') }}?v={{ build_id }}"></script>
+<script defer src="{{ url('/static/mock.js') }}?v={{ build_id }}"></script>
+{% endblock %}

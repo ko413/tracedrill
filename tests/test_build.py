@@ -317,3 +317,31 @@ def test_levels_use_the_new_names_and_assignments(site):
     middle = home.split('id="level-3"')[1].split("このサイトについて")[0]
     assert "再帰呼出しの戻り値" in beginner
     assert "二次元配列の行ごとの合計" in middle and "同じ文字が続く最長の長さ" in middle
+
+
+def test_member_pages_are_built_from_prepared_files_only(site):
+    """会員ページとサンプル模試：ビルドは site/members/ を配るだけで、private/ を読まない。"""
+    members_dir = ROOT / "site" / "members"
+    if not (members_dir / "sample.json").exists():
+        pytest.skip("site/members/ がまだありません")
+    sample = (site / "mock" / "sample" / "index.html").read_text(encoding="utf-8")
+    page = (site / "members" / "index.html").read_text(encoding="utf-8")
+    for html in (sample, page):
+        assert 'id="members-app"' in html and "/static/member.js" in html and "/static/mock.js" in html
+    assert 'data-sample="/members/sample.json"' in sample and "noindex" not in sample
+    assert "月額980円" in page
+    # 配るのは、暗号化済みのファイルと目次・鍵束・サンプルだけ
+    copied = sorted(str(p.relative_to(site / "members")) for p in (site / "members").rglob("*.json"))
+    expected = sorted(str(p.relative_to(members_dir)) for p in members_dir.rglob("*.json"))
+    assert copied == expected
+    for path in (site / "members" / "data").glob("*.json"):
+        box = json.loads(path.read_text(encoding="utf-8"))
+        assert set(box) == {"v", "alg", "iv", "ct"}          # 中身は読めない形
+    # 先行公開中のテンプレートの問題ページは、公開サイトのどこにもない
+    private_templates = ROOT / "private" / "templates"
+    if private_templates.exists():
+        for template in private_templates.glob("*.yaml"):
+            assert not (site / "algo" / template.stem).exists() and not (site / "q" / template.stem).exists()
+    sitemap = (site / "sitemap.xml").read_text(encoding="utf-8")
+    assert "/mock/sample/" in sitemap and "/members/" in sitemap
+    assert "無料サンプル模試" in (site / "index.html").read_text(encoding="utf-8")

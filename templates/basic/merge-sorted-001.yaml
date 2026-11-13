@@ -1,0 +1,60 @@
+id: merge-sorted-001
+title: 整列済みの配列の併合
+level: 3
+access: free
+pace: standard
+tags: [while, if, 配列, 整列, 併合]
+array_base: 1
+description: 関数 merge は、昇順に並んだ二つの配列 a と b を、昇順を保ったまま一つの配列にまとめて返す。配列の要素番号は 1 から始まる。
+
+params:
+  a: {type: int_array, length: [2, 3], range: [1, 9], unique: true, sorted: asc}
+  b: {type: int_array, length: [2, 3], range: [1, 9], unique: true, sorted: asc}
+
+source: |
+  ○整数型の配列: merge(整数型の配列: a, 整数型の配列: b)
+    整数型の配列: c ← {}
+    整数型: i ← 1
+    整数型: j ← 1
+    while (i ≦ aの要素数 and j ≦ bの要素数)   // @loop
+      if (a[i] ≦ b[j])
+        cの末尾に a[i] を追加する   // @takeA
+        i ← i ＋ 1
+      else
+        cの末尾に b[j] を追加する   // @takeB
+        j ← j ＋ 1   // @incJ
+      endif
+    endwhile
+    while (i ≦ aの要素数)
+      cの末尾に a[i] を追加する   // @restA
+      i ← i ＋ 1
+    endwhile
+    while (j ≦ bの要素数)
+      cの末尾に b[j] を追加する   // @restB
+      j ← j ＋ 1
+    endwhile
+    return c
+
+call: "merge(${a}, ${b})"
+
+quality:
+  - "count(takeA) ≧ 1"
+  - "count(takeB) ≧ 1"
+
+questions:
+  - {type: return_value, weight: 0.2}
+  - {type: exec_count, line: loop}
+  - {type: exec_count, line: takeA}
+  - {type: var_at_line, line: takeB, var: i, pass: random}
+  - type: fill_blank
+    blank: "a[i] ≦ b[j]"
+    distractors:
+      - "a[i] ≧ b[j]"
+      - "a[j] ≦ b[i]"
+      - "i ≦ j"
+      - "a[i] ≦ b[1]"
+      - "a[1] ≦ b[j]"
+
+explanation: |
+  i は a の、j は b の「まだ取り出していない先頭」を指します。二つの先頭を比べて小さいほうを c の末尾に移し、移したほうの番号を 1 進めます。
+  どちらかが空になったら、残りをそのまま末尾に移します。結果は ${result} です。

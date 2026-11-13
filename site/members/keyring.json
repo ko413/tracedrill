@@ -1,0 +1,10 @@
+{
+ "v": 1,
+ "alg": "AES-256-GCM",
+ "iv": "tpevgLyYEIHamT4T",
+ "ct": "cHHBLNFDqN6XDjmp0WACH4iRzhLaKsmENhaktt+OCPWiAofncUqg3vp9eV4XFFVXT6M/s/grHTdXKGF0QyjzoFRoD11M+q1snivavSxFIAGp4cmtrtEBACRMOO2R/6oQBG4zBbJXpXyZwfr+JGXUqWBQaUfl1OwpuZvpqwCRcAmbw+uuRg69/IkjnR2s2d48RkwEgAe7h0zxiq9W+9FV3OFK3kzc3kwBCrYPH0OIzZFn0ZYDghhN+1qYgZBQpZimQQYaJdL/Crz+RVf/B5+54F3cFgaoN50Y0voiVq9Rk7xdQfd0t7/iq25Zf/r0rh3jB1OoyzQDzia2gPuyTLxofZ3AVgWNU5WZb9N+vveuDXIcfQrzJlvdIHpHP073HkMULdR/E75WeV1GBQDitVcXOHfVCTBGm3QLh3U=",
+ "kdf": "PBKDF2-SHA256",
+ "iter": 200000,
+ "salt": "DlD2iVFfxaSh7J2uTJ4bjg==",
+ "issued": "2026-11"
+}

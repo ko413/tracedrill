@@ -1,0 +1,43 @@
+id: recursion-fib-001
+title: 2つに枝分かれする再帰
+level: 3
+access: free
+pace: standard
+publish: {indexed: 5, extra: 10}
+tags: [再帰, if, 呼出し回数]
+description: 関数 f は、自分自身を 2 回呼び出して値を計算する。
+
+params:
+  n: {type: int, range: [4, 6]}
+  k: {type: int, range: [2, 3]}
+  b: {type: int, range: [1, 4]}
+
+source: |
+  ○整数型: f(整数型: n)
+    if (n ≦ 1)   // @chk
+      return ${b}   // @base
+    endif
+    return f(n － 1) ＋ f(n － ${k})   // @rec
+
+call: "f(${n})"
+
+quality:
+  - "count(rec) ≧ 3"
+  - "steps ≦ 60"
+
+questions:
+  - {type: return_value}
+  - {type: exec_count, line: chk}
+  - {type: exec_count, line: base}
+  - type: fill_blank
+    blank: "f(n － 1) ＋ f(n － ${k})"
+    distractors:
+      - "f(n － 1) ＋ f(n － 1)"
+      - "f(n － 1) ＋ n － ${k}"
+      - "f(n － ${k}) ＋ f(n － ${k})"
+      - "f(n － 1) × f(n － ${k}) ＋ 1"
+      - "f(n － 1) ＋ ${k}"
+
+explanation: |
+  f(${n}) は f(${n} － 1) と f(${n} － ${k}) の和です。呼出しを木の形に書き出し、n が 1 以下になった所に ${b} を書いて、下から足し上げます。
+  戻り値は ${result} です。

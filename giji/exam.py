@@ -211,7 +211,8 @@ def _run(source: str, template: Template, problem: Problem) -> tuple:
 def _program_blank(template, problem, rng, min_weight):
     """プログラムに空欄を置く。テンプレートに blank_b があれば、ａとｂの組合せにする。"""
     spec = _spec(template, "fill_blank")
-    if not spec or problem.result.return_value is None:
+    result = problem.result
+    if not spec or (result.return_value is None and not result.outputs):
         return None
     values = problem.params
     blank_a = G._substitute(str(spec["blank"]), values)
@@ -265,7 +266,13 @@ def _program_blank(template, problem, rng, min_weight):
         blanks, answer = ["ａ"], [blank_a]
 
     line = next(n for n, text in enumerate(source.split("\n"), start=1) if blank_a in text)
-    fact = f"{_called(problem)}すと，戻り値は {format_value(problem.result.return_value)} となる。"
+    if result.return_value is not None:
+        fact = f"{_called(problem)}すと，戻り値は {format_value(result.return_value)} となる。"
+    else:
+        # 戻り値のない手続は、出力の並びを手がかりにする
+        shown_outputs = "，".join(format_value(v) for v in result.outputs)
+        order = "の順に出力される" if len(result.outputs) > 1 else "が出力される"
+        fact = f"手続 {_name(problem)} を {problem.call} として呼び出すと，{shown_outputs} {order}。"
     return ExamQuestion(
         form="program_blank", lead=_lead(LEAD_PROGRAM, blanks),
         body=[comma(problem.description), fact], source=shown, markers={}, blanks=blanks,

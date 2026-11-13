@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 .DS_Store
 .venv/
+# 会員向けコンテンツの平文・鍵・合言葉。リポジトリに入れない（消さないこと）
+private/

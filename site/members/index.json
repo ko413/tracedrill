@@ -1,0 +1,38 @@
+{
+ "version": 1,
+ "updated": "2026-11",
+ "bundles": [
+  {
+   "id": "mock-002",
+   "kind": "mock",
+   "title": "第2回 アルゴリズム16問模試（トレース中心）",
+   "issued": "2026-11",
+   "count": 16,
+   "minutes": 80
+  },
+  {
+   "id": "mock-001",
+   "kind": "mock",
+   "title": "第1回 アルゴリズム16問模試（トレース中心）",
+   "issued": "2026-11",
+   "count": 16,
+   "minutes": 80
+  },
+  {
+   "id": "early-queue-ring-001",
+   "kind": "drill",
+   "title": "先行公開：配列を輪のように使うキュー",
+   "issued": "2026-11",
+   "count": 10,
+   "minutes": 0
+  },
+  {
+   "id": "early-bracket-match-001",
+   "kind": "drill",
+   "title": "先行公開：スタックでかっこの対応を調べる",
+   "issued": "2026-11",
+   "count": 10,
+   "minutes": 0
+  }
+ ]
+}

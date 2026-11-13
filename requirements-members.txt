@@ -1,0 +1,2 @@
+# 会員向けコンテンツの暗号化（tools/members.py）にだけ必要。手元で使う。CI では不要
+cryptography

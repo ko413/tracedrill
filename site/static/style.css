@@ -141,3 +141,22 @@ pre code { border: none; padding: 0; background: none; }
 .problem.js[data-mode="exam"] .practice-only { display: none; }
 .problem.js[data-mode="practice"].all-done .review,
 .problem.js[data-mode="exam"].exam-done .review { display: block; }
+
+/* 模試・会員ページ */
+.mock-intro, .mock-summary:not(:empty), .mock-upsell { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.2rem 1rem 0.8rem; margin: 1rem 0; }
+.mock-summary h2, .mock-intro h2 { border: none; margin: 0.8rem 0 0.2rem; }
+.mock-timer { position: sticky; top: 0; z-index: 2; background: var(--accent); color: var(--accent-fg); font-weight: 700; text-align: center; padding: 0.2rem; border-radius: 0 0 6px 6px; font-variant-numeric: tabular-nums; }
+.mock-actions { text-align: center; margin: 1.5rem 0; }
+.mock-wrong .chip { text-decoration: none; display: inline-block; margin: 0.15rem; }
+.mock-upsell { border: none; padding: 0; background: none; }
+.mock-list { list-style: none; padding: 0; }
+.mock-list li { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.5rem 0.9rem; margin: 0.5rem 0; }
+.mock-list .mock-meta { display: block; font-size: 0.85rem; color: var(--muted); }
+.member-login { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 1rem; margin: 1rem 0; }
+.member-login label { font-weight: 700; flex-basis: 100%; }
+.member-login input { flex: 1 1 14rem; font: inherit; font-family: var(--mono); padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+.member-login .note { flex-basis: 100%; margin: 0; }
+.mock-question .result:empty { display: none; }
+.mock-question tr.is-answer { background: rgba(26, 127, 75, 0.16); }
+.mock-question tr.is-chosen-wrong { background: rgba(179, 38, 30, 0.14); }
+.home-mock { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.2rem 1rem 0.9rem; }

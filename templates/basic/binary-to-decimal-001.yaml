@@ -1,0 +1,48 @@
+id: binary-to-decimal-001
+title: 2進数を10進数に直す
+level: 2
+access: free
+pace: standard
+publish: {indexed: 10, extra: 12}
+tags: [for, if, 文字, 配列, 基数変換]
+array_base: 1
+description: 関数 toDecimal は、2進数の各桁を上の桁から順に格納した文字の配列 bits を受け取り、その値を10進数の整数で返す。配列の要素番号は 1 から始まる。
+
+params:
+  bits: {type: char_array, length: [4, 6], alphabet: "01"}
+
+source: |
+  ○整数型: toDecimal(文字型の配列: bits)
+    整数型: value ← 0
+    整数型: i
+    for (i を 1 から bitsの要素数 まで 1 ずつ増やす)
+      value ← value × 2   // @dbl
+      if (bits[i] ＝ "1")
+        value ← value ＋ 1   // @add
+      endif
+    endfor
+    return value
+
+call: "toDecimal(${bits})"
+
+quality:
+  - "count(add) ≧ 2"
+  - "count(add) < count(dbl)"
+  - "result ≧ 5"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: dbl, var: value, pass: random}
+  - {type: var_at_line, line: add, var: value, pass: random}
+  - type: fill_blank
+    blank: "value × 2"
+    distractors:
+      - "value ＋ 2"
+      - "value × 10"
+      - "value ＋ i"
+      - "i × 2"
+      - "value × i"
+
+explanation: |
+  1桁読むたびに、それまでの値を 2 倍してから、その桁が "1" なら 1 を足します。
+  上の桁から順に処理すると、最後の value は ${result} になります。

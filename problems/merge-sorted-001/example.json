@@ -1,0 +1,832 @@
+{
+ "version": 1,
+ "template_id": "merge-sorted-001",
+ "seed": 30,
+ "call": "merge({4, 5, 6}, {2, 5})",
+ "source": "○整数型の配列: merge(整数型の配列: a, 整数型の配列: b)\n  整数型の配列: c ← {}\n  整数型: i ← 1\n  整数型: j ← 1\n  while (i ≦ aの要素数 and j ≦ bの要素数)\n    if (a[i] ≦ b[j])\n      cの末尾に a[i] を追加する\n      i ← i ＋ 1\n    else\n      cの末尾に b[j] を追加する\n      j ← j ＋ 1\n    endif\n  endwhile\n  while (i ≦ aの要素数)\n    cの末尾に a[i] を追加する\n    i ← i ＋ 1\n  endwhile\n  while (j ≦ bの要素数)\n    cの末尾に b[j] を追加する\n    j ← j ＋ 1\n  endwhile\n  return c",
+ "trace": {
+  "names": [
+   "a",
+   "b",
+   "c",
+   "i",
+   "j"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      true
+     ],
+     "b": [
+      "{2, 5}",
+      true
+     ],
+     "c": [
+      "{}",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ],
+     "j": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{}",
+      false
+     ],
+     "i": [
+      "1",
+      true
+     ],
+     "j": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "宣言",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 10,
+    "what": "追加",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2}",
+      true
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 11,
+    "what": "代入",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 7,
+    "what": "追加",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4}",
+      true
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 8,
+    "what": "代入",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4}",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 7,
+    "what": "追加",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5}",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 8,
+    "what": "代入",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 10,
+    "what": "追加",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 11,
+    "what": "代入",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 14,
+    "what": "条件判定（真）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 15,
+    "what": "追加",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5, 6}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 16,
+    "what": "代入",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5, 6}",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 14,
+    "what": "条件判定（偽）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5, 6}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 18,
+    "what": "条件判定（偽）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5, 6}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 22,
+    "what": "戻る（{2, 4, 5, 5, 6}）",
+    "proc": "merge",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "{4, 5, 6}",
+      false
+     ],
+     "b": [
+      "{2, 5}",
+      false
+     ],
+     "c": [
+      "{2, 4, 5, 5, 6}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ },
+ "questions": [
+  {
+   "prompt": "merge({4, 5, 6}, {2, 5}) を呼び出したときの戻り値はどれか。",
+   "answer": "{2, 4, 5, 5, 6}",
+   "explain": [
+    "戻り値になる c は、{} → {2} → {2, 4} → {2, 4, 5} → {2, 4, 5, 5} → {2, 4, 5, 5, 6} と変わります。",
+    "22行目で返す時点の値 {2, 4, 5, 5, 6} が答えです。"
+   ]
+  },
+  {
+   "prompt": "5行目の条件式が評価される回数はどれか。",
+   "answer": "5",
+   "explain": [
+    "5行目の条件式は5回評価され、真が4回、偽が1回です。"
+   ]
+  },
+  {
+   "prompt": "7行目が実行される回数はどれか。",
+   "answer": "2",
+   "explain": [
+    "7行目が実行されるのは、6行目の条件が真になったときだけです。",
+    "6行目の条件は4回評価され、真になるのは2回です。したがって 7行目は2回実行されます。"
+   ]
+  },
+  {
+   "prompt": "10行目を1回目に実行した直後の、変数 i の値はどれか。",
+   "answer": "1",
+   "explain": [
+    "10行目は全部で2回実行されます。",
+    "実行した直後の i は、順に 1 → 3 です。",
+    "1回目の直後なので、答えは 1 です。"
+   ]
+  }
+ ]
+}

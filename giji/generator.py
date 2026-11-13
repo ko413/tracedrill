@@ -291,8 +291,18 @@ def _substitute(text: str, values: dict) -> str:
         name = match.group(1)
         if name not in values:
             raise TemplateError(f"${{{name}}} に対応する値がありません")
-        return format_value(values[name])
+        return _literal(values[name])
     return _PLACEHOLDER.sub(replace, text)
+
+
+def _literal(value) -> str:
+    """値をプログラムに埋め込む綴りにする。YAML の null は「未定義の値」になる
+    （choice の values に [3, null, 5] と書くと {3, 未定義の値, 5} が入る）。"""
+    if value is None:
+        return "未定義の値"
+    if isinstance(value, list) and any(v is None or isinstance(v, list) for v in value):
+        return "{" + ", ".join(_literal(v) for v in value) + "}"
+    return format_value(value)
 
 
 # ---- 条件式の評価 ----
@@ -572,7 +582,11 @@ def _outcome_text(outcome: tuple) -> str:
         return f"途中で止まる（{outcome[2]}）"
     if outcome[1] != "なし":
         return f"戻り値は {outcome[1]}"
-    return "出力は " + "、".join(outcome[2]) if outcome[2] else "何も返さない"
+    if not outcome[2]:
+        return "何も返さない"
+    if len(outcome[2]) > 8:      # 誤答で出力が延々と続く場合は、先頭だけ見せる
+        return "出力は " + "、".join(outcome[2][:8]) + f" …（全部で{len(outcome[2])}個）"
+    return "出力は " + "、".join(outcome[2])
 
 
 def _question_fill_blank(spec, ctx) -> Question:
@@ -666,6 +680,9 @@ def _attempt(template: Template, rng: random.Random, notation: Notation) -> dict
     explain_values = dict(values)
     if result.return_value is not None:
         explain_values["result"] = result.return_value
+    elif result.outputs:
+        # 戻り値のない手続では、出力（複数なら出力順の並び）を ${result} として使える
+        explain_values["result"] = result.outputs if len(result.outputs) > 1 else result.outputs[0]
     return {
         "source": source, "call": call, "params": values, "questions": questions,
         "result": result, "explanation": _substitute(template.explanation, explain_values),

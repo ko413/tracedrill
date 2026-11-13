@@ -1,0 +1,386 @@
+{
+ "version": 1,
+ "template_id": "recursion-binary-001",
+ "number": 5,
+ "seed": 4,
+ "description": "手続 toBinary は、1 以上の整数 n を受け取り、自分自身を呼び出しながら値を出力する。",
+ "call": "toBinary(25)",
+ "source": "○toBinary(整数型: n)\n  if (n ≧ 2)\n    toBinary(n ÷ 2 の商)\n  endif\n  (n mod 2) を出力する",
+ "explanation": "出力する行は再帰呼出しの後ろにあるので、いちばん深い呼出し（n が 1）から先に出力されます。\nn を 2 で割った商を順に書き出し、下から n mod 2 を読むと、出力は {1, 1, 0, 0, 1} です。25 の2進数表記と同じ並びになります。",
+ "practice": {
+  "source": "○toBinary(整数型: n)\n  if (n ≧ 2)\n    toBinary(［　ａ　］)\n  endif\n  (n mod 2) を出力する",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "プログラムを実行すると 1、1、0、0、1 の順に出力される。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "n － 2"
+     },
+     {
+      "label": "イ",
+      "text": "n ÷ 2 の商"
+     },
+     {
+      "label": "ウ",
+      "text": "n ÷ 2 の商 ＋ 1"
+     },
+     {
+      "label": "エ",
+      "text": "n － 1"
+     }
+    ],
+    "answer": "n ÷ 2 の商",
+    "answer_label": "イ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「n － 2」→ 出力は 1、1、1、1、1、1、1、1 …（全部で13個）",
+     "「n ÷ 2 の商」→ 出力は 1、1、0、0、1（正解）",
+     "「n ÷ 2 の商 ＋ 1」→ 繰返しが終わらない",
+     "「n － 1」→ 出力は 1、0、1、0、1、0、1、0 …（全部で25個）"
+    ],
+    "focus": {
+     "line": 3,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "5行目を5回目に実行した直後の、変数 n の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "3"
+     },
+     {
+      "label": "イ",
+      "text": "12"
+     },
+     {
+      "label": "ウ",
+      "text": "25"
+     },
+     {
+      "label": "エ",
+      "text": "26"
+     }
+    ],
+    "answer": "25",
+    "answer_label": "ウ",
+    "explain": [
+     "5行目は全部で5回実行されます。",
+     "実行した直後の n は、順に 1 → 3 → 6 → 12 → 25 です。",
+     "5回目の直後なので、答えは 25 です。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": "n",
+     "step": 14,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "3行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "3"
+     },
+     {
+      "label": "イ",
+      "text": "4"
+     },
+     {
+      "label": "ウ",
+      "text": "5"
+     },
+     {
+      "label": "エ",
+      "text": "6"
+     }
+    ],
+    "answer": "4",
+    "answer_label": "イ",
+    "explain": [
+     "3行目は4回実行されます。トレース表で 3行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 3,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "手続 toBinary は，1 以上の整数 n を受け取り，自分自身を呼び出しながら値を出力する。",
+   "関数 toBinary を toBinary(25) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "2"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "6"
+    ]
+   }
+  ],
+  "answer_label": "エ",
+  "answer_text": "4",
+  "explain": [
+   "3行目は4回実行されます。トレース表で 3行目の行を数えると確かめられます。"
+  ],
+  "source": "○toBinary(整数型: n)\n  if (n ≧ 2)\n    toBinary(n ÷ 2 の商)\n  endif\n  (n mod 2) を出力する",
+  "markers": {
+   "3": "α"
+  },
+  "focus": {
+   "line": 3,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "n"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "25",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "12",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "toBinary",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "出力（0）",
+    "proc": "toBinary",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "12",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "出力（0）",
+    "proc": "toBinary",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "12",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 3,
+    "what": "呼出し",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "25",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "出力（1）",
+    "proc": "toBinary",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "25",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

@@ -1,0 +1,796 @@
+{
+ "version": 1,
+ "template_id": "stack-basic-001",
+ "seed": 36,
+ "call": "test()",
+ "source": "大域: 整数型の配列: stack ← {3 個の 0}\n大域: 整数型: top ← 0\n\n○push(整数型: x)\n  top ← top ＋ 1\n  stack[top] ← x\n\n○整数型: pop()\n  整数型: v ← stack[top]\n  top ← top － 1\n  return v\n\n○整数型: test()\n  整数型: r\n  push(8)\n  push(4)\n  r ← pop()\n  push(6)\n  r ← r × 10 ＋ pop()\n  r ← r × 10 ＋ pop()\n  return r",
+ "trace": {
+  "names": [
+   "stack",
+   "top",
+   "r",
+   "x",
+   "v"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 1,
+    "what": "宣言",
+    "proc": "(main)",
+    "depth": 0,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "宣言",
+    "proc": "(main)",
+    "depth": 0,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 14,
+    "what": "宣言",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{0, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "8",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "8",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 15,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 0, 0}",
+      true
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 0, 0}",
+      false
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "4",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "4",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 16,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "未定義",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 11,
+    "what": "戻る（4）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 17,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "4",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 4, 0}",
+      false
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "6",
+      true
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 6,
+    "what": "代入",
+    "proc": "push",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "6",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 18,
+    "what": "呼出し",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "4",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      true
+     ],
+     "top": [
+      "2",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 11,
+    "what": "戻る（6）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 19,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      true
+     ],
+     "r": [
+      "46",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 9,
+    "what": "宣言",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "1",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "8",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 10,
+    "what": "代入",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 11,
+    "what": "戻る（8）",
+    "proc": "pop",
+    "depth": 2,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      false
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 20,
+    "what": "代入",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      true
+     ],
+     "r": [
+      "468",
+      true
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 21,
+    "what": "戻る（468）",
+    "proc": "test",
+    "depth": 1,
+    "cells": {
+     "stack": [
+      "{8, 6, 0}",
+      false
+     ],
+     "top": [
+      "0",
+      false
+     ],
+     "r": [
+      "468",
+      false
+     ],
+     "x": [
+      "",
+      false
+     ],
+     "v": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ },
+ "questions": [
+  {
+   "prompt": "test() を呼び出したときの戻り値はどれか。",
+   "answer": "468",
+   "explain": [
+    "呼出しは全部で4回行われます。",
+    "奥の呼出しから順に 4 → 6 → 8 → 468 を返し、最後に返る 468 が答えです。"
+   ]
+  },
+  {
+   "prompt": "6行目を3回目に実行した直後の、変数 stack の値はどれか。",
+   "answer": "{8, 6, 0}",
+   "explain": [
+    "6行目は全部で3回実行されます。",
+    "実行した直後の stack は、順に {8, 0, 0} → {8, 4, 0} → {8, 6, 0} です。",
+    "3回目の直後なので、答えは {8, 6, 0} です。"
+   ]
+  },
+  {
+   "prompt": "10行目を3回目に実行した直後の、変数 top の値はどれか。",
+   "answer": "0",
+   "explain": [
+    "10行目は全部で3回実行されます。",
+    "実行した直後の top は、順に 1 → 1 → 0 です。",
+    "3回目の直後なので、答えは 0 です。"
+   ]
+  }
+ ]
+}
