@@ -24,7 +24,7 @@ contact:
   email: ""          # 例: info@example.com （ドメインのメール転送で作る専用アドレス）
 
 analytics:
-  cloudflare_token: ""        # Cloudflare Web Analytics のトークン（空なら計測タグを出さない）
+  cloudflare_token: 43eace9e753346e194c51494f5ef59eb        # Cloudflare Web Analytics のトークン（空なら計測タグを出さない）
 search_console:
   google_verification: ""     # Search Console の「HTMLタグ」方式の content 値（DNS で確認するなら空でよい）
 
