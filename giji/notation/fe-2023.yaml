@@ -66,6 +66,13 @@ phrases:
   count_of: ["個の"]
   quotient: ["の商"]
   remainder: ["の余り"]
+  # 大域変数の宣言「大域: 整数型: x ← 0」
+  global: ["大域"]
+  # 未定義。「x ← 未定義の値」「x が 未定義」「x が 未定義でない」
+  undef_value: ["未定義の値"]
+  is: ["が"]
+  undef: ["未定義"]
+  not_undef: ["未定義でない"]
 
 # 型名。配列は「基本型 + 接尾辞」で組み立てる。
 types:

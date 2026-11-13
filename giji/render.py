@@ -105,7 +105,7 @@ def trace_rows(result: RunResult, focus_line: int | None = None,
                 cells[name] = ("", False)
                 continue
             value = step.vars[name]
-            text = "未設定" if value is UNSET else format_value(value)
+            text = "未定義" if value is UNSET else format_value(value)
             changed = name not in previous or format_value(previous[name]) != format_value(value)
             cells[name] = (text, changed and value is not UNSET)
         last_seen[frame] = step.vars

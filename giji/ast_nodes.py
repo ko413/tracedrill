@@ -92,6 +92,20 @@ class ArrayFill:
     line: int
 
 
+@dataclass
+class Undef:
+    """「未定義の値」。"""
+    line: int
+
+
+@dataclass
+class IsUndef:
+    """「x が 未定義」「x が 未定義でない」。"""
+    operand: object
+    negate: bool       # True なら「未定義でない」
+    line: int
+
+
 # ---- 文 ----
 
 @dataclass
@@ -99,6 +113,7 @@ class Decl:
     type: TypeSpec
     items: list        # [(変数名, 初期値の式 or None)]
     line: int
+    is_global: bool = False   # 「大域:」付きの宣言
 
 
 @dataclass

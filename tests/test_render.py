@@ -35,7 +35,7 @@ def test_trace_rows_cover_every_step_and_mark_the_asked_pass():
 def test_unset_variable_is_shown_as_unset():
     result = run(SOURCE, call="f(1)")
     _, rows = trace_rows(result)
-    assert rows[0]["cells"]["i"] == ("", False) and rows[1]["cells"]["i"] == ("未設定", False)
+    assert rows[0]["cells"]["i"] == ("", False) and rows[1]["cells"]["i"] == ("未定義", False)
 
 
 def test_trace_html_highlights_row_and_column():

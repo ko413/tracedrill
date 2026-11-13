@@ -87,14 +87,14 @@
       body.querySelector('#daily-another').addEventListener('click', function () {
         offset += 1;
         show(items[(today + offset) % items.length]);
-        document.getElementById('daily-label').textContent = 'もう1問。';
+        document.getElementById('daily-label').textContent = 'もう1問';
         markScrollable();
       });
       markScrollable();
     }
 
     document.getElementById('daily-label').textContent =
-      '今日の1問（' + (now.getUTCMonth() + 1) + '月' + now.getUTCDate() + '日）';
+      '今日の1問（' + (now.getUTCMonth() + 1) + '/' + now.getUTCDate() + '）';
     show(items[today % items.length]);
   })();
 

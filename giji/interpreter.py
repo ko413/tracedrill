@@ -18,10 +18,10 @@ INT_DIV_MODES = ("strict", "quotient", "real")
 
 
 class _Unset:
-    """宣言されたが、まだ値が入っていない変数の印。"""
+    """未定義（宣言されたが値が入っていない、または「未定義の値」を代入した）の印。"""
 
     def __repr__(self) -> str:
-        return "未設定"
+        return "未定義"
 
     def __deepcopy__(self, memo):
         return self
@@ -111,7 +111,7 @@ def _trunc_div(a: int, b: int) -> int:
 def format_value(v) -> str:
     """値を擬似言語の書き方で文字列にする。"""
     if v is UNSET:
-        return "未設定"
+        return "未定義"
     if v is None:
         return "なし"
     if isinstance(v, bool):
@@ -132,6 +132,8 @@ class Interpreter:
         self.builtins = builtins or {}
         self.result = RunResult()
         self.frames: list[tuple[str, dict]] = []
+        #: 「大域:」で宣言した変数。どの手続からも読み書きできる。
+        self.globals: dict = {}
 
     # ---- 入口 ----
 
@@ -139,6 +141,7 @@ class Interpreter:
         """手続の外の文を実行し、call（式）があればそれを評価して戻り値にする。"""
         self.result = RunResult()
         self.frames = [("(main)", {})]
+        self.globals = {}
         # 擬似言語の呼出し1回が Python の呼出し十数回になるので、上限を一時的に広げる。
         # それでも足りない場合は StepLimitError に言い換える。
         old_limit = sys.getrecursionlimit()
@@ -161,6 +164,7 @@ class Interpreter:
         """式を1つだけ評価する（テンプレートの制約式・品質条件で使う）。"""
         self.result = RunResult()
         self.frames = [("(expr)", dict(variables or {}))]
+        self.globals = {}
         return self._eval(expr)
 
     # ---- 記録 ----
@@ -179,7 +183,8 @@ class Interpreter:
             kind=kind,
             depth=len(self.frames) - 1,
             proc=self.frames[-1][0],
-            vars=copy.deepcopy(self._vars),
+            # 大域変数も一緒に記録する（トレース表と設問で値を追えるように）。
+            vars=copy.deepcopy({**self.globals, **self._vars} if self.globals else self._vars),
             detail=copy.deepcopy(detail),
         ))
 
@@ -194,22 +199,27 @@ class Interpreter:
         method(stmt)
 
     def _exec_Decl(self, stmt: A.Decl) -> None:
+        if stmt.is_global and len(self.frames) > 1:
+            raise ExecError("「大域:」の宣言は手続の外にだけ書けます", stmt.line)
+        scope = self.globals if stmt.is_global else self._vars
         for name, init in stmt.items:
-            if name in self._vars:
+            if name in self._vars or name in self.globals:
+                # 大域変数と同じ名前の局所変数も、読み手が迷うので認めない。
                 raise ExecError(f"変数「{name}」が二重に宣言されています", stmt.line)
-            self._vars[name] = UNSET if init is None else self._eval(init)
+            scope[name] = UNSET if init is None else self._value(init)
         self._record(stmt.line, "decl")
 
     def _exec_Assign(self, stmt: A.Assign) -> None:
-        value = self._eval(stmt.value)
+        value = self._value(stmt.value)
         self._store(stmt.target, value)
         self._record(stmt.line, "assign")
 
     def _store(self, target, value) -> None:
         if isinstance(target, A.Var):
-            if target.name not in self._vars:
+            scope = self._scope_of(target.name)
+            if scope is None:
                 raise ExecError(f"宣言されていない変数「{target.name}」に代入しています", target.line)
-            self._vars[target.name] = value
+            scope[target.name] = value
             return
         container, offset = self._locate(target)
         container[offset] = value
@@ -242,17 +252,18 @@ class Interpreter:
 
     def _exec_For(self, stmt: A.For) -> None:
         # 終了値と増分は繰返しに入る前に1回だけ求める。
-        if stmt.var not in self._vars:
+        scope = self._scope_of(stmt.var)
+        if scope is None:
             raise ExecError(f"繰返しの変数「{stmt.var}」が宣言されていません", stmt.line)
         start = self._number(stmt.start)
         end = self._number(stmt.end)
         step = self._number(stmt.step)
         if step <= 0:
             raise ExecError("for の増分・減分は正の数でなければなりません", stmt.line)
-        self._vars[stmt.var] = start
+        scope[stmt.var] = start
         self._record(stmt.line, "for_init")
         while True:
-            current = self._vars[stmt.var]
+            current = scope[stmt.var]
             if not _is_number(current):
                 raise ExecError(f"繰返しの変数「{stmt.var}」が数値ではありません", stmt.line)
             ok = current <= end if stmt.direction == "inc" else current >= end
@@ -260,12 +271,12 @@ class Interpreter:
             if not ok:
                 return
             self._exec_block(stmt.body)
-            current = self._vars[stmt.var]
-            self._vars[stmt.var] = current + step if stmt.direction == "inc" else current - step
+            current = scope[stmt.var]
+            scope[stmt.var] = current + step if stmt.direction == "inc" else current - step
             self._record(stmt.line, "for_step")
 
     def _exec_Return(self, stmt: A.Return) -> None:
-        value = None if stmt.value is None else self._eval(stmt.value)
+        value = None if stmt.value is None else self._value(stmt.value)
         self._record(stmt.line, "return", value)
         raise _ReturnSignal(value)
 
@@ -278,7 +289,7 @@ class Interpreter:
         target = self._eval(stmt.target)
         if not isinstance(target, list):
             raise ExecError("「の末尾に…を追加する」の対象が配列ではありません", stmt.line)
-        target.append(self._eval(stmt.value))
+        target.append(self._value(stmt.value))
         self._record(stmt.line, "append")
 
     def _exec_ExprStmt(self, stmt: A.ExprStmt) -> None:
@@ -312,10 +323,41 @@ class Interpreter:
     def _eval_Bool(self, node: A.Bool):
         return node.value
 
+    def _scope_of(self, name: str) -> dict | None:
+        """変数が入っている入れ物（今の手続の変数 → 大域変数の順に探す）。"""
+        if name in self._vars:
+            return self._vars
+        if name in self.globals:
+            return self.globals
+        return None
+
+    def _value(self, node):
+        """未定義でもよい場所（代入の右辺、戻り値、配列の要素、引数、が 未定義 の左）の評価。
+
+        計算・比較・条件式・要素番号では従来どおり、未定義を読むと誤りにする。
+        """
+        if isinstance(node, A.Var):
+            scope = self._scope_of(node.name)
+            if scope is None:
+                raise ExecError(f"宣言されていない変数「{node.name}」を参照しています", node.line)
+            return scope[node.name]
+        if isinstance(node, A.Index):
+            container, offset = self._locate(node)
+            return container[offset]
+        return self._eval(node)
+
+    def _eval_Undef(self, node: A.Undef):
+        return UNSET
+
+    def _eval_IsUndef(self, node: A.IsUndef):
+        undefined = self._value(node.operand) is UNSET
+        return not undefined if node.negate else undefined
+
     def _eval_Var(self, node: A.Var):
-        if node.name not in self._vars:
+        scope = self._scope_of(node.name)
+        if scope is None:
             raise ExecError(f"宣言されていない変数「{node.name}」を参照しています", node.line)
-        value = self._vars[node.name]
+        value = scope[node.name]
         if value is UNSET:
             raise ExecError(f"値が設定されていない変数「{node.name}」を参照しています", node.line)
         return value
@@ -358,13 +400,13 @@ class Interpreter:
         return len(target)
 
     def _eval_ArrayLit(self, node: A.ArrayLit):
-        return [self._eval(item) for item in node.items]
+        return [self._value(item) for item in node.items]
 
     def _eval_ArrayFill(self, node: A.ArrayFill):
         count = self._eval(node.count)
         if not _is_int(count) or count < 0:
             raise ExecError("「個の」の前は0以上の整数でなければなりません", node.line)
-        value = self._eval(node.value)
+        value = self._value(node.value)
         return [copy.deepcopy(value) for _ in range(count)]
 
     def _eval_Unary(self, node: A.Unary):
@@ -463,8 +505,11 @@ class Interpreter:
             raise StepLimitError(
                 f"呼出しの深さが上限（{self.options.max_depth}）を超えました", node.line)
         # 配列は複製せずにそのまま渡す（呼び出された側の書換えが呼出し元に見える）。
-        args = [self._eval(arg) for arg in node.args]
+        args = [self._value(arg) for arg in node.args]
         local = {name: value for (_, name), value in zip(proc.params, args)}
+        for name in local:
+            if name in self.globals:
+                raise ExecError(f"引数「{name}」が大域変数と同じ名前です", proc.line)
         self.frames.append((proc.name, local))
         try:
             self._exec_block(proc.body)

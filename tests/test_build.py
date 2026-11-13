@@ -264,6 +264,9 @@ def test_home_shows_one_problem_first_and_keeps_a_short_description(site):
     first_screen, rest = page.split('class="level-entry"')
     assert 'id="daily-body"' in first_screen and 'class="giji-code"' in first_screen
     assert first_screen.count('name="daily"') == 4 and "解答する" in first_screen
+    # 「今日の1問」は説明文の中ではなく、問題の枠のすぐ上の独立した見出し
+    assert re.search(r'<h2 class="daily-title" id="daily-label">今日の1問</h2>\s*<div class="question" id="daily-body">', first_screen)
+    assert "今日の1問" not in first_screen.split('class="daily-lead"')[1].split("</p>")[0]
     assert "このサイトについて" in rest and "トレース" in rest            # 説明文は最初の画面の下に残す
     daily = json.loads(re.search(r'id="daily-data">(.*?)</script>', page, re.S).group(1))
     assert len(daily) >= 7                                             # 日替わりにできるだけの数がある

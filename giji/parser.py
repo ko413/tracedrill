@@ -124,6 +124,16 @@ class Parser:
         kind = tok.kind
         if kind == "TYPE":
             return self._decl()
+        if kind == "global":
+            # 「大域: 整数型: x ← 0」。手続の外にだけ書ける（実行時に確かめる）。
+            self._next()
+            self._expect("colon", "「:」")
+            if self.peek.kind != "TYPE":
+                raise ParseError("「大域:」の後ろには型名が必要です", self.peek.line)
+            decl = self._decl()
+            decl.is_global = True
+            decl.line = tok.line
+            return decl
         if kind == "if":
             return self._if()
         if kind == "while":
@@ -315,6 +325,14 @@ class Parser:
             elif self.peek.kind == "cols":
                 tok = self._next()
                 node = A.Length(node, tok.line, axis=1)
+            elif self.peek.kind == "is":
+                tok = self._next()
+                if self._accept("undef"):
+                    node = A.IsUndef(node, False, tok.line)
+                elif self._accept("not_undef"):
+                    node = A.IsUndef(node, True, tok.line)
+                else:
+                    raise ParseError("「が」の後ろには「未定義」か「未定義でない」が必要です", tok.line)
             else:
                 return node
 
@@ -330,6 +348,9 @@ class Parser:
         if kind in ("true", "false"):
             self._next()
             return A.Bool(kind == "true", tok.line)
+        if kind == "undef_value":
+            self._next()
+            return A.Undef(tok.line)
         if kind == "IDENT":
             self._next()
             if self._accept("lparen"):

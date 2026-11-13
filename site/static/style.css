@@ -114,7 +114,8 @@ pre code { border: none; padding: 0; background: none; }
 
 /* トップ：今日の1問 */
 .daily h1 { font-size: 1.25rem; margin: 0.4rem 0 0; }
-.daily-lead { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--muted); }
+.daily-lead { margin: 0 0 0.6rem; font-size: 0.9rem; color: var(--muted); }
+.daily-title { font-size: 1.15rem; margin: 0 0 0.3rem; padding: 0 0 0 0.6rem; border-bottom: none; border-left: 5px solid var(--accent); line-height: 1.4; }
 .daily .question { margin: 0.4rem 0 0; padding: 0.6rem 0.9rem 0.9rem; }
 .daily-meta, .daily-call { margin: 0 0 0.3rem; font-size: 0.9rem; }
 .daily .prompt { margin: 0.6rem 0 0.4rem; font-weight: 700; }

@@ -283,3 +283,128 @@ def test_negative_divmod_can_be_forbidden():
 def test_rows_and_columns_of_a_matrix():
     source = "整数型の二次元配列: m ← {{1, 2, 3}, {4, 5, 6}}\nreturn mの行数 × 10 ＋ mの列数"
     assert run(source).return_value == 23
+
+
+# ---- 大域変数・未定義・配列によるスタック／キュー ----
+
+STACK = """
+大域: 整数型の配列: stack ← {4 個の 0}
+大域: 整数型: top ← 0
+
+○push(整数型: x)
+  top ← top ＋ 1
+  stack[top] ← x
+
+○整数型: pop()
+  整数型: v ← stack[top]
+  top ← top － 1
+  return v
+
+○整数型: test()
+  整数型: a
+  push(3)
+  push(5)
+  a ← pop()
+  push(7)
+  return a ＋ pop() × 10
+"""
+
+QUEUE = """
+大域: 整数型の配列: queue ← {3 個の 未定義の値}
+大域: 整数型: head ← 1, tail ← 1, size ← 0
+
+○enqueue(整数型: x)
+  queue[tail] ← x
+  tail ← tail mod queueの要素数 ＋ 1
+  size ← size ＋ 1
+
+○整数型: dequeue()
+  整数型: v ← queue[head]
+  queue[head] ← 未定義の値
+  head ← head mod queueの要素数 ＋ 1
+  size ← size － 1
+  return v
+
+○test()
+  enqueue(1)
+  enqueue(2)
+  dequeue() を出力する
+  enqueue(3)
+  enqueue(4)
+  dequeue() を出力する
+  dequeue() を出力する
+"""
+
+LIST = """
+大域: 整数型の配列: dataList ← {10, 30, 20, 40, 未定義の値}
+大域: 整数型の配列: pointerList ← {3, 4, 2, 未定義の値, 未定義の値}
+
+○整数型の配列: orderList()
+  整数型: p ← 1
+  整数型の配列: out ← {}
+  while (p が 未定義でない)
+    outの末尾に dataList[p] を追加する
+    p ← pointerList[p]
+  endwhile
+  return out
+"""
+
+
+def _run(source, call, **opts):
+    return run(source, call=call, **opts)
+
+
+def _main(source):
+    return run(source)
+
+
+def test_global_stack_shared_between_procedures():
+    result = _run(STACK, "test()")
+    assert result.return_value == 5 + 70
+    # 大域変数は、どの手続の記録にも含まれる（トレース表・設問で追える）
+    in_push = [s for s in result.steps if s.proc == "push"]
+    assert in_push and all("stack" in s.vars and "top" in s.vars for s in in_push)
+    assert in_push[-1].vars["stack"] == [3, 7, 0, 0] and in_push[-1].vars["top"] == 2
+
+
+def test_ring_queue_with_undefined_slots():
+    result = _run(QUEUE, "test()")
+    assert result.outputs == [1, 2, 3]
+    last = result.steps[-1].vars
+    assert format_value(last["queue"]) == "{4, 未定義, 未定義}" and last["size"] == 1
+
+
+def test_undefined_ends_list_traversal():
+    assert _run(LIST, "orderList()").return_value == [10, 20, 30, 40]
+
+
+def test_is_undefined_on_plain_variables():
+    src = "整数型: x\n論理型: a ← x が 未定義\nx ← 1\n論理型: b ← x が 未定義でない\nx ← 未定義の値\n論理型: c ← x が 未定義\n"
+    v = _main(src).steps[-1].vars
+    assert (v["a"], v["b"], v["c"]) == (True, True, True)
+
+
+def test_undefined_cannot_be_used_in_arithmetic_or_conditions():
+    for body in ("整数型: y ← x ＋ 1", "if (x > 0)\nendif", "整数型の配列: a ← {1, 2}\na[x] ← 1",
+                 "整数型の配列: a ← {未定義の値}\n整数型: y ← a[1] × 2"):
+        with pytest.raises(ExecError):
+            _main("整数型: x\n" + body + "\n")
+
+
+def test_global_rules():
+    # 手続の中では宣言できない
+    with pytest.raises(ExecError):
+        _run("○f()\n  大域: 整数型: g ← 1\n", "f()")
+    # 大域変数と同じ名前の局所変数・引数は認めない
+    with pytest.raises(ExecError):
+        _run("大域: 整数型: g ← 1\n○f()\n  整数型: g ← 2\n", "f()")
+    with pytest.raises(ExecError):
+        _run("大域: 整数型: g ← 1\n○f(整数型: g)\n  return\n", "f(1)")
+    # 「大域:」のない手続外の変数は、これまでどおり手続からは見えない
+    with pytest.raises(ExecError):
+        _run("整数型: m ← 1\n○整数型: f()\n  return m\n", "f()")
+
+
+def test_programs_without_globals_record_the_same_variables():
+    result = _run("○整数型: f(整数型: n)\n  整数型: s ← n ＋ 1\n  return s\n", "f(2)")
+    assert [sorted(s.vars) for s in result.steps] == [["n", "s"], ["n", "s"]]

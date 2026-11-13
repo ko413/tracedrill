@@ -18,8 +18,9 @@
 {% block content %}
 <section class="daily" id="daily">
   <h1>{{ site.name }}</h1>
-  <p class="daily-lead">基本情報 科目Bの擬似言語を、1行ずつ追って解く練習。<span id="daily-label">まずは1問。</span></p>
+  <p class="daily-lead">基本情報 科目Bの擬似言語を、1行ずつ追って解く練習。</p>
   {% if daily %}
+  <h2 class="daily-title" id="daily-label">今日の1問</h2>
   <div class="question" id="daily-body">{{ daily_card(daily[0]) }}</div>
   {% endif %}
 </section>
