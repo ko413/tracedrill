@@ -1,0 +1,80 @@
+# 表記の対応表（基本情報技術者試験 科目B・現行の擬似言語）
+#
+# 左側が処理系内部の名前（変えない）、右側が問題文に現れる綴り（変えてよい）。
+# 新制度で表記が変わったら、このファイルを複製して右側だけ直す。
+# 1つの名前に複数の綴りを書ける。先頭の綴りが「表示用の正式な綴り」になる。
+
+name: fe-2023
+
+# 英字のキーワード。識別子と同じ規則で切り出してから照合する
+# （"iffy" の先頭を "if" と誤認しないため）。
+words:
+  if: [if]
+  elseif: [elseif]
+  else: [else]
+  endif: [endif]
+  while: [while]
+  endwhile: [endwhile]
+  do: [do]
+  for: [for]
+  endfor: [endfor]
+  return: [return]
+  "true": ["true"]
+  "false": ["false"]
+  and: [and]
+  or: [or]
+  not: [not]
+  mod: [mod]
+
+# 記号。全角・半角のゆれはここで吸収する。
+symbols:
+  assign: ["←"]
+  mul: ["×"]
+  div: ["÷"]
+  plus: ["＋", "+"]
+  minus: ["－", "-", "−"]
+  ne: ["≠"]
+  le: ["≦", "≤"]
+  ge: ["≧", "≥"]
+  lt: ["＜", "<"]
+  gt: ["＞", ">"]
+  eq: ["＝", "="]
+  lparen: ["(", "（"]
+  rparen: [")", "）"]
+  lbracket: ["[", "［"]
+  rbracket: ["]", "］"]
+  lbrace: ["{", "｛"]
+  rbrace: ["}", "｝"]
+  comma: [",", "，", "、"]
+  colon: [":", "："]
+  proc_mark: ["○", "〇"]
+
+# 日本語の定型句。
+phrases:
+  wo: ["を"]
+  from: ["から"]
+  to: ["まで"]
+  step: ["ずつ"]
+  inc: ["増やす"]
+  dec: ["減らす"]
+  output: ["出力する"]
+  length: ["の要素数"]
+  rows: ["の行数"]
+  cols: ["の列数"]
+  append_to: ["の末尾に"]
+  append: ["追加する"]
+  count_of: ["個の"]
+  quotient: ["の商"]
+  remainder: ["の余り"]
+
+# 型名。配列は「基本型 + 接尾辞」で組み立てる。
+types:
+  base:
+    int: "整数型"
+    real: "実数型"
+    bool: "論理型"
+    char: "文字型"
+    string: "文字列型"
+  array_suffix:
+    1: "の配列"
+    2: "の二次元配列"

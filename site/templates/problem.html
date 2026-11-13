@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="problem" id="problem" data-mode="practice">
+<h1>{{ algo.title }}　問題{{ number }}</h1>
+<p class="meta">レベル：{{ algo.level_name }}　／　<a href="{{ url(algo.path) }}">このアルゴリズムの解説を読む</a></p>
+
+{% if exam %}
+<div class="mode-switch" role="group" aria-label="出題の形式">
+  <button type="button" class="chip" data-mode="practice" aria-pressed="true">練習モード</button>
+  <button type="button" class="chip" data-mode="exam" aria-pressed="false">本番形式</button>
+  <span class="note">練習モードは行番号つきで順に解く形式、本番形式は公開問題と同じ体裁の1問です。</span>
+</div>
+{% endif %}
+
+<section class="mode" id="mode-practice">
+<p>{{ problem.description }}</p>
+{% if problem.call %}<p>次のプログラムを <code>{{ problem.call }}</code> で呼び出す。</p>{% endif %}
+
+<h2>〔プログラム〕</h2>
+<div class="program">{{ practice_html | safe }}</div>
+
+{% for q in questions %}
+<section class="question{% if not loop.first %} locked{% endif %}" data-kind="practice" data-index="{{ loop.index0 }}">
+  <h2>設問{{ loop.index }}</h2>
+  <p class="prompt">{{ q.prompt }}</p>
+  <fieldset>
+    <legend>解答群</legend>
+    {% for choice in q.choices %}
+    <label><input type="radio" name="p{{ loop.index0 }}-{{ q.key }}" value="{{ choice.label }}"> <b>{{ choice.label }}</b>　<span>{{ choice.text }}</span></label>
+    {% endfor %}
+  </fieldset>
+  <button type="button" class="button answer-button" disabled>解答する</button>
+  <div class="result after-answer" aria-live="polite">
+    <p class="verdict"></p>
+    <p><strong>正解：{{ q.answer_label }}　{{ q.answer }}</strong></p>
+    <ul>{% for line in q.explain %}<li>{{ line }}</li>{% endfor %}</ul>
+  </div>
+</section>
+{% endfor %}
+</section>
+
+{% if exam %}
+<section class="mode" id="mode-exam">
+<h2 class="noscript-only">本番形式</h2>
+<p class="exam-lead"><b>問</b>　{{ exam.lead }}</p>
+{% for paragraph in exam.body %}<p>{{ paragraph }}</p>{% endfor %}
+
+<p class="exam-heading">〔プログラム〕</p>
+<div class="program">{{ exam_html | safe }}</div>
+
+<section class="question" data-kind="exam">
+  <p class="exam-heading">解答群</p>
+  {% if exam.blanks | length > 1 %}
+  <div class="scroll-x"><table class="combo">
+    <thead><tr><th></th>{% for b in exam.blanks %}<th>{{ b }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for choice in exam.choices %}
+    <tr><th><label><input type="radio" name="exam" value="{{ choice.label }}"> {{ choice.label }}</label></th>{% for text in choice.texts %}<td>{{ text }}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}
+  <fieldset class="exam-choices">
+    {% for choice in exam.choices %}
+    <label><input type="radio" name="exam" value="{{ choice.label }}"> <b>{{ choice.label }}</b>　<span>{{ choice.texts[0] }}</span></label>
+    {% endfor %}
+  </fieldset>
+  {% endif %}
+  <button type="button" class="button answer-button" disabled>解答する</button>
+  <div class="result after-answer" aria-live="polite">
+    <p class="verdict"></p>
+    <p><strong>正解：{{ exam.answer_label }}　{{ exam.answer_text }}</strong></p>
+    <ul>{% for line in exam.explain %}<li>{{ line }}</li>{% endfor %}</ul>
+    {% if exam.marker_line %}<p class="note">α の行は，下のトレース表（行番号つき）では {{ exam.marker_line }} 行目です。</p>{% endif %}
+  </div>
+</section>
+</section>
+{% endif %}
+
+<section class="review">
+  <h2>解説</h2>
+  <p class="score"></p>
+  <p>{{ problem.explanation }}</p>
+  <h3>行番号つきのプログラム</h3>
+  <div class="program-review">{{ source_html | safe }}</div>
+  <h3>トレース表（全ステップ）</h3>
+  <p class="note">太字は、その文で値が変わった変数です。設問が指している行は黄色、その回は濃い黄色、変数は青い列で示します。</p>
+  <p class="focus-buttons practice-only">
+    {% for q in questions %}<button type="button" class="chip" data-focus="{{ loop.index0 }}">設問{{ loop.index }}を強調</button>{% endfor %}
+  </p>
+  {{ trace_html | safe }}
+</section>
+
+<nav class="pager">
+  {% if prev_path %}<a href="{{ url(prev_path) }}">← 前の問題</a>{% else %}<span></span>{% endif %}
+  <a href="{{ url(algo.path) }}">{{ algo.title }}の一覧</a>
+  {% if next_path %}<a class="button" href="{{ url(next_path) }}">次の問題 →</a>{% else %}<a class="button" href="{{ url('/') }}#algorithms">ほかのアルゴリズムへ</a>{% endif %}
+</nav>
+</article>
+<script type="application/json" id="quiz-data">{{ quiz_json | safe }}</script>
+{% endblock %}

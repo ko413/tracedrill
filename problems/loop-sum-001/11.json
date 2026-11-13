@@ -1,0 +1,845 @@
+{
+ "version": 1,
+ "template_id": "loop-sum-001",
+ "number": 11,
+ "seed": 22,
+ "description": "関数 calc は、配列 data の要素のうち k の倍数だけを合計して返す。配列の要素番号は 1 から始まる。",
+ "call": "calc({6, 12, 3, 4, 12}, 3)",
+ "source": "○整数型: calc(整数型の配列: data, 整数型: k)\n  整数型: sum ← 0\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    if (data[i] mod k ＝ 0)\n      sum ← sum ＋ data[i]\n    endif\n  endfor\n  return sum",
+ "explanation": "if の条件が真になるのは、data[i] が 3 で割り切れるときだけです。\n真になった要素だけを sum に足していくので、戻り値は 33 になります。",
+ "practice": {
+  "source": "○整数型: calc(整数型の配列: data, 整数型: k)\n  整数型: sum ← 0\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    if (［　ａ　］)\n      sum ← sum ＋ data[i]\n    endif\n  endfor\n  return sum",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "calc({6, 12, 3, 4, 12}, 3) を呼び出すと戻り値は 33 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "data[i] mod k ≠ 0"
+     },
+     {
+      "label": "イ",
+      "text": "data[i] mod k ＝ 0"
+     },
+     {
+      "label": "ウ",
+      "text": "sum mod k ＝ 0"
+     },
+     {
+      "label": "エ",
+      "text": "data[i] ÷ k の商 ＝ 0"
+     }
+    ],
+    "answer": "data[i] mod k ＝ 0",
+    "answer_label": "イ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「data[i] mod k ≠ 0」→ 戻り値は 4",
+     "「data[i] mod k ＝ 0」→ 戻り値は 33（正解）",
+     "「sum mod k ＝ 0」→ 戻り値は 25",
+     "「data[i] ÷ k の商 ＝ 0」→ 戻り値は 0"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "6行目を3回目に実行した直後の、変数 sum の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "6"
+     },
+     {
+      "label": "イ",
+      "text": "18"
+     },
+     {
+      "label": "ウ",
+      "text": "21"
+     },
+     {
+      "label": "エ",
+      "text": "33"
+     }
+    ],
+    "answer": "21",
+    "answer_label": "ウ",
+    "explain": [
+     "6行目は全部で4回実行されます。",
+     "実行した直後の sum は、順に 6 → 18 → 21 → 33 です。",
+     "3回目の直後なので、答えは 21 です。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": "sum",
+     "step": 14,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "6行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "3"
+     },
+     {
+      "label": "ウ",
+      "text": "4"
+     },
+     {
+      "label": "エ",
+      "text": "5"
+     }
+    ],
+    "answer": "4",
+    "answer_label": "ウ",
+    "explain": [
+     "6行目が実行されるのは、5行目の条件が真になったときだけです。",
+     "5行目の条件は5回評価され、真になるのは4回です。したがって 6行目は4回実行されます。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "program_blank",
+  "lead": "次のプログラム中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+  "body": [
+   "関数 calc は，配列 data の要素のうち k の倍数だけを合計して返す。配列の要素番号は 1 から始まる。",
+   "関数 calc を calc({6, 12, 3, 4, 12}, 3) として呼び出すと，戻り値は 33 となる。"
+  ],
+  "blanks": [
+   "ａ",
+   "ｂ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "i mod k ＝ 0",
+     "sum ＋ 1"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "i mod k ＝ 0",
+     "data[i]"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "i mod k ＝ 0",
+     "sum ＋ data[i]"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "data[i] mod k ≠ 0",
+     "sum ＋ 1"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "data[i] mod k ≠ 0",
+     "data[i]"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "data[i] mod k ≠ 0",
+     "sum ＋ data[i]"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "data[i] mod k ＝ 0",
+     "sum ＋ 1"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "data[i] mod k ＝ 0",
+     "sum ＋ data[i]"
+    ]
+   }
+  ],
+  "answer_label": "ク",
+  "answer_text": "ａ data[i] mod k ＝ 0，ｂ sum ＋ data[i]",
+  "explain": [
+   "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+   "ａ「i mod k ＝ 0」，ｂ「sum ＋ 1」→ 戻り値は 1",
+   "ａ「i mod k ＝ 0」，ｂ「data[i]」→ 戻り値は 3",
+   "ａ「i mod k ＝ 0」，ｂ「sum ＋ data[i]」→ 戻り値は 3",
+   "ａ「data[i] mod k ≠ 0」，ｂ「sum ＋ 1」→ 戻り値は 1",
+   "ａ「data[i] mod k ≠ 0」，ｂ「data[i]」→ 戻り値は 4",
+   "ａ「data[i] mod k ≠ 0」，ｂ「sum ＋ data[i]」→ 戻り値は 4",
+   "ａ「data[i] mod k ＝ 0」，ｂ「sum ＋ 1」→ 戻り値は 4",
+   "ａ「data[i] mod k ＝ 0」，ｂ「sum ＋ data[i]」→ 戻り値は 33（正解）"
+  ],
+  "source": "○整数型: calc(整数型の配列: data, 整数型: k)\n  整数型: sum ← 0\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    if (［　ａ　］)\n      sum ← ［　ｂ　］\n    endif\n  endfor\n  return sum",
+  "markers": {},
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "k",
+   "sum",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      true
+     ],
+     "k": [
+      "3",
+      true
+     ],
+     "sum": [
+      "0",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ],
+     "i": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "代入",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "6",
+      true
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "6",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "6",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "6",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 6,
+    "what": "代入",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "18",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "18",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "18",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "18",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 6,
+    "what": "代入",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "21",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 6,
+    "what": "代入",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "33",
+      true
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "33",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "33",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 9,
+    "what": "戻る（33）",
+    "proc": "calc",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 12, 3, 4, 12}",
+      false
+     ],
+     "k": [
+      "3",
+      false
+     ],
+     "sum": [
+      "33",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

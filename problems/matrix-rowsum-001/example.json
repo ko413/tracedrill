@@ -1,0 +1,1545 @@
+{
+ "version": 1,
+ "template_id": "matrix-rowsum-001",
+ "seed": 22,
+ "call": "rowSum({{2, 3, 5}, {1, 2, 6}, {9, 5, 9}})",
+ "source": "○整数型の配列: rowSum(整数型の二次元配列: m)\n  整数型の配列: out ← {}\n  整数型: r, c, sum\n  for (r を 1 から mの行数 まで 1 ずつ増やす)\n    sum ← 0\n    for (c を 1 から mの列数 まで 1 ずつ増やす)\n      sum ← sum ＋ m[r, c]\n    endfor\n    outの末尾に sum を追加する\n  endfor\n  return out",
+ "trace": {
+  "names": [
+   "m",
+   "out",
+   "r",
+   "c",
+   "sum"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      true
+     ],
+     "out": [
+      "{}",
+      true
+     ],
+     "r": [
+      "",
+      false
+     ],
+     "c": [
+      "",
+      false
+     ],
+     "sum": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "未設定",
+      false
+     ],
+     "c": [
+      "未設定",
+      false
+     ],
+     "sum": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      true
+     ],
+     "c": [
+      "未設定",
+      false
+     ],
+     "sum": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "未設定",
+      false
+     ],
+     "sum": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "未設定",
+      false
+     ],
+     "sum": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "繰返しの初期化",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "1",
+      true
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "2",
+      true
+     ],
+     "sum": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "3",
+      true
+     ],
+     "sum": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "10",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "4",
+      true
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{}",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 9,
+    "what": "追加",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      true
+     ],
+     "r": [
+      "1",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      true
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 5,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 6,
+    "what": "繰返しの初期化",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "1",
+      true
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "2",
+      true
+     ],
+     "sum": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 27,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "3",
+      true
+     ],
+     "sum": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 28,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 29,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "9",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 30,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "4",
+      true
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 31,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10}",
+      false
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 32,
+    "line": 9,
+    "what": "追加",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      true
+     ],
+     "r": [
+      "2",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 33,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      true
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 34,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 35,
+    "line": 5,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 36,
+    "line": 6,
+    "what": "繰返しの初期化",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "1",
+      true
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 37,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 38,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "1",
+      false
+     ],
+     "sum": [
+      "9",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 39,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "2",
+      true
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 40,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 41,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "2",
+      false
+     ],
+     "sum": [
+      "14",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 42,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "3",
+      true
+     ],
+     "sum": [
+      "14",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 43,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "14",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 44,
+    "line": 7,
+    "what": "代入",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "3",
+      false
+     ],
+     "sum": [
+      "23",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 45,
+    "line": 6,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "4",
+      true
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 46,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9}",
+      false
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 47,
+    "line": 9,
+    "what": "追加",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9, 23}",
+      true
+     ],
+     "r": [
+      "3",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 48,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9, 23}",
+      false
+     ],
+     "r": [
+      "4",
+      true
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 49,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9, 23}",
+      false
+     ],
+     "r": [
+      "4",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 50,
+    "line": 11,
+    "what": "戻る（{10, 9, 23}）",
+    "proc": "rowSum",
+    "depth": 1,
+    "cells": {
+     "m": [
+      "{{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}",
+      false
+     ],
+     "out": [
+      "{10, 9, 23}",
+      false
+     ],
+     "r": [
+      "4",
+      false
+     ],
+     "c": [
+      "4",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ },
+ "questions": [
+  {
+   "prompt": "rowSum({{2, 3, 5}, {1, 2, 6}, {9, 5, 9}}) を呼び出したときの戻り値はどれか。",
+   "answer": "{10, 9, 23}",
+   "explain": [
+    "戻り値になる out は、{} → {10} → {10, 9} → {10, 9, 23} と変わります。",
+    "11行目で返す時点の値 {10, 9, 23} が答えです。"
+   ]
+  },
+  {
+   "prompt": "7行目を6回目に実行した直後の、変数 sum の値はどれか。",
+   "answer": "9",
+   "explain": [
+    "7行目は全部で9回実行されます。",
+    "実行した直後の sum は、順に 2 → 5 → 10 → 1 → 3 → 9 → 9 → 14 → 23 です。",
+    "6回目の直後なので、答えは 9 です。"
+   ]
+  },
+  {
+   "prompt": "7行目が実行される回数はどれか。",
+   "answer": "9",
+   "explain": [
+    "7行目が実行されるのは、6行目の条件が真になったときだけです。",
+    "6行目の条件は12回評価され、真になるのは9回です。したがって 7行目は9回実行されます。"
+   ]
+  }
+ ]
+}

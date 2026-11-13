@@ -1,0 +1,508 @@
+{
+ "version": 1,
+ "template_id": "prefix-sum-001",
+ "number": 8,
+ "seed": 7,
+ "description": "関数 prefix は、配列 data の各要素を「先頭からその要素までの合計」に置き換えて返す。配列の要素番号は 1 から始まる。",
+ "call": "prefix({6, 5, 7, 7, 1, 1})",
+ "source": "○整数型の配列: prefix(整数型の配列: data)\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    data[i] ← data[i － 1] ＋ data[i]\n  endfor\n  return data",
+ "explanation": "1つ前の要素には、すでに「先頭からそこまでの合計」が入っています。それに自分の値を足せば、自分までの合計になります。\n戻り値は {6, 11, 18, 25, 26, 27} です。",
+ "practice": {
+  "source": "○整数型の配列: prefix(整数型の配列: data)\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    data[i] ← data[i － 1] ＋ data[i]\n  endfor\n  return data",
+  "questions": [
+   {
+    "type": "var_at_line",
+    "prompt": "4行目を3回目に実行した直後の、変数 data の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{6, 11, 18, 7, 1, 1}"
+     },
+     {
+      "label": "イ",
+      "text": "{6, 11, 18, 25, 26, 27}"
+     },
+     {
+      "label": "ウ",
+      "text": "{6, 11, 18, 25, 1, 1}"
+     },
+     {
+      "label": "エ",
+      "text": "{6, 11, 18, 25, 26, 1}"
+     }
+    ],
+    "answer": "{6, 11, 18, 25, 1, 1}",
+    "answer_label": "ウ",
+    "explain": [
+     "4行目は全部で5回実行されます。",
+     "実行した直後の data は、順に {6, 11, 7, 7, 1, 1} → {6, 11, 18, 7, 1, 1} → {6, 11, 18, 25, 1, 1} → {6, 11, 18, 25, 26, 1} → {6, 11, 18, 25, 26, 27} です。",
+     "3回目の直後なので、答えは {6, 11, 18, 25, 1, 1} です。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": "data",
+     "step": 10,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "prefix({6, 5, 7, 7, 1, 1}) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{6, 18, 11, 25, 26, 27}"
+     },
+     {
+      "label": "イ",
+      "text": "{6, 11, 18, 25, 26, 27}"
+     },
+     {
+      "label": "ウ",
+      "text": "{6, 11, 25, 18, 26, 27}"
+     },
+     {
+      "label": "エ",
+      "text": "{6, 11, 18, 25, 26, 1}"
+     }
+    ],
+    "answer": "{6, 11, 18, 25, 26, 27}",
+    "answer_label": "イ",
+    "explain": [
+     "戻り値になる data は、{6, 5, 7, 7, 1, 1} → {6, 11, 7, 7, 1, 1} → {6, 11, 18, 7, 1, 1} → {6, 11, 18, 25, 1, 1} → {6, 11, 18, 25, 26, 1} → {6, 11, 18, 25, 26, 27} と変わります。",
+     "6行目で返す時点の値 {6, 11, 18, 25, 26, 27} が答えです。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": 19,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 prefix は，配列 data の各要素を「先頭からその要素までの合計」に置き換えて返す。配列の要素番号は 1 から始まる。",
+   "関数 prefix を prefix({6, 5, 7, 7, 1, 1}) として呼び出すと，戻り値は［　ａ　］となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "{6, 11, 18, 26, 25, 27}"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "{11, 6, 18, 25, 26, 27}"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "{6, 11, 18, 25, 26, 1}"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "{6, 11, 18, 25, 27, 26}"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "{11, 18, 25, 26, 27, 6}"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "{6, 11, 25, 18, 26, 27}"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "{27, 26, 25, 18, 11, 6}"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "{6, 11, 18, 25, 26, 27}"
+    ]
+   }
+  ],
+  "answer_label": "ク",
+  "answer_text": "{6, 11, 18, 25, 26, 27}",
+  "explain": [
+   "戻り値になる data は、{6, 5, 7, 7, 1, 1} → {6, 11, 7, 7, 1, 1} → {6, 11, 18, 7, 1, 1} → {6, 11, 18, 25, 1, 1} → {6, 11, 18, 25, 26, 1} → {6, 11, 18, 25, 26, 27} と変わります。",
+   "6行目で返す時点の値 {6, 11, 18, 25, 26, 27} が答えです。"
+  ],
+  "source": "○整数型の配列: prefix(整数型の配列: data)\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    data[i] ← data[i － 1] ＋ data[i]\n  endfor\n  return data",
+  "markers": {},
+  "focus": {
+   "line": 6,
+   "variable": null,
+   "step": 19
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 5, 7, 7, 1, 1}",
+      true
+     ],
+     "i": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "繰返しの初期化",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 5, 7, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 5, 7, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "代入",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 7, 7, 1, 1}",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 7, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 7, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "代入",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 7, 1, 1}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 7, 1, 1}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 4,
+    "what": "代入",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 1, 1}",
+      true
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 1, 1}",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 1, 1}",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 4,
+    "what": "代入",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 1}",
+      true
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 1}",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 1}",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 4,
+    "what": "代入",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 27}",
+      true
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 27}",
+      false
+     ],
+     "i": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 3,
+    "what": "条件判定（偽）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 27}",
+      false
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 6,
+    "what": "戻る（{6, 11, 18, 25, 26, 27}）",
+    "proc": "prefix",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{6, 11, 18, 25, 26, 27}",
+      false
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

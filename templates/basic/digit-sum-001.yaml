@@ -1,0 +1,40 @@
+id: digit-sum-001
+title: 各桁の和（後判定の繰返し）
+level: 1
+access: free
+tags: [do-while, の商, の余り]
+description: 関数 digitSum は、正の整数 n の各桁の数字の和を返す。
+
+params:
+  n: {type: int, range: [10, 99999]}
+
+source: |
+  ○整数型: digitSum(整数型: n)
+    整数型: sum ← 0
+    do
+      sum ← sum ＋ n ÷ 10 の余り   // @add
+      n ← n ÷ 10 の商
+    while (n > 0)
+    return sum
+
+call: "digitSum(${n})"
+
+quality:
+  - "result ≧ 5"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: add, var: sum, pass: random}
+  - {type: exec_count, line: add}
+  - type: fill_blank
+    blank: "n > 0"
+    distractors:
+      - "n > 10"
+      - "n ≧ 10"
+      - "sum > 10"
+      - "sum > 0"
+      - "n < 0"
+
+explanation: |
+  10 で割った余りが一の位です。それを sum に足し、n を 10 で割った商に置き換えると、次の桁が一の位に来ます。
+  n が 0 になるまで繰り返すと、和は ${result} になります。

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <h1>{{ site.name }}</h1>
+  <p class="lead">{{ site.tagline }}</p>
+  <p>科目Bは、プログラムを頭の中で1行ずつ動かす「トレース」が正確にできるかどうかで点が決まります。このサイトでは、同じアルゴリズムを値を変えて何度も追い、全ステップのトレース表で答え合わせができます。</p>
+  <p><a class="button" href="{{ url(first_problem) }}">まず1問解いてみる</a>　<a href="{{ url('/guide/trace-table/') }}">トレース表の書き方を読む</a></p>
+</section>
+
+<section id="algorithms">
+  <h2>アルゴリズムから選ぶ</h2>
+  {% for level in levels %}
+  <h3>{{ level.name }}</h3>
+  <ul class="cards">
+    {% for algo in level.algos %}
+    <li><a href="{{ url(algo.path) }}"><strong>{{ algo.title }}</strong><span>{{ algo.summary }}</span><em>{{ algo.count }}問＋解説</em></a></li>
+    {% endfor %}
+  </ul>
+  {% endfor %}
+</section>
+
+<section>
+  <h2>擬似言語の読み方ガイド</h2>
+  <ul class="links">
+    {% for guide in guides %}<li><a href="{{ url(guide.path) }}">{{ guide.title }}</a> — {{ guide.description }}</li>{% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2>このサイトの問題について</h2>
+  <ul>
+    <li>値を変えた類題を、アルゴリズムごとに{{ site.problems.indexed + site.problems.extra }}問用意しています。</li>
+    <li>答え・誤答の選択肢・解説は、すべてプログラムを実際に動かした結果から作っています。</li>
+    <li>書き方は、IPAが公開している「擬似言語の記述形式」に合わせています。</li>
+  </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+id: prefix-sum-001
+title: 累積和
+level: 1
+access: free
+tags: [for, 配列, 配列の操作]
+array_base: 1
+description: 関数 prefix は、配列 data の各要素を「先頭からその要素までの合計」に置き換えて返す。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 6], range: [1, 9]}
+
+source: |
+  ○整数型の配列: prefix(整数型の配列: data)
+    整数型: i
+    for (i を 2 から dataの要素数 まで 1 ずつ増やす)
+      data[i] ← data[i － 1] ＋ data[i]   // @acc
+    endfor
+    return data
+
+call: "prefix(${data})"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: acc, var: data, pass: random}
+  - type: fill_blank
+    blank: "data[i － 1] ＋ data[i]"
+    distractors:
+      - "data[i － 1]"
+      - "data[i] ＋ data[i]"
+      - "data[1] ＋ data[i]"
+      - "data[i － 1] ＋ i"
+      - "data[i] ＋ i"
+      - "data[i － 1] × data[i]"
+
+explanation: |
+  1つ前の要素には、すでに「先頭からそこまでの合計」が入っています。それに自分の値を足せば、自分までの合計になります。
+  戻り値は ${result} です。

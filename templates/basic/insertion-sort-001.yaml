@@ -1,0 +1,47 @@
+id: insertion-sort-001
+title: 挿入ソート
+level: 3
+access: free
+tags: [for, while, and, 配列, 整列]
+array_base: 1
+max_steps: 600
+description: 関数 sort は、配列 data を昇順に整列して返す。2 番目以降の要素を順に取り出し、それより前の整列済みの部分の正しい位置に挿入する。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 5], range: [1, 9], unique: true}
+
+source: |
+  ○整数型の配列: sort(整数型の配列: data)
+    整数型: i, j, key
+    for (i を 2 から dataの要素数 まで 1 ずつ増やす)
+      key ← data[i]
+      j ← i － 1
+      while (j ≧ 1 and data[j] > key)
+        data[j ＋ 1] ← data[j]   // @shift
+        j ← j － 1
+      endwhile
+      data[j ＋ 1] ← key   // @put
+    endfor
+    return data
+
+call: "sort(${data})"
+
+quality:
+  - "count(shift) ≧ 2"
+
+questions:
+  - {type: return_value, weight: 0.2}
+  - {type: var_at_line, line: put, var: data, pass: random}
+  - {type: exec_count, line: shift}
+  - type: fill_blank
+    blank: "data[j] > key"
+    distractors:
+      - "data[j] < key"
+      - "data[j] > data[i]"
+      - "data[j ＋ 1] > key"
+      - "j > key"
+      - "data[i] > key"
+
+explanation: |
+  取り出した要素 key より大きい要素を、右へ1つずつずらして場所を空け、空いた所に key を入れます。
+  ずらす回数は、key より大きい要素が前にいくつあるかで決まります。

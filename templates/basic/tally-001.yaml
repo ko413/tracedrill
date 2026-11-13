@@ -1,0 +1,39 @@
+id: tally-001
+title: 値ごとの個数を数える
+level: 2
+access: free
+tags: [for, 配列, 配列の操作, 集計]
+array_base: 1
+description: 関数 tally は、配列 data に 1 から kinds までの整数がそれぞれ何個あるかを数え、個数の配列を返す。data の要素は 1 以上 kinds 以下の整数である。配列の要素番号は 1 から始まる。
+
+params:
+  kinds: {type: int, range: [3, 4]}
+  data: {type: int_array, length: [6, 9], range: [1, 3]}
+
+source: |
+  ○整数型の配列: tally(整数型の配列: data, 整数型: kinds)
+    整数型の配列: count ← {kinds 個の 0}
+    整数型: i
+    for (i を 1 から dataの要素数 まで 1 ずつ増やす)
+      count[data[i]] ← count[data[i]] ＋ 1   // @inc
+    endfor
+    return count
+
+call: "tally(${data}, ${kinds})"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: inc, var: count, pass: random}
+  - type: fill_blank
+    blank: "count[data[i]] ＋ 1"
+    distractors:
+      - "count[i] ＋ 1"
+      - "count[data[i]] ＋ data[i]"
+      - "data[i] ＋ 1"
+      - "count[data[i]]"
+      - "count[1] ＋ 1"
+      - "i"
+
+explanation: |
+  data[i] の値を、そのまま count の要素番号として使います。値が 2 なら count[2] を 1 増やします。
+  戻り値は ${result} です。

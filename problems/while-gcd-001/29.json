@@ -1,0 +1,534 @@
+{
+ "version": 1,
+ "template_id": "while-gcd-001",
+ "number": 29,
+ "seed": 14,
+ "description": "関数 gcd は、二つの正の整数 a と b の最大公約数を返す。",
+ "call": "gcd(95, 24)",
+ "source": "○整数型: gcd(整数型: a, 整数型: b)\n  整数型: r\n  while (b ≠ 0)\n    r ← a mod b\n    a ← b\n    b ← r\n  endwhile\n  return a",
+ "explanation": "余り r を求め、a に b を、b に r を入れ直すことを、b が 0 になるまで繰り返します。\nb が 0 になったときの a が最大公約数で、ここでは 1 です。",
+ "practice": {
+  "source": "○整数型: gcd(整数型: a, 整数型: b)\n  整数型: r\n  while (b ≠ 0)\n    r ← ［　ａ　］\n    a ← b\n    b ← r\n  endwhile\n  return a",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "gcd(95, 24) を呼び出すと戻り値は 1 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "a ＋ b"
+     },
+     {
+      "label": "イ",
+      "text": "a mod b"
+     },
+     {
+      "label": "ウ",
+      "text": "a － b"
+     },
+     {
+      "label": "エ",
+      "text": "b ÷ a の商"
+     }
+    ],
+    "answer": "a mod b",
+    "answer_label": "イ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「a ＋ b」→ 繰返しが終わらない",
+     "「a mod b」→ 戻り値は 1（正解）",
+     "「a － b」→ 繰返しが終わらない",
+     "「b ÷ a の商」→ 戻り値は 24"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "4行目を3回目に実行した直後の、変数 r の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "0"
+     },
+     {
+      "label": "イ",
+      "text": "1"
+     },
+     {
+      "label": "ウ",
+      "text": "2"
+     },
+     {
+      "label": "エ",
+      "text": "23"
+     }
+    ],
+    "answer": "0",
+    "answer_label": "ア",
+    "explain": [
+     "4行目は全部で3回実行されます。",
+     "実行した直後の r は、順に 23 → 1 → 0 です。",
+     "3回目の直後なので、答えは 0 です。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": "r",
+     "step": 11,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "4行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "3"
+     },
+     {
+      "label": "エ",
+      "text": "4"
+     }
+    ],
+    "answer": "3",
+    "answer_label": "ウ",
+    "explain": [
+     "4行目が実行されるのは、3行目の条件が真になったときだけです。",
+     "3行目の条件は4回評価され、真になるのは3回です。したがって 4行目は3回実行されます。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 gcd は，二つの正の整数 a と b の最大公約数を返す。",
+   "関数 gcd を gcd(95, 24) として呼び出すと，戻り値は［　ａ　］となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "0"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "24"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "95"
+    ]
+   }
+  ],
+  "answer_label": "イ",
+  "answer_text": "1",
+  "explain": [
+   "戻り値になる a は、95 → 24 → 23 → 1 と変わります。",
+   "8行目で返す時点の値 1 が答えです。"
+  ],
+  "source": "○整数型: gcd(整数型: a, 整数型: b)\n  整数型: r\n  while (b ≠ 0)\n    r ← a mod b\n    a ← b\n    b ← r\n  endwhile\n  return a",
+  "markers": {},
+  "focus": {
+   "line": 8,
+   "variable": null,
+   "step": 15
+  }
+ },
+ "trace": {
+  "names": [
+   "a",
+   "b",
+   "r"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "95",
+      true
+     ],
+     "b": [
+      "24",
+      true
+     ],
+     "r": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "95",
+      false
+     ],
+     "b": [
+      "24",
+      false
+     ],
+     "r": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "95",
+      false
+     ],
+     "b": [
+      "24",
+      false
+     ],
+     "r": [
+      "23",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 5,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "24",
+      true
+     ],
+     "b": [
+      "24",
+      false
+     ],
+     "r": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 6,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "24",
+      false
+     ],
+     "b": [
+      "23",
+      true
+     ],
+     "r": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "24",
+      false
+     ],
+     "b": [
+      "23",
+      false
+     ],
+     "r": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "24",
+      false
+     ],
+     "b": [
+      "23",
+      false
+     ],
+     "r": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "23",
+      true
+     ],
+     "b": [
+      "23",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 6,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "23",
+      false
+     ],
+     "b": [
+      "1",
+      true
+     ],
+     "r": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "23",
+      false
+     ],
+     "b": [
+      "1",
+      false
+     ],
+     "r": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "23",
+      false
+     ],
+     "b": [
+      "1",
+      false
+     ],
+     "r": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "1",
+      true
+     ],
+     "b": [
+      "1",
+      false
+     ],
+     "r": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 6,
+    "what": "代入",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "1",
+      false
+     ],
+     "b": [
+      "0",
+      true
+     ],
+     "r": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 3,
+    "what": "条件判定（偽）",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "1",
+      false
+     ],
+     "b": [
+      "0",
+      false
+     ],
+     "r": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 8,
+    "what": "戻る（1）",
+    "proc": "gcd",
+    "depth": 1,
+    "cells": {
+     "a": [
+      "1",
+      false
+     ],
+     "b": [
+      "0",
+      false
+     ],
+     "r": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

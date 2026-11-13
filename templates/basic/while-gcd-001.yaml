@@ -1,0 +1,48 @@
+id: while-gcd-001
+title: 最大公約数（互除法）
+level: 1
+access: free
+tags: [while, mod]
+int_div: strict
+description: 関数 gcd は、二つの正の整数 a と b の最大公約数を返す。
+
+params:
+  a: {type: int, range: [20, 99]}
+  b: {type: int, range: [6, 60]}
+
+constraints:
+  - "${a} > ${b}"
+
+source: |
+  ○整数型: gcd(整数型: a, 整数型: b)
+    整数型: r
+    while (b ≠ 0)
+      r ← a mod b   // @rem
+      a ← b
+      b ← r
+    endwhile
+    return a
+
+call: "gcd(${a}, ${b})"
+
+quality:
+  - "count(rem) ≧ 2"
+  - "count(rem) ≦ 5"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: rem, var: r, pass: random}
+  - {type: exec_count, line: rem}
+  - type: fill_blank
+    blank: "a mod b"
+    distractors:
+      - "b mod a"
+      - "a ÷ b の商"
+      - "a － b"
+      - "b ÷ a の商"
+      - "a ＋ b"
+      - "b"
+
+explanation: |
+  余り r を求め、a に b を、b に r を入れ直すことを、b が 0 になるまで繰り返します。
+  b が 0 になったときの a が最大公約数で、ここでは ${result} です。

@@ -1,0 +1,929 @@
+{
+ "version": 1,
+ "template_id": "insertion-sort-001",
+ "number": 3,
+ "seed": 4,
+ "description": "関数 sort は、配列 data を昇順に整列して返す。2 番目以降の要素を順に取り出し、それより前の整列済みの部分の正しい位置に挿入する。配列の要素番号は 1 から始まる。",
+ "call": "sort({3, 6, 2, 7})",
+ "source": "○整数型の配列: sort(整数型の配列: data)\n  整数型: i, j, key\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    key ← data[i]\n    j ← i － 1\n    while (j ≧ 1 and data[j] > key)\n      data[j ＋ 1] ← data[j]\n      j ← j － 1\n    endwhile\n    data[j ＋ 1] ← key\n  endfor\n  return data",
+ "explanation": "取り出した要素 key より大きい要素を、右へ1つずつずらして場所を空け、空いた所に key を入れます。\nずらす回数は、key より大きい要素が前にいくつあるかで決まります。",
+ "practice": {
+  "source": "○整数型の配列: sort(整数型の配列: data)\n  整数型: i, j, key\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    key ← data[i]\n    j ← i － 1\n    while (j ≧ 1 and ［　ａ　］)\n      data[j ＋ 1] ← data[j]\n      j ← j － 1\n    endwhile\n    data[j ＋ 1] ← key\n  endfor\n  return data",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "sort({3, 6, 2, 7}) を呼び出すと戻り値は {2, 3, 6, 7} になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "j > key"
+     },
+     {
+      "label": "イ",
+      "text": "data[j ＋ 1] > key"
+     },
+     {
+      "label": "ウ",
+      "text": "data[j] < key"
+     },
+     {
+      "label": "エ",
+      "text": "data[j] > key"
+     }
+    ],
+    "answer": "data[j] > key",
+    "answer_label": "エ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「j > key」→ 戻り値は {3, 6, 2, 7}",
+     "「data[j ＋ 1] > key」→ 戻り値は {3, 6, 2, 7}",
+     "「data[j] < key」→ 戻り値は {7, 6, 3, 2}",
+     "「data[j] > key」→ 戻り値は {2, 3, 6, 7}（正解）"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "10行目を1回目に実行した直後の、変数 data の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{7, 2, 6, 3}"
+     },
+     {
+      "label": "イ",
+      "text": "{6, 3, 2, 7}"
+     },
+     {
+      "label": "ウ",
+      "text": "{2, 3, 6, 7}"
+     },
+     {
+      "label": "エ",
+      "text": "{3, 6, 2, 7}"
+     }
+    ],
+    "answer": "{3, 6, 2, 7}",
+    "answer_label": "エ",
+    "explain": [
+     "10行目は全部で3回実行されます。",
+     "実行した直後の data は、順に {3, 6, 2, 7} → {2, 3, 6, 7} → {2, 3, 6, 7} です。",
+     "1回目の直後なので、答えは {3, 6, 2, 7} です。"
+    ],
+    "focus": {
+     "line": 10,
+     "variable": "data",
+     "step": 7,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "7行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "3"
+     },
+     {
+      "label": "エ",
+      "text": "5"
+     }
+    ],
+    "answer": "2",
+    "answer_label": "イ",
+    "explain": [
+     "7行目が実行されるのは、6行目の条件が真になったときだけです。",
+     "6行目の条件は5回評価され、真になるのは2回です。したがって 7行目は2回実行されます。"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 sort は，配列 data を昇順に整列して返す。2 番目以降の要素を順に取り出し，それより前の整列済みの部分の正しい位置に挿入する。配列の要素番号は 1 から始まる。",
+   "関数 sort を sort({3, 6, 2, 7}) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "0"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "6"
+    ]
+   }
+  ],
+  "answer_label": "ウ",
+  "answer_text": "2",
+  "explain": [
+   "7行目が実行されるのは、6行目の条件が真になったときだけです。",
+   "6行目の条件は5回評価され、真になるのは2回です。したがって 7行目は2回実行されます。"
+  ],
+  "source": "○整数型の配列: sort(整数型の配列: data)\n  整数型: i, j, key\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    key ← data[i]\n    j ← i － 1\n    while (j ≧ 1 and data[j] > key)\n      data[j ＋ 1] ← data[j]\n      j ← j － 1\n    endwhile\n    data[j ＋ 1] ← key\n  endfor\n  return data",
+  "markers": {
+   "7": "α"
+  },
+  "focus": {
+   "line": 7,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "i",
+   "j",
+   "key"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      true
+     ],
+     "i": [
+      "未設定",
+      false
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "key": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "繰返しの初期化",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "key": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "key": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "key": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "1",
+      true
+     ],
+     "key": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 10,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 4,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 5,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      true
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 2, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 7,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 6, 7}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 8,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 6, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "1",
+      true
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 6, 6, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 7,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 3, 6, 7}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "1",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 8,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "0",
+      true
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "0",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 10,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "j": [
+      "0",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ],
+     "j": [
+      "0",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "0",
+      false
+     ],
+     "key": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 4,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "0",
+      false
+     ],
+     "key": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 5,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      true
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 10,
+    "what": "代入",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 3,
+    "what": "繰返しの更新",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 27,
+    "line": 3,
+    "what": "条件判定（偽）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 28,
+    "line": 12,
+    "what": "戻る（{2, 3, 6, 7}）",
+    "proc": "sort",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 3, 6, 7}",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "key": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

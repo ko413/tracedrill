@@ -1,0 +1,408 @@
+{
+ "version": 1,
+ "template_id": "recursion-sum-001",
+ "number": 6,
+ "seed": 19,
+ "description": "関数 f は、自分自身を呼び出して値を計算する。",
+ "call": "f(16)",
+ "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(n － 2)",
+ "explanation": "f(16) は 16 ＋ f(16 － 2) です。n が 1 以下になるまで呼出しが続き、そこで 0 が返ります。\n戻ってくる順に足していくと 72 になります。",
+ "practice": {
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(n － 2)",
+  "questions": [
+   {
+    "type": "exec_count",
+    "prompt": "5行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "7"
+     },
+     {
+      "label": "ウ",
+      "text": "8"
+     },
+     {
+      "label": "エ",
+      "text": "9"
+     }
+    ],
+    "answer": "8",
+    "answer_label": "ウ",
+    "explain": [
+     "5行目は8回実行されます。トレース表で 5行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "f(16) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "16"
+     },
+     {
+      "label": "イ",
+      "text": "71"
+     },
+     {
+      "label": "ウ",
+      "text": "72"
+     },
+     {
+      "label": "エ",
+      "text": "73"
+     }
+    ],
+    "answer": "72",
+    "answer_label": "ウ",
+    "explain": [
+     "呼出しは全部で9回行われます。",
+     "奥の呼出しから順に 0 → 2 → 6 → 12 → 20 → 30 → 42 → 56 → 72 を返し、最後に返る 72 が答えです。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": 18,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "program_blank",
+  "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 f は，自分自身を呼び出して値を計算する。",
+   "関数 f を f(16) として呼び出すと，戻り値は 72 となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "n ÷ 2 の商"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "n － 1"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "n － 2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "2 － n"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "n"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "n － 5"
+    ]
+   }
+  ],
+  "answer_label": "ウ",
+  "answer_text": "n － 2",
+  "explain": [
+   "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+   "「n ÷ 2 の商」→ 戻り値は 30",
+   "「n － 1」→ 戻り値は 135",
+   "「n － 2」→ 戻り値は 72（正解）",
+   "「2 － n」→ 戻り値は 16",
+   "「n」→ 繰返しが終わらない",
+   "「n － 5」→ 戻り値は 33"
+  ],
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(［　ａ　］)",
+  "markers": {},
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "n"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "16",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "14",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "12",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "10",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "8",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 7,
+    "cells": {
+     "n": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 8,
+    "cells": {
+     "n": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "f",
+    "depth": 9,
+    "cells": {
+     "n": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 3,
+    "what": "戻る（0）",
+    "proc": "f",
+    "depth": 9,
+    "cells": {
+     "n": [
+      "0",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 5,
+    "what": "戻る（2）",
+    "proc": "f",
+    "depth": 8,
+    "cells": {
+     "n": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "戻る（6）",
+    "proc": "f",
+    "depth": 7,
+    "cells": {
+     "n": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 5,
+    "what": "戻る（12）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "戻る（20）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 5,
+    "what": "戻る（30）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 5,
+    "what": "戻る（42）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "12",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 5,
+    "what": "戻る（56）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "14",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 5,
+    "what": "戻る（72）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "16",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

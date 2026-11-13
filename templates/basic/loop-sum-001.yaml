@@ -1,0 +1,53 @@
+id: loop-sum-001
+title: 条件に合う要素の合計
+level: 1
+access: free
+tags: [for, if, 配列, mod]
+array_base: 1
+int_div: strict
+description: 関数 calc は、配列 data の要素のうち k の倍数だけを合計して返す。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 6], range: [1, 12]}
+  k: {type: int, range: [2, 4]}
+
+source: |
+  ○整数型: calc(整数型の配列: data, 整数型: k)
+    整数型: sum ← 0
+    整数型: i
+    for (i を 1 から dataの要素数 まで 1 ずつ増やす)
+      if (data[i] mod k ＝ 0)
+        sum ← sum ＋ data[i]   // @add
+      endif
+    endfor
+    return sum
+
+call: "calc(${data}, ${k})"
+
+quality:
+  - "result ≠ 0"
+  - "count(add) ≧ 2"
+  - "count(add) < ${data}の要素数"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: add, var: sum, pass: random}
+  - {type: exec_count, line: add}
+  - type: fill_blank
+    blank: "data[i] mod k ＝ 0"
+    distractors:
+      - "data[i] mod k ≠ 0"
+      - "i mod k ＝ 0"
+      - "data[i] ÷ k の商 ＝ 0"
+      - "data[i] mod k ＝ 1"
+      - "sum mod k ＝ 0"
+      - "data[i] ＝ k"
+    blank_b: "sum ＋ data[i]"
+    distractors_b:
+      - "sum ＋ i"
+      - "sum ＋ 1"
+      - "data[i]"
+
+explanation: |
+  if の条件が真になるのは、data[i] が ${k} で割り切れるときだけです。
+  真になった要素だけを sum に足していくので、戻り値は ${result} になります。

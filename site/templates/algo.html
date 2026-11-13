@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<article>
+<h1>{{ algo.title }}｜擬似言語のトレース解説と練習問題</h1>
+<p class="meta">レベル：{{ algo.level_name }}　／　タグ：{{ algo.tags | join('・') }}</p>
+<p>{{ algo.description }}</p>
+
+<h2>プログラム</h2>
+{{ example.source_html | safe }}
+
+<div class="prose">{{ body | safe }}</div>
+
+<h2>例題：{{ example.call }} を最後まで追う</h2>
+<p>上のプログラムを {{ example.call }} で呼び出したときの、全ステップのトレース表です。太字は、その文で値が変わった変数です。</p>
+{{ example.trace_html | safe }}
+<h3>この例題で問われること</h3>
+{% for q in example.questions %}
+<div class="worked">
+  <p><strong>問</strong>　{{ q.prompt }}</p>
+  <p><strong>答え</strong>　{{ q.answer }}</p>
+  <ul>{% for line in q.explain %}<li>{{ line }}</li>{% endfor %}</ul>
+</div>
+{% endfor %}
+
+<h2>練習問題（値を変えた{{ problems | length }}問）</h2>
+<ol class="problem-list">
+  {% for p in problems %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
+</ol>
+{% if extras %}
+<details class="more">
+  <summary>もっと解く（追加の{{ extras | length }}問）</summary>
+  <ol class="problem-list" start="{{ problems | length + 1 }}">
+    {% for p in extras %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
+  </ol>
+</details>
+{% endif %}
+
+<h2>ほかのアルゴリズム</h2>
+<ul class="links">{% for other in others %}<li><a href="{{ url(other.path) }}">{{ other.title }}</a></li>{% endfor %}</ul>
+</article>
+{% endblock %}

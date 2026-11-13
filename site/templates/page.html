@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<article>
+<h1>{{ page.title }}</h1>
+<div class="prose">{{ body | safe }}</div>
+{% if children %}
+<ul class="links">{% for child in children %}<li><a href="{{ url(child.path) }}">{{ child.title }}</a> — {{ child.description }}</li>{% endfor %}</ul>
+{% endif %}
+{% if show_contact %}
+<h2>お問い合わせ</h2>
+{% if site.contact.form_url %}<p><a class="button" href="{{ site.contact.form_url }}" rel="noopener">お問い合わせフォームを開く</a></p>
+{% elif site.contact.email %}<p>メール：<a href="mailto:{{ site.contact.email }}">{{ site.contact.email }}</a></p>
+{% else %}<p>お問い合わせ窓口は準備中です。</p>{% endif %}
+{% endif %}
+</article>
+{% endblock %}

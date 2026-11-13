@@ -1,0 +1,1006 @@
+{
+ "version": 1,
+ "template_id": "tally-001",
+ "number": 17,
+ "seed": 20,
+ "description": "関数 tally は、配列 data に 1 から kinds までの整数がそれぞれ何個あるかを数え、個数の配列を返す。data の要素は 1 以上 kinds 以下の整数である。配列の要素番号は 1 から始まる。",
+ "call": "tally({2, 1, 1, 2, 2, 2, 1, 3, 1}, 4)",
+ "source": "○整数型の配列: tally(整数型の配列: data, 整数型: kinds)\n  整数型の配列: count ← {kinds 個の 0}\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    count[data[i]] ← count[data[i]] ＋ 1\n  endfor\n  return count",
+ "explanation": "data[i] の値を、そのまま count の要素番号として使います。値が 2 なら count[2] を 1 増やします。\n戻り値は {4, 4, 1, 0} です。",
+ "practice": {
+  "source": "○整数型の配列: tally(整数型の配列: data, 整数型: kinds)\n  整数型の配列: count ← {kinds 個の 0}\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    count[data[i]] ← ［　ａ　］\n  endfor\n  return count",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "tally({2, 1, 1, 2, 2, 2, 1, 3, 1}, 4) を呼び出すと戻り値は {4, 4, 1, 0} になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "count[data[i]] ＋ 1"
+     },
+     {
+      "label": "イ",
+      "text": "count[1] ＋ 1"
+     },
+     {
+      "label": "ウ",
+      "text": "i"
+     },
+     {
+      "label": "エ",
+      "text": "count[i] ＋ 1"
+     }
+    ],
+    "answer": "count[data[i]] ＋ 1",
+    "answer_label": "ア",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「count[data[i]] ＋ 1」→ 戻り値は {4, 4, 1, 0}（正解）",
+     "「count[1] ＋ 1」→ 戻り値は {4, 3, 4, 0}",
+     "「i」→ 戻り値は {9, 6, 8, 0}",
+     "「count[i] ＋ 1」→ 途中で止まる（配列の範囲外です（要素番号 5、要素数 4））"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "5行目を7回目に実行した直後の、変数 count の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{2, 4, 0, 0}"
+     },
+     {
+      "label": "イ",
+      "text": "{2, 1, 0, 0}"
+     },
+     {
+      "label": "ウ",
+      "text": "{3, 4, 1, 0}"
+     },
+     {
+      "label": "エ",
+      "text": "{3, 4, 0, 0}"
+     }
+    ],
+    "answer": "{3, 4, 0, 0}",
+    "answer_label": "エ",
+    "explain": [
+     "5行目は全部で9回実行されます。",
+     "実行した直後の count は、順に {0, 1, 0, 0} → {1, 1, 0, 0} → {2, 1, 0, 0} → {2, 2, 0, 0} → {2, 3, 0, 0} → {2, 4, 0, 0} → {3, 4, 0, 0} → {3, 4, 1, 0} → {4, 4, 1, 0} です。",
+     "7回目の直後なので、答えは {3, 4, 0, 0} です。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": "count",
+     "step": 23,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 tally は，配列 data に 1 から kinds までの整数がそれぞれ何個あるかを数え，個数の配列を返す。data の要素は 1 以上 kinds 以下の整数である。配列の要素番号は 1 から始まる。",
+   "関数 tally を tally({2, 1, 1, 2, 2, 2, 1, 3, 1}, 4) として呼び出したとき，プログラム中の α の行を7回目に実行した直後の変数 count の値は［　ａ　］となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "{0, 0, 0, 0}"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "{3, 4, 1, 0}"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "{3, 0, 4, 0}"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "{2, 1, 0, 0}"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "{2, 2, 0, 0}"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "{4, 3, 0, 0}"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "{2, 4, 0, 0}"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "{3, 4, 0, 0}"
+    ]
+   }
+  ],
+  "answer_label": "ク",
+  "answer_text": "{3, 4, 0, 0}",
+  "explain": [
+   "5行目は全部で9回実行されます。",
+   "実行した直後の count は、順に {0, 1, 0, 0} → {1, 1, 0, 0} → {2, 1, 0, 0} → {2, 2, 0, 0} → {2, 3, 0, 0} → {2, 4, 0, 0} → {3, 4, 0, 0} → {3, 4, 1, 0} → {4, 4, 1, 0} です。",
+   "7回目の直後なので、答えは {3, 4, 0, 0} です。"
+  ],
+  "source": "○整数型の配列: tally(整数型の配列: data, 整数型: kinds)\n  整数型の配列: count ← {kinds 個の 0}\n  整数型: i\n  for (i を 1 から dataの要素数 まで 1 ずつ増やす)\n    count[data[i]] ← count[data[i]] ＋ 1\n  endfor\n  return count",
+  "markers": {
+   "5": "α"
+  },
+  "focus": {
+   "line": 5,
+   "variable": "count",
+   "step": 23
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "kinds",
+   "count",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      true
+     ],
+     "kinds": [
+      "4",
+      true
+     ],
+     "count": [
+      "{0, 0, 0, 0}",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 0, 0, 0}",
+      false
+     ],
+     "i": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 0, 0, 0}",
+      false
+     ],
+     "i": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 0, 0, 0}",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 1, 0, 0}",
+      true
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{0, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{1, 1, 0, 0}",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{1, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{1, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 1, 0, 0}",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 1, 0, 0}",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 2, 0, 0}",
+      true
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 2, 0, 0}",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 2, 0, 0}",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 3, 0, 0}",
+      true
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 3, 0, 0}",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 3, 0, 0}",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 4, 0, 0}",
+      true
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 4, 0, 0}",
+      false
+     ],
+     "i": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{2, 4, 0, 0}",
+      false
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 0, 0}",
+      true
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 0, 0}",
+      false
+     ],
+     "i": [
+      "8",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 0, 0}",
+      false
+     ],
+     "i": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 1, 0}",
+      true
+     ],
+     "i": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 27,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 1, 0}",
+      false
+     ],
+     "i": [
+      "9",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 28,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{3, 4, 1, 0}",
+      false
+     ],
+     "i": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 29,
+    "line": 5,
+    "what": "代入",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{4, 4, 1, 0}",
+      true
+     ],
+     "i": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 30,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{4, 4, 1, 0}",
+      false
+     ],
+     "i": [
+      "10",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 31,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{4, 4, 1, 0}",
+      false
+     ],
+     "i": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 32,
+    "line": 7,
+    "what": "戻る（{4, 4, 1, 0}）",
+    "proc": "tally",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{2, 1, 1, 2, 2, 2, 1, 3, 1}",
+      false
+     ],
+     "kinds": [
+      "4",
+      false
+     ],
+     "count": [
+      "{4, 4, 1, 0}",
+      false
+     ],
+     "i": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

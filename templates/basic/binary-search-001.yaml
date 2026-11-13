@@ -1,0 +1,51 @@
+id: binary-search-001
+title: 二分探索
+level: 2
+access: free
+tags: [while, if, 配列, 探索, の商]
+array_base: 1
+description: 関数 search は、昇順に並んだ配列 data から target を探し、見つかった要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [6, 9], range: [1, 40], unique: true, sorted: asc}
+  target: {type: element, of: data}
+
+source: |
+  ○整数型: search(整数型の配列: data, 整数型: target)
+    整数型: low ← 1
+    整数型: high ← dataの要素数
+    整数型: middle
+    while (low ≦ high)
+      middle ← (low ＋ high) ÷ 2 の商   // @mid
+      if (data[middle] < target)
+        low ← middle ＋ 1
+      elseif (data[middle] > target)
+        high ← middle － 1
+      else
+        return middle
+      endif
+    endwhile
+    return 0
+
+call: "search(${data}, ${target})"
+
+quality:
+  - "count(mid) ≧ 2"
+
+questions:
+  # 配列を見るだけで答えが分かるので、出題されにくくしている
+  - {type: return_value, weight: 0.2, domain: {index_of: data, extra: [0]}}
+  - {type: var_at_line, line: mid, var: middle, pass: random, domain: {index_of: data}}
+  - {type: exec_count, line: mid}
+  - type: fill_blank
+    blank: "data[middle] < target"
+    distractors:
+      - "data[middle] > target"
+      - "data[low] < target"
+      - "middle < target"
+      - "data[middle] ≦ target"
+      - "data[high] < target"
+
+explanation: |
+  探す範囲の真ん中 middle と target を比べ、範囲を半分ずつ狭めていきます。
+  data[middle] が target と等しくなったときの middle、つまり ${result} が戻り値です。

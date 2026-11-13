@@ -1,0 +1,728 @@
+{
+ "version": 1,
+ "template_id": "binary-search-001",
+ "number": 28,
+ "seed": 26,
+ "description": "関数 search は、昇順に並んだ配列 data から target を探し、見つかった要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+ "call": "search({3, 22, 27, 32, 35, 39}, 22)",
+ "source": "○整数型: search(整数型の配列: data, 整数型: target)\n  整数型: low ← 1\n  整数型: high ← dataの要素数\n  整数型: middle\n  while (low ≦ high)\n    middle ← (low ＋ high) ÷ 2 の商\n    if (data[middle] < target)\n      low ← middle ＋ 1\n    elseif (data[middle] > target)\n      high ← middle － 1\n    else\n      return middle\n    endif\n  endwhile\n  return 0",
+ "explanation": "探す範囲の真ん中 middle と target を比べ、範囲を半分ずつ狭めていきます。\ndata[middle] が target と等しくなったときの middle、つまり 2 が戻り値です。",
+ "practice": {
+  "source": "○整数型: search(整数型の配列: data, 整数型: target)\n  整数型: low ← 1\n  整数型: high ← dataの要素数\n  整数型: middle\n  while (low ≦ high)\n    middle ← (low ＋ high) ÷ 2 の商\n    if (［　ａ　］)\n      low ← middle ＋ 1\n    elseif (data[middle] > target)\n      high ← middle － 1\n    else\n      return middle\n    endif\n  endwhile\n  return 0",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "search({3, 22, 27, 32, 35, 39}, 22) を呼び出すと戻り値は 2 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "data[middle] ≦ target"
+     },
+     {
+      "label": "イ",
+      "text": "data[middle] < target"
+     },
+     {
+      "label": "ウ",
+      "text": "data[middle] > target"
+     },
+     {
+      "label": "エ",
+      "text": "data[low] < target"
+     }
+    ],
+    "answer": "data[middle] < target",
+    "answer_label": "イ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「data[middle] ≦ target」→ 戻り値は 0",
+     "「data[middle] < target」→ 戻り値は 2（正解）",
+     "「data[middle] > target」→ 戻り値は 0",
+     "「data[low] < target」→ 戻り値は 0"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "6行目を3回目に実行した直後の、変数 middle の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "3"
+     },
+     {
+      "label": "エ",
+      "text": "4"
+     }
+    ],
+    "answer": "2",
+    "answer_label": "イ",
+    "explain": [
+     "6行目は全部で3回実行されます。",
+     "実行した直後の middle は、順に 3 → 1 → 2 です。",
+     "3回目の直後なので、答えは 2 です。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": "middle",
+     "step": 14,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "6行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "2"
+     },
+     {
+      "label": "イ",
+      "text": "3"
+     },
+     {
+      "label": "ウ",
+      "text": "4"
+     },
+     {
+      "label": "エ",
+      "text": "6"
+     }
+    ],
+    "answer": "3",
+    "answer_label": "イ",
+    "explain": [
+     "6行目は3回実行されます。トレース表で 6行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+  "body": [
+   "関数 search は，昇順に並んだ配列 data から target を探し，見つかった要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+   "関数 search を search({3, 22, 27, 32, 35, 39}, 22) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行され，3回目に実行した直後の変数 middle の値は［　ｂ　］となる。"
+  ],
+  "blanks": [
+   "ａ",
+   "ｂ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "2",
+     "1"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "2",
+     "3"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "3",
+     "1"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "3",
+     "2"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "3",
+     "3"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "4",
+     "1"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "4",
+     "2"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "4",
+     "3"
+    ]
+   }
+  ],
+  "answer_label": "エ",
+  "answer_text": "ａ 3，ｂ 2",
+  "explain": [
+   "6行目は3回実行されます。トレース表で 6行目の行を数えると確かめられます。",
+   "6行目は全部で3回実行されます。",
+   "実行した直後の middle は、順に 3 → 1 → 2 です。",
+   "3回目の直後なので、答えは 2 です。"
+  ],
+  "source": "○整数型: search(整数型の配列: data, 整数型: target)\n  整数型: low ← 1\n  整数型: high ← dataの要素数\n  整数型: middle\n  while (low ≦ high)\n    middle ← (low ＋ high) ÷ 2 の商\n    if (data[middle] < target)\n      low ← middle ＋ 1\n    elseif (data[middle] > target)\n      high ← middle － 1\n    else\n      return middle\n    endif\n  endwhile\n  return 0",
+  "markers": {
+   "6": "α"
+  },
+  "focus": {
+   "line": 6,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "target",
+   "low",
+   "high",
+   "middle"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      true
+     ],
+     "target": [
+      "22",
+      true
+     ],
+     "low": [
+      "1",
+      true
+     ],
+     "high": [
+      "",
+      false
+     ],
+     "middle": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      true
+     ],
+     "middle": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "宣言",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      false
+     ],
+     "middle": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      false
+     ],
+     "middle": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 6,
+    "what": "代入",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      false
+     ],
+     "middle": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 7,
+    "what": "条件判定（偽）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      false
+     ],
+     "middle": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 9,
+    "what": "条件判定（真）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "6",
+      false
+     ],
+     "middle": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 10,
+    "what": "代入",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "2",
+      true
+     ],
+     "middle": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 6,
+    "what": "代入",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 7,
+    "what": "条件判定（真）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "1",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 8,
+    "what": "代入",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      true
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 6,
+    "what": "代入",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 7,
+    "what": "条件判定（偽）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 9,
+    "what": "条件判定（偽）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 12,
+    "what": "戻る（2）",
+    "proc": "search",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{3, 22, 27, 32, 35, 39}",
+      false
+     ],
+     "target": [
+      "22",
+      false
+     ],
+     "low": [
+      "2",
+      false
+     ],
+     "high": [
+      "2",
+      false
+     ],
+     "middle": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

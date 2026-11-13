@@ -1,0 +1,32 @@
+# サイト全体の設定。ここを直して `python build.py` を実行すると dist/ に反映される。
+
+name: 擬似言語トレースドリル
+exam_label: 基本情報 科目B          # タイトルの後ろに付く補足。試験の呼び名が変わったらここを直す
+tagline: 基本情報技術者試験・科目Bの擬似言語を、1行ずつ追って解く練習サイト
+description: >-
+  基本情報技術者試験 科目Bの擬似言語プログラムを、値を変えながら何度でもトレースできる無料の練習サイトです。
+  全ステップのトレース表つきで、どこで間違えたかがすぐ分かります。
+
+# 公開先。ドメインを取ったら base_url と custom_domain を差し替える。
+base_url: https://tracedrill.com     # 末尾に / を付けない
+custom_domain: tracedrill.com   # 例: example.com （書くと dist/CNAME を出力する）
+base_path: ""                      # 独自ドメインなら空。ユーザー名.github.io/リポジトリ名 で出すなら "/リポジトリ名"
+
+problems:
+  indexed: 10        # 1テンプレートあたり、検索対象にする問題数
+  extra: 20          # 検索対象外（noindex）の追加問題数
+  candidates: 150    # 候補として試す種（seed）の数。この中から答えがばらけるように選ぶ
+  min_weight: 0.5    # 設問の weight がこれ未満なら静的ページには出さない
+
+# 連絡先。個人のアドレスは書かない。フォームのURLか、サイト専用のアドレスを入れる。
+contact:
+  form_url: https://forms.gle/gxV5ZgjNYdbrkwWz7    # 例: Googleフォームなどの URL
+  email: ""          # 例: info@example.com （ドメインのメール転送で作る専用アドレス）
+
+analytics:
+  cloudflare_token: ""        # Cloudflare Web Analytics のトークン（空なら計測タグを出さない）
+search_console:
+  google_verification: ""     # Search Console の「HTMLタグ」方式の content 値（DNS で確認するなら空でよい）
+
+ogp:
+  font: site/fonts/NotoSansJP-Bold.otf

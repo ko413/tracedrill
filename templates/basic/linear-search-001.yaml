@@ -1,0 +1,45 @@
+id: linear-search-001
+title: 線形探索
+level: 1
+access: free
+tags: [while, and, 配列, 探索]
+array_base: 1
+description: 関数 find は、配列 data を先頭から順に調べ、target と等しい最初の要素の要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [5, 8], range: [1, 20], unique: true}
+  target: {type: element, of: data}
+
+source: |
+  ○整数型: find(整数型の配列: data, 整数型: target)
+    整数型: i ← 1
+    while (i ≦ dataの要素数 and data[i] ≠ target)   // @check
+      i ← i ＋ 1   // @next
+    endwhile
+    if (i ≦ dataの要素数)
+      return i
+    endif
+    return 0
+
+call: "find(${data}, ${target})"
+
+quality:
+  - "count(next) ≧ 2"
+
+questions:
+  - {type: return_value, weight: 0.2, domain: {index_of: data, extra: [0]}}
+  - {type: exec_count, line: check}
+  - {type: var_at_line, line: next, var: i, pass: last}
+  - type: fill_blank
+    blank: "data[i] ≠ target"
+    distractors:
+      - "data[i] ＝ target"
+      - "data[i] < target"
+      - "data[i] > target"
+      - "data[i ＋ 1] ≠ target"
+      - "data[i] ≠ i"
+      - "data[1] ≠ target"
+
+explanation: |
+  先頭から1つずつ target と比べ、等しい要素が見つかるか、配列の終わりを過ぎるまで i を進めます。
+  繰返しを抜けたとき、i が要素数以下なら見つかっています。ここでの戻り値は ${result} です。

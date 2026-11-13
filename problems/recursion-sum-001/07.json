@@ -1,0 +1,402 @@
+{
+ "version": 1,
+ "template_id": "recursion-sum-001",
+ "number": 7,
+ "seed": 23,
+ "description": "関数 f は、自分自身を呼び出して値を計算する。",
+ "call": "f(15)",
+ "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(n － 2)",
+ "explanation": "f(15) は 15 ＋ f(15 － 2) です。n が 1 以下になるまで呼出しが続き、そこで 0 が返ります。\n戻ってくる順に足していくと 63 になります。",
+ "practice": {
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(［　ａ　］)",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "f(15) を呼び出すと戻り値は 63 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "n － 1"
+     },
+     {
+      "label": "イ",
+      "text": "n － 5"
+     },
+     {
+      "label": "ウ",
+      "text": "n － 2"
+     },
+     {
+      "label": "エ",
+      "text": "n"
+     }
+    ],
+    "answer": "n － 2",
+    "answer_label": "ウ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「n － 1」→ 戻り値は 119",
+     "「n － 5」→ 戻り値は 30",
+     "「n － 2」→ 戻り値は 63（正解）",
+     "「n」→ 繰返しが終わらない"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "5行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "6"
+     },
+     {
+      "label": "ウ",
+      "text": "7"
+     },
+     {
+      "label": "エ",
+      "text": "8"
+     }
+    ],
+    "answer": "7",
+    "answer_label": "ウ",
+    "explain": [
+     "5行目は7回実行されます。トレース表で 5行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+  "body": [
+   "関数 f は，自分自身を呼び出して値を計算する。",
+   "関数 f を f(15) として呼び出すと，プログラム中の α の行は［　ａ　］回実行され，戻り値は［　ｂ　］となる。"
+  ],
+  "blanks": [
+   "ａ",
+   "ｂ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "6",
+     "15"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "6",
+     "63"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "6",
+     "64"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "7",
+     "15"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "7",
+     "63"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "7",
+     "64"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "8",
+     "15"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "8",
+     "63"
+    ]
+   }
+  ],
+  "answer_label": "オ",
+  "answer_text": "ａ 7，ｂ 63",
+  "explain": [
+   "5行目は7回実行されます。トレース表で 5行目の行を数えると確かめられます。",
+   "呼出しは全部で8回行われます。",
+   "奥の呼出しから順に 0 → 3 → 8 → 15 → 24 → 35 → 48 → 63 を返し、最後に返る 63 が答えです。"
+  ],
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 0\n  endif\n  return n ＋ f(n － 2)",
+  "markers": {
+   "5": "α"
+  },
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "n"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "15",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "11",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "9",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 7,
+    "cells": {
+     "n": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "f",
+    "depth": 8,
+    "cells": {
+     "n": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 3,
+    "what": "戻る（0）",
+    "proc": "f",
+    "depth": 8,
+    "cells": {
+     "n": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "戻る（3）",
+    "proc": "f",
+    "depth": 7,
+    "cells": {
+     "n": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 5,
+    "what": "戻る（8）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "戻る（15）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 5,
+    "what": "戻る（24）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "9",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 5,
+    "what": "戻る（35）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "11",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 5,
+    "what": "戻る（48）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 5,
+    "what": "戻る（63）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "15",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

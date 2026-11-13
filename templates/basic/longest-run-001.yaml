@@ -1,0 +1,55 @@
+id: longest-run-001
+title: 同じ文字が続く最長の長さ
+level: 2
+access: free
+tags: [for, if, else, 文字, 配列]
+array_base: 1
+description: 関数 longestRun は、文字の配列 s の中で、同じ文字が連続する部分の最長の長さを返す。配列の要素番号は 1 から始まる。
+
+params:
+  s: {type: char_array, length: [6, 9], alphabet: "abc"}
+
+source: |
+  ○整数型: longestRun(文字型の配列: s)
+    整数型: best ← 1
+    整数型: run ← 1
+    整数型: i
+    for (i を 2 から sの要素数 まで 1 ずつ増やす)
+      if (s[i] ＝ s[i － 1])
+        run ← run ＋ 1   // @grow
+      else
+        run ← 1   // @reset
+      endif
+      if (run > best)
+        best ← run   // @upd
+      endif
+    endfor
+    return best
+
+call: "longestRun(${s})"
+
+quality:
+  - "count(grow) ≧ 2"
+  - "count(reset) ≧ 2"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: grow, var: run, pass: random}
+  - {type: exec_count, line: reset}
+  - type: fill_blank
+    blank: "s[i] ＝ s[i － 1]"
+    distractors:
+      - "s[i] ≠ s[i － 1]"
+      - "s[i] ＝ s[1]"
+      - "s[i] ＝ s[i ＋ 1]"
+      - "s[i － 1] ＝ s[1]"
+      - "i ＝ run"
+    blank_b: "run > best"
+    distractors_b:
+      - "run < best"
+      - "i > best"
+      - "run > i"
+
+explanation: |
+  run は「今続いている同じ文字の長さ」、best は「これまでの最長」です。
+  前の文字と同じなら run を 1 増やし、違えば 1 に戻します。最長の長さは ${result} です。

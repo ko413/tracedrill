@@ -1,0 +1,500 @@
+{
+ "version": 1,
+ "template_id": "digit-sum-001",
+ "number": 20,
+ "seed": 62,
+ "description": "関数 digitSum は、正の整数 n の各桁の数字の和を返す。",
+ "call": "digitSum(75182)",
+ "source": "○整数型: digitSum(整数型: n)\n  整数型: sum ← 0\n  do\n    sum ← sum ＋ n ÷ 10 の余り\n    n ← n ÷ 10 の商\n  while (n > 0)\n  return sum",
+ "explanation": "10 で割った余りが一の位です。それを sum に足し、n を 10 で割った商に置き換えると、次の桁が一の位に来ます。\nn が 0 になるまで繰り返すと、和は 23 になります。",
+ "practice": {
+  "source": "○整数型: digitSum(整数型: n)\n  整数型: sum ← 0\n  do\n    sum ← sum ＋ n ÷ 10 の余り\n    n ← n ÷ 10 の商\n  while (n > 0)\n  return sum",
+  "questions": [
+   {
+    "type": "var_at_line",
+    "prompt": "4行目を5回目に実行した直後の、変数 sum の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "7"
+     },
+     {
+      "label": "イ",
+      "text": "10"
+     },
+     {
+      "label": "ウ",
+      "text": "16"
+     },
+     {
+      "label": "エ",
+      "text": "23"
+     }
+    ],
+    "answer": "23",
+    "answer_label": "エ",
+    "explain": [
+     "4行目は全部で5回実行されます。",
+     "実行した直後の sum は、順に 2 → 10 → 11 → 16 → 23 です。",
+     "5回目の直後なので、答えは 23 です。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": "sum",
+     "step": 14,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "4行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "4"
+     },
+     {
+      "label": "ウ",
+      "text": "5"
+     },
+     {
+      "label": "エ",
+      "text": "6"
+     }
+    ],
+    "answer": "5",
+    "answer_label": "ウ",
+    "explain": [
+     "4行目は5回実行されます。トレース表で 4行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "digitSum(75182) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "0"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "11"
+     },
+     {
+      "label": "エ",
+      "text": "23"
+     }
+    ],
+    "answer": "23",
+    "answer_label": "エ",
+    "explain": [
+     "戻り値になる sum は、0 → 2 → 10 → 11 → 16 → 23 と変わります。",
+     "7行目で返す時点の値 23 が答えです。"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": null,
+     "step": 17,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 digitSum は，正の整数 n の各桁の数字の和を返す。",
+   "関数 digitSum を digitSum(75182) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "0"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "6"
+    ]
+   }
+  ],
+  "answer_label": "カ",
+  "answer_text": "5",
+  "explain": [
+   "4行目は5回実行されます。トレース表で 4行目の行を数えると確かめられます。"
+  ],
+  "source": "○整数型: digitSum(整数型: n)\n  整数型: sum ← 0\n  do\n    sum ← sum ＋ n ÷ 10 の余り\n    n ← n ÷ 10 の商\n  while (n > 0)\n  return sum",
+  "markers": {
+   "4": "α"
+  },
+  "focus": {
+   "line": 4,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "n",
+   "sum"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "75182",
+      true
+     ],
+     "sum": [
+      "0",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 4,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "75182",
+      false
+     ],
+     "sum": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 5,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7518",
+      true
+     ],
+     "sum": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7518",
+      false
+     ],
+     "sum": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 4,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7518",
+      false
+     ],
+     "sum": [
+      "10",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 5,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "751",
+      true
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "751",
+      false
+     ],
+     "sum": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 4,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "751",
+      false
+     ],
+     "sum": [
+      "11",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 5,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "75",
+      true
+     ],
+     "sum": [
+      "11",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "75",
+      false
+     ],
+     "sum": [
+      "11",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "75",
+      false
+     ],
+     "sum": [
+      "16",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7",
+      true
+     ],
+     "sum": [
+      "16",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7",
+      false
+     ],
+     "sum": [
+      "16",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 4,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "7",
+      false
+     ],
+     "sum": [
+      "23",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 5,
+    "what": "代入",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "0",
+      true
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 6,
+    "what": "条件判定（偽）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "0",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 7,
+    "what": "戻る（23）",
+    "proc": "digitSum",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "0",
+      false
+     ],
+     "sum": [
+      "23",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

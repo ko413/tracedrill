@@ -1,0 +1,589 @@
+{
+ "version": 1,
+ "template_id": "array-reverse-001",
+ "number": 14,
+ "seed": 13,
+ "description": "関数 reverse は、配列 data の要素の並びを逆順にして返す。配列の要素番号は 1 から始まる。",
+ "call": "reverse({4, 7, 2, 3, 5})",
+ "source": "○整数型の配列: reverse(整数型の配列: data)\n  整数型: n ← dataの要素数\n  整数型: i, tmp\n  for (i を 1 から n ÷ 2 の商 まで 1 ずつ増やす)\n    tmp ← data[i]\n    data[i] ← data[n － i ＋ 1]\n    data[n － i ＋ 1] ← tmp\n  endfor\n  return data",
+ "explanation": "先頭側と末尾側の要素を、外側から順に入れ替えます。\n入替えは要素数の半分の回数で止めます。最後まで続けると、入れ替えたものを元に戻してしまうためです。",
+ "practice": {
+  "source": "○整数型の配列: reverse(整数型の配列: data)\n  整数型: n ← dataの要素数\n  整数型: i, tmp\n  for (i を 1 から ［　ａ　］ まで 1 ずつ増やす)\n    tmp ← data[i]\n    data[i] ← data[n － i ＋ 1]\n    data[n － i ＋ 1] ← tmp\n  endfor\n  return data",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "reverse({4, 7, 2, 3, 5}) を呼び出すと戻り値は {5, 3, 2, 7, 4} になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "n"
+     },
+     {
+      "label": "イ",
+      "text": "n ÷ 2 の商 － 1"
+     },
+     {
+      "label": "ウ",
+      "text": "n ÷ 2 の商"
+     },
+     {
+      "label": "エ",
+      "text": "1"
+     }
+    ],
+    "answer": "n ÷ 2 の商",
+    "answer_label": "ウ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「n」→ 戻り値は {4, 7, 2, 3, 5}",
+     "「n ÷ 2 の商 － 1」→ 戻り値は {5, 7, 2, 3, 4}",
+     "「n ÷ 2 の商」→ 戻り値は {5, 3, 2, 7, 4}（正解）",
+     "「1」→ 戻り値は {5, 7, 2, 3, 4}"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "7行目を1回目に実行した直後の、変数 data の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{5, 7, 2, 3, 4}"
+     },
+     {
+      "label": "イ",
+      "text": "{4, 7, 2, 3, 5}"
+     },
+     {
+      "label": "ウ",
+      "text": "{5, 7, 2, 4, 3}"
+     },
+     {
+      "label": "エ",
+      "text": "{5, 3, 2, 7, 4}"
+     }
+    ],
+    "answer": "{5, 7, 2, 3, 4}",
+    "answer_label": "ア",
+    "explain": [
+     "7行目は全部で2回実行されます。",
+     "実行した直後の data は、順に {5, 7, 2, 3, 4} → {5, 3, 2, 7, 4} です。",
+     "1回目の直後なので、答えは {5, 7, 2, 3, 4} です。"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": "data",
+     "step": 7,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "7行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "3"
+     },
+     {
+      "label": "エ",
+      "text": "5"
+     }
+    ],
+    "answer": "2",
+    "answer_label": "イ",
+    "explain": [
+     "7行目は2回実行されます。トレース表で 7行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 7,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 reverse は，配列 data の要素の並びを逆順にして返す。配列の要素番号は 1 から始まる。",
+   "関数 reverse を reverse({4, 7, 2, 3, 5}) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行される。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "0"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "2"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "6"
+    ]
+   }
+  ],
+  "answer_label": "ウ",
+  "answer_text": "2",
+  "explain": [
+   "7行目は2回実行されます。トレース表で 7行目の行を数えると確かめられます。"
+  ],
+  "source": "○整数型の配列: reverse(整数型の配列: data)\n  整数型: n ← dataの要素数\n  整数型: i, tmp\n  for (i を 1 から n ÷ 2 の商 まで 1 ずつ増やす)\n    tmp ← data[i]\n    data[i] ← data[n － i ＋ 1]\n    data[n － i ＋ 1] ← tmp\n  endfor\n  return data",
+  "markers": {
+   "7": "α"
+  },
+  "focus": {
+   "line": 7,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "n",
+   "i",
+   "tmp"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 7, 2, 3, 5}",
+      true
+     ],
+     "n": [
+      "5",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ],
+     "tmp": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 7, 2, 3, 5}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "未設定",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 7, 2, 3, 5}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "1",
+      true
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 7, 2, 3, 5}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 7, 2, 3, 5}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 7, 2, 3, 5}",
+      true
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 7,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 7, 2, 3, 4}",
+      true
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 7, 2, 3, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 7, 2, 3, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 7, 2, 3, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "tmp": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 6,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 3, 2, 3, 4}",
+      true
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "tmp": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 7,
+    "what": "代入",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 3, 2, 7, 4}",
+      true
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ],
+     "tmp": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 3, 2, 7, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ],
+     "tmp": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 3, 2, 7, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 9,
+    "what": "戻る（{5, 3, 2, 7, 4}）",
+    "proc": "reverse",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{5, 3, 2, 7, 4}",
+      false
+     ],
+     "n": [
+      "5",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

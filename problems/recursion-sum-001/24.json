@@ -1,0 +1,331 @@
+{
+ "version": 1,
+ "template_id": "recursion-sum-001",
+ "number": 24,
+ "seed": 36,
+ "description": "関数 f は、自分自身を呼び出して値を計算する。",
+ "call": "f(16)",
+ "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 1\n  endif\n  return n ＋ f(n － 3)",
+ "explanation": "f(16) は 16 ＋ f(16 － 3) です。n が 1 以下になるまで呼出しが続き、そこで 1 が返ります。\n戻ってくる順に足していくと 51 になります。",
+ "practice": {
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 1\n  endif\n  return n ＋ f(n － 3)",
+  "questions": [
+   {
+    "type": "exec_count",
+    "prompt": "5行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "4"
+     },
+     {
+      "label": "ウ",
+      "text": "5"
+     },
+     {
+      "label": "エ",
+      "text": "6"
+     }
+    ],
+    "answer": "5",
+    "answer_label": "ウ",
+    "explain": [
+     "5行目は5回実行されます。トレース表で 5行目の行を数えると確かめられます。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "f(16) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "16"
+     },
+     {
+      "label": "イ",
+      "text": "50"
+     },
+     {
+      "label": "ウ",
+      "text": "51"
+     },
+     {
+      "label": "エ",
+      "text": "52"
+     }
+    ],
+    "answer": "51",
+    "answer_label": "ウ",
+    "explain": [
+     "呼出しは全部で6回行われます。",
+     "奥の呼出しから順に 1 → 5 → 12 → 22 → 35 → 51 を返し、最後に返る 51 が答えです。"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": 12,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 f は，自分自身を呼び出して値を計算する。",
+   "関数 f を f(16) として呼び出すと，戻り値は［　ａ　］となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "16"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "48"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "49"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "50"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "51"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "52"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "53"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "54"
+    ]
+   }
+  ],
+  "answer_label": "オ",
+  "answer_text": "51",
+  "explain": [
+   "呼出しは全部で6回行われます。",
+   "奥の呼出しから順に 1 → 5 → 12 → 22 → 35 → 51 を返し、最後に返る 51 が答えです。"
+  ],
+  "source": "○整数型: f(整数型: n)\n  if (n ≦ 1)\n    return 1\n  endif\n  return n ＋ f(n － 3)",
+  "markers": {},
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": 12
+  }
+ },
+ "trace": {
+  "names": [
+   "n"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "16",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "10",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 2,
+    "what": "条件判定（偽）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 2,
+    "what": "条件判定（真）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 3,
+    "what": "戻る（1）",
+    "proc": "f",
+    "depth": 6,
+    "cells": {
+     "n": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "戻る（5）",
+    "proc": "f",
+    "depth": 5,
+    "cells": {
+     "n": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 5,
+    "what": "戻る（12）",
+    "proc": "f",
+    "depth": 4,
+    "cells": {
+     "n": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 5,
+    "what": "戻る（22）",
+    "proc": "f",
+    "depth": 3,
+    "cells": {
+     "n": [
+      "10",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 5,
+    "what": "戻る（35）",
+    "proc": "f",
+    "depth": 2,
+    "cells": {
+     "n": [
+      "13",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "戻る（51）",
+    "proc": "f",
+    "depth": 1,
+    "cells": {
+     "n": [
+      "16",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

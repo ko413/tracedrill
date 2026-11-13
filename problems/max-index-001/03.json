@@ -1,0 +1,812 @@
+{
+ "version": 1,
+ "template_id": "max-index-001",
+ "number": 3,
+ "seed": 10,
+ "description": "関数 maxIndex は、配列 data の中で最も大きい要素の要素番号を返す。配列の要素番号は 1 から始まる。",
+ "call": "maxIndex({1, 10, 15, 21, 14, 30, 13})",
+ "source": "○整数型: maxIndex(整数型の配列: data)\n  整数型: pos ← 1\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (data[i] > data[pos])\n      pos ← i\n    endif\n  endfor\n  return pos",
+ "explanation": "pos は「これまでに見た中で最大の要素の位置」です。\nそれより大きい要素が見つかるたびに pos を書き換えるので、最後の pos は 6 になります。",
+ "practice": {
+  "source": "○整数型: maxIndex(整数型の配列: data)\n  整数型: pos ← 1\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (［　ａ　］)\n      pos ← i\n    endif\n  endfor\n  return pos",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "maxIndex({1, 10, 15, 21, 14, 30, 13}) を呼び出すと戻り値は 6 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "i > pos"
+     },
+     {
+      "label": "イ",
+      "text": "i > data[pos]"
+     },
+     {
+      "label": "ウ",
+      "text": "data[i] < data[pos]"
+     },
+     {
+      "label": "エ",
+      "text": "data[i] > data[pos]"
+     }
+    ],
+    "answer": "data[i] > data[pos]",
+    "answer_label": "エ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「i > pos」→ 戻り値は 7",
+     "「i > data[pos]」→ 戻り値は 2",
+     "「data[i] < data[pos]」→ 戻り値は 1",
+     "「data[i] > data[pos]」→ 戻り値は 6（正解）"
+    ],
+    "focus": {
+     "line": 5,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "6行目を3回目に実行した直後の、変数 pos の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "2"
+     },
+     {
+      "label": "イ",
+      "text": "3"
+     },
+     {
+      "label": "ウ",
+      "text": "4"
+     },
+     {
+      "label": "エ",
+      "text": "6"
+     }
+    ],
+    "answer": "4",
+    "answer_label": "ウ",
+    "explain": [
+     "6行目は全部で4回実行されます。",
+     "実行した直後の pos は、順に 2 → 3 → 4 → 6 です。",
+     "3回目の直後なので、答えは 4 です。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": "pos",
+     "step": 14,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "6行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "3"
+     },
+     {
+      "label": "ウ",
+      "text": "4"
+     },
+     {
+      "label": "エ",
+      "text": "5"
+     }
+    ],
+    "answer": "4",
+    "answer_label": "ウ",
+    "explain": [
+     "6行目が実行されるのは、5行目の条件が真になったときだけです。",
+     "5行目の条件は6回評価され、真になるのは4回です。したがって 6行目は4回実行されます。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］と［　ｂ　］に入れる正しい答えの組合せを，解答群の中から選べ。",
+  "body": [
+   "関数 maxIndex は，配列 data の中で最も大きい要素の要素番号を返す。配列の要素番号は 1 から始まる。",
+   "関数 maxIndex を maxIndex({1, 10, 15, 21, 14, 30, 13}) として呼び出したとき，プログラム中の α の行は［　ａ　］回実行され，3回目に実行した直後の変数 pos の値は［　ｂ　］となる。"
+  ],
+  "blanks": [
+   "ａ",
+   "ｂ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "3",
+     "3"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "3",
+     "4"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "4",
+     "3"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "4",
+     "4"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "4",
+     "6"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "5",
+     "3"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "5",
+     "4"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "5",
+     "6"
+    ]
+   }
+  ],
+  "answer_label": "エ",
+  "answer_text": "ａ 4，ｂ 4",
+  "explain": [
+   "6行目が実行されるのは、5行目の条件が真になったときだけです。",
+   "5行目の条件は6回評価され、真になるのは4回です。したがって 6行目は4回実行されます。",
+   "6行目は全部で4回実行されます。",
+   "実行した直後の pos は、順に 2 → 3 → 4 → 6 です。",
+   "3回目の直後なので、答えは 4 です。"
+  ],
+  "source": "○整数型: maxIndex(整数型の配列: data)\n  整数型: pos ← 1\n  整数型: i\n  for (i を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (data[i] > data[pos])\n      pos ← i\n    endif\n  endfor\n  return pos",
+  "markers": {
+   "6": "α"
+  },
+  "focus": {
+   "line": 6,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "pos",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      true
+     ],
+     "pos": [
+      "1",
+      true
+     ],
+     "i": [
+      "",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "宣言",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "1",
+      false
+     ],
+     "i": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "1",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "1",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "1",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 6,
+    "what": "代入",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "2",
+      true
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "2",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "2",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "2",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 6,
+    "what": "代入",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "3",
+      true
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "3",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "3",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "3",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 6,
+    "what": "代入",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      true
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "4",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 6,
+    "what": "代入",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      true
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 22,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "7",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 23,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 24,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "7",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 25,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "8",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 26,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 27,
+    "line": 9,
+    "what": "戻る（6）",
+    "proc": "maxIndex",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 10, 15, 21, 14, 30, 13}",
+      false
+     ],
+     "pos": [
+      "6",
+      false
+     ],
+     "i": [
+      "8",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

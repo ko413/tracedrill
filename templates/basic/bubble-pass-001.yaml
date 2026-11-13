@@ -1,0 +1,46 @@
+id: bubble-pass-001
+title: 隣どうしの比較と交換（1巡）
+level: 2
+access: free
+tags: [for, if, 配列, 交換, 整列]
+array_base: 1
+description: 関数 onePass は、配列 data の隣り合う要素を先頭から順に比べ、左が大きければ入れ替える。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 6], range: [1, 9], unique: true}
+
+source: |
+  ○整数型の配列: onePass(整数型の配列: data)
+    整数型: j, tmp
+    for (j を 1 から dataの要素数 － 1 まで 1 ずつ増やす)
+      if (data[j] > data[j ＋ 1])
+        tmp ← data[j]
+        data[j] ← data[j ＋ 1]
+        data[j ＋ 1] ← tmp   // @swap
+      endif
+    endfor
+    return data
+
+call: "onePass(${data})"
+
+quality:
+  - "count(swap) ≧ 2"
+  - "count(swap) < ${data}の要素数 － 1"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: swap, var: data, pass: random}
+  - {type: exec_count, line: swap}
+  - type: fill_blank
+    blank: "data[j] > data[j ＋ 1]"
+    distractors:
+      - "data[j] < data[j ＋ 1]"
+      - "data[j] > data[1]"
+      - "j > data[j ＋ 1]"
+      - "data[j ＋ 1] > data[j]"
+      - "data[j] > data[j － 1]"
+      - "data[j] ≠ data[j ＋ 1]"
+
+explanation: |
+  1巡すると、最も大きい要素が末尾まで運ばれます。
+  それ以外の要素は、途中で入れ替わった分だけ動きます。

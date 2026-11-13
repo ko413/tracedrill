@@ -1,0 +1,512 @@
+{
+ "version": 1,
+ "template_id": "linear-search-001",
+ "number": 24,
+ "seed": 23,
+ "description": "関数 find は、配列 data を先頭から順に調べ、target と等しい最初の要素の要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+ "call": "find({18, 7, 1, 10, 4, 11, 6, 12}, 11)",
+ "source": "○整数型: find(整数型の配列: data, 整数型: target)\n  整数型: i ← 1\n  while (i ≦ dataの要素数 and data[i] ≠ target)\n    i ← i ＋ 1\n  endwhile\n  if (i ≦ dataの要素数)\n    return i\n  endif\n  return 0",
+ "explanation": "先頭から1つずつ target と比べ、等しい要素が見つかるか、配列の終わりを過ぎるまで i を進めます。\n繰返しを抜けたとき、i が要素数以下なら見つかっています。ここでの戻り値は 6 です。",
+ "practice": {
+  "source": "○整数型: find(整数型の配列: data, 整数型: target)\n  整数型: i ← 1\n  while (i ≦ dataの要素数 and ［　ａ　］)\n    i ← i ＋ 1\n  endwhile\n  if (i ≦ dataの要素数)\n    return i\n  endif\n  return 0",
+  "questions": [
+   {
+    "type": "fill_blank",
+    "prompt": "find({18, 7, 1, 10, 4, 11, 6, 12}, 11) を呼び出すと戻り値は 6 になる。プログラム中の ［　ａ　］ に入れる正しい答えはどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "data[i] ≠ i"
+     },
+     {
+      "label": "イ",
+      "text": "data[i] > target"
+     },
+     {
+      "label": "ウ",
+      "text": "data[i] < target"
+     },
+     {
+      "label": "エ",
+      "text": "data[i] ≠ target"
+     }
+    ],
+    "answer": "data[i] ≠ target",
+    "answer_label": "エ",
+    "explain": [
+     "それぞれの選択肢を空欄に入れて、実際に動かした結果は次のとおりです。",
+     "「data[i] ≠ i」→ 戻り値は 0",
+     "「data[i] > target」→ 戻り値は 2",
+     "「data[i] < target」→ 戻り値は 1",
+     "「data[i] ≠ target」→ 戻り値は 6（正解）"
+    ],
+    "focus": {
+     "line": 3,
+     "variable": null,
+     "step": null,
+     "showLineBefore": false
+    }
+   },
+   {
+    "type": "var_at_line",
+    "prompt": "4行目を5回目に実行した直後の、変数 i の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "4"
+     },
+     {
+      "label": "イ",
+      "text": "5"
+     },
+     {
+      "label": "ウ",
+      "text": "6"
+     },
+     {
+      "label": "エ",
+      "text": "11"
+     }
+    ],
+    "answer": "6",
+    "answer_label": "ウ",
+    "explain": [
+     "4行目は全部で5回実行されます。",
+     "実行した直後の i は、順に 2 → 3 → 4 → 5 → 6 です。",
+     "5回目の直後なので、答えは 6 です。"
+    ],
+    "focus": {
+     "line": 4,
+     "variable": "i",
+     "step": 11,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "3行目の条件式が評価される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "5"
+     },
+     {
+      "label": "ウ",
+      "text": "6"
+     },
+     {
+      "label": "エ",
+      "text": "7"
+     }
+    ],
+    "answer": "6",
+    "answer_label": "ウ",
+    "explain": [
+     "3行目の条件式は6回評価され、真が5回、偽が1回です。"
+    ],
+    "focus": {
+     "line": 3,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "statement",
+  "lead": "次の記述中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 find は，配列 data を先頭から順に調べ，target と等しい最初の要素の要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。",
+   "関数 find を find({18, 7, 1, 10, 4, 11, 6, 12}, 11) として呼び出したとき，プログラム中の α の行の条件式は［　ａ　］回評価される。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "1"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "3"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "4"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "5"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "6"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "7"
+    ]
+   },
+   {
+    "label": "キ",
+    "texts": [
+     "8"
+    ]
+   },
+   {
+    "label": "ク",
+    "texts": [
+     "9"
+    ]
+   }
+  ],
+  "answer_label": "オ",
+  "answer_text": "6",
+  "explain": [
+   "3行目の条件式は6回評価され、真が5回、偽が1回です。"
+  ],
+  "source": "○整数型: find(整数型の配列: data, 整数型: target)\n  整数型: i ← 1\n  while (i ≦ dataの要素数 and data[i] ≠ target)\n    i ← i ＋ 1\n  endwhile\n  if (i ≦ dataの要素数)\n    return i\n  endif\n  return 0",
+  "markers": {
+   "3": "α"
+  },
+  "focus": {
+   "line": 3,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "target",
+   "i"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      true
+     ],
+     "target": [
+      "11",
+      true
+     ],
+     "i": [
+      "1",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "1",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "代入",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "2",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "2",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 4,
+    "what": "代入",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "3",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "3",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "代入",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 4,
+    "what": "代入",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "5",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 3,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "5",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "代入",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "6",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 3,
+    "what": "条件判定（偽）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 6,
+    "what": "条件判定（真）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 7,
+    "what": "戻る（6）",
+    "proc": "find",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{18, 7, 1, 10, 4, 11, 6, 12}",
+      false
+     ],
+     "target": [
+      "11",
+      false
+     ],
+     "i": [
+      "6",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

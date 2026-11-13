@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.full_title }}</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ page.canonical }}">
+{% if page.noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+{% if site.search_console.google_verification %}<meta name="google-site-verification" content="{{ site.search_console.google_verification }}">{% endif %}
+<meta property="og:type" content="{{ 'website' if page.path == '/' else 'article' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ page.og_title or page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ page.canonical }}">
+<meta property="og:image" content="{{ page.og_image }}">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="{{ url('/static/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url('/static/style.css') }}?v={{ build_id }}">
+{% if page.breadcrumbs %}<script type="application/ld+json">{{ page.breadcrumb_json | safe }}</script>{% endif %}
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{{ url('/') }}">{{ site.name }}</a>
+  <nav>
+    <a href="{{ url('/') }}#algorithms">アルゴリズム</a>
+    <a href="{{ url('/guide/') }}">読み方ガイド</a>
+    <a href="{{ url('/about/') }}">このサイトについて</a>
+  </nav>
+</header>
+<main>
+{% if page.breadcrumbs %}
+<nav class="breadcrumbs" aria-label="パンくず">
+  {% for crumb in page.breadcrumbs %}{% if not loop.last %}<a href="{{ url(crumb.path) }}">{{ crumb.name }}</a> <span>›</span> {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}{% endfor %}
+</nav>
+{% endif %}
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+  <p>問題はこのサイトが自動生成したオリジナル問題で、IPAの試験問題ではありません。答えと解説は、プログラムを実際に動かした結果から作っています。</p>
+  <p><a href="{{ url('/about/') }}">このサイトについて</a>　<a href="{{ url('/for-teams/') }}">研修・スクールでのご利用</a></p>
+</footer>
+<script defer src="{{ url('/static/app.js') }}?v={{ build_id }}"></script>
+{% if site.analytics.cloudflare_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics.cloudflare_token }}"}'></script>{% endif %}
+</body>
+</html>
