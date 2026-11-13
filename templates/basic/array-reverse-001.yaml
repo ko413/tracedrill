@@ -2,6 +2,7 @@ id: array-reverse-001
 title: 配列の並びを逆にする
 level: 2
 access: free
+pace: standard
 tags: [for, 配列, 交換, の商]
 array_base: 1
 description: 関数 reverse は、配列 data の要素の並びを逆順にして返す。配列の要素番号は 1 から始まる。

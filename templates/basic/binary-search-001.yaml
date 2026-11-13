@@ -2,6 +2,7 @@ id: binary-search-001
 title: 二分探索
 level: 2
 access: free
+pace: standard
 tags: [while, if, 配列, 探索, の商]
 array_base: 1
 description: 関数 search は、昇順に並んだ配列 data から target を探し、見つかった要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。

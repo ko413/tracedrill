@@ -2,6 +2,7 @@ id: max-index-001
 title: 最大値の位置
 level: 1
 access: free
+pace: long
 tags: [for, if, 配列]
 array_base: 1
 description: 関数 maxIndex は、配列 data の中で最も大きい要素の要素番号を返す。配列の要素番号は 1 から始まる。

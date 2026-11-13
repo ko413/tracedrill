@@ -1,7 +1,8 @@
 id: longest-run-001
 title: 同じ文字が続く最長の長さ
-level: 2
+level: 3
 access: free
+pace: long
 tags: [for, if, else, 文字, 配列]
 array_base: 1
 description: 関数 longestRun は、文字の配列 s の中で、同じ文字が連続する部分の最長の長さを返す。配列の要素番号は 1 から始まる。

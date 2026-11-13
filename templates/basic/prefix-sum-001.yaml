@@ -2,6 +2,7 @@ id: prefix-sum-001
 title: 累積和
 level: 1
 access: free
+pace: standard
 tags: [for, 配列, 配列の操作]
 array_base: 1
 description: 関数 prefix は、配列 data の各要素を「先頭からその要素までの合計」に置き換えて返す。配列の要素番号は 1 から始まる。

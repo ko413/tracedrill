@@ -1,7 +1,8 @@
 id: matrix-rowsum-001
 title: 二次元配列の行ごとの合計
-level: 2
+level: 3
 access: free
+pace: long
 tags: [for, 二重ループ, 二次元配列]
 array_base: 1
 max_steps: 600

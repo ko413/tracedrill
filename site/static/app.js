@@ -27,6 +27,77 @@
   markScrollable();
   window.addEventListener('resize', markScrollable);
 
+  // ---- トップページ：今日の1問 ----
+  // 日付（日本時間）で決まる1問を出す。同じ日は誰が見ても同じ問題になる。
+  (function () {
+    var dailyData = document.getElementById('daily-data');
+    var body = document.getElementById('daily-body');
+    if (!dailyData || !body) return;
+    var items = JSON.parse(dailyData.textContent);
+    if (!items.length) return;
+    var base = (document.querySelector('.site-header .brand').getAttribute('href') || '/').replace(/\/$/, '');
+    var now = new Date(Date.now() + 9 * 3600 * 1000);
+    var today = Math.floor(now.getTime() / 86400000);
+    var offset = 0;
+
+    function esc(text) {
+      return String(text).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    function show(item) {
+      var choices = item.choices.map(function (c) {
+        return '<label><input type="radio" name="daily" value="' + esc(c.label) + '"> <b>' + esc(c.label) +
+               '</b>　<span>' + esc(c.text) + '</span></label>';
+      }).join('');
+      var explain = item.explain.map(function (line) { return '<li>' + esc(line) + '</li>'; }).join('');
+      body.className = 'question';
+      body.innerHTML =
+        '<p class="daily-meta"><span class="badge">' + esc(item.level) + '</span> ' + esc(item.title) + '</p>' +
+        '<p class="daily-call">次のプログラムを <code>' + esc(item.call) + '</code> で呼び出す。</p>' +
+        item.source_html +
+        '<p class="prompt">' + esc(item.prompt) + '</p>' +
+        '<div class="daily-choices">' + choices + '</div>' +
+        '<button type="button" class="button answer-button" disabled>解答する</button>' +
+        '<div class="result after-answer" aria-live="polite"><p class="verdict"></p>' +
+        '<p><strong>正解：' + esc(item.answer) + '　' + esc(item.answer_text) + '</strong></p><ul>' + explain + '</ul>' +
+        '<p class="daily-next"><a class="button" href="' + esc(base + item.path) + '">トレース表で確かめる</a> ' +
+        '<button type="button" class="chip" id="daily-another">別の問題を解く</button></p></div>';
+      if (item.line) {
+        all('.giji-code tr[data-line="' + item.line + '"]', body).forEach(function (el) { el.classList.add('focus'); });
+      }
+      var button = body.querySelector('.answer-button');
+      all('input[type="radio"]', body).forEach(function (radio) {
+        radio.addEventListener('change', function () { button.disabled = false; });
+      });
+      button.addEventListener('click', function () {
+        var chosen = body.querySelector('input[type="radio"]:checked');
+        if (!chosen) return;
+        var ok = chosen.value === item.answer;
+        body.classList.add('answered', ok ? 'is-correct' : 'is-wrong');
+        body.querySelector('.verdict').textContent = ok ? '正解です。' : '不正解です。';
+        all('input[type="radio"]', body).forEach(function (radio) {
+          radio.disabled = true;
+          if (radio.value === item.answer) radio.parentNode.classList.add('is-answer');
+          else if (radio.checked) radio.parentNode.classList.add('is-chosen-wrong');
+        });
+        button.hidden = true;
+      });
+      body.querySelector('#daily-another').addEventListener('click', function () {
+        offset += 1;
+        show(items[(today + offset) % items.length]);
+        document.getElementById('daily-label').textContent = 'もう1問。';
+        markScrollable();
+      });
+      markScrollable();
+    }
+
+    document.getElementById('daily-label').textContent =
+      '今日の1問（' + (now.getUTCMonth() + 1) + '月' + now.getUTCDate() + '日）';
+    show(items[today % items.length]);
+  })();
+
   // ---- 問題ページ ----
   var dataEl = document.getElementById('quiz-data');
   var root = document.getElementById('problem');

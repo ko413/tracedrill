@@ -2,6 +2,7 @@ id: tally-001
 title: 値ごとの個数を数える
 level: 2
 access: free
+pace: long
 tags: [for, 配列, 配列の操作, 集計]
 array_base: 1
 description: 関数 tally は、配列 data に 1 から kinds までの整数がそれぞれ何個あるかを数え、個数の配列を返す。data の要素は 1 以上 kinds 以下の整数である。配列の要素番号は 1 から始まる。

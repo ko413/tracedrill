@@ -2,6 +2,7 @@ id: linear-search-001
 title: 線形探索
 level: 1
 access: free
+pace: standard
 tags: [while, and, 配列, 探索]
 array_base: 1
 description: 関数 find は、配列 data を先頭から順に調べ、target と等しい最初の要素の要素番号を返す。見つからなければ 0 を返す。配列の要素番号は 1 から始まる。

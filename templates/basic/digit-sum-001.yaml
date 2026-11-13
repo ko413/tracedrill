@@ -2,6 +2,7 @@ id: digit-sum-001
 title: 各桁の和（後判定の繰返し）
 level: 1
 access: free
+pace: standard
 tags: [do-while, の商, の余り]
 description: 関数 digitSum は、正の整数 n の各桁の数字の和を返す。
 

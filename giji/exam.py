@@ -3,7 +3,7 @@
 練習モードとの違い
   - 行番号を使わない。行は「/*** α ***/」という注釈の目印で指す
   - 問いは定型文（「次のプログラム中の［ａ］に入れる…」「次の記述中の［ａ］に入れる…」）
-  - 解答群は6〜8個。空欄が2つのときは、ａとｂの組合せから選ぶ
+  - 解答群は4〜6個（公開問題で多い個数）。空欄が2つのときは、ａとｂの組合せから選ぶ
   - 読点は「，」
 
 元になる値（正解・行・変数）は練習モードの設問と同じものを使うので、
@@ -25,8 +25,8 @@ from .parser import parse_expression, parse_program
 BLANK_A = "［　ａ　］"
 BLANK_B = "［　ｂ　］"
 MARK = "α"
-MIN_CHOICES = 6
-MAX_CHOICES = 8
+MIN_CHOICES = 4
+MAX_CHOICES = 6
 
 LEAD_PROGRAM = "次のプログラム中の{blanks}に入れる正しい答え{combo}を，解答群の中から選べ。"
 LEAD_STATEMENT = "次の記述中の{blanks}に入れる正しい答え{combo}を，解答群の中から選べ。"
@@ -91,7 +91,7 @@ def _options_for(question, template: Template, problem: Problem, rng, size: int)
 
 
 def _many(question, template, problem, rng) -> list | None:
-    for size in (MAX_CHOICES, 7, MIN_CHOICES):
+    for size in (MAX_CHOICES, 5, MIN_CHOICES):
         choices = _options_for(question, template, problem, rng, size)
         if choices:
             return choices

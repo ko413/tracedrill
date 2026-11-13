@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <article class="problem" id="problem" data-mode="practice">
-<h1>{{ algo.title }}　問題{{ number }}</h1>
-<p class="meta">レベル：{{ algo.level_name }}　／　<a href="{{ url(algo.path) }}">このアルゴリズムの解説を読む</a></p>
+<h1>{{ heading }}</h1>
+<p class="meta"><span class="badge pace-{{ group.pace }}">{{ group.pace_name }}</span> レベル：{{ group.level_name }}　／　<a href="{{ url(algo.path) }}">このアルゴリズムの解説を読む</a></p>
 
 {% if exam %}
 <div class="mode-switch" role="group" aria-label="出題の形式">
@@ -18,6 +18,21 @@
 
 <h2>〔プログラム〕</h2>
 <div class="program">{{ practice_html | safe }}</div>
+
+<div class="hints">
+  <details class="hint">
+    <summary>ヒント1：トレース表の枠を見る</summary>
+    <p class="note">この列で表を作り、文を1つ実行するたびに1行足していきます。</p>
+    {{ hint_frame_html | safe }}
+  </details>
+  {% if hint_steps %}
+  <details class="hint">
+    <summary>ヒント2：最初の{{ hint_steps }}ステップを見る</summary>
+    <p class="note">続きを同じ要領で書いていきます。太字は、その文で値が変わった変数です。</p>
+    {{ hint_steps_html | safe }}
+  </details>
+  {% endif %}
+</div>
 
 {% for q in questions %}
 <section class="question{% if not loop.first %} locked{% endif %}" data-kind="practice" data-index="{{ loop.index0 }}">
@@ -93,7 +108,7 @@
 
 <nav class="pager">
   {% if prev_path %}<a href="{{ url(prev_path) }}">← 前の問題</a>{% else %}<span></span>{% endif %}
-  <a href="{{ url(algo.path) }}">{{ algo.title }}の一覧</a>
+  <a href="{{ url(algo.path) }}#{{ group.pace }}">{{ algo.title }}の一覧</a>
   {% if next_path %}<a class="button" href="{{ url(next_path) }}">次の問題 →</a>{% else %}<a class="button" href="{{ url('/') }}#algorithms">ほかのアルゴリズムへ</a>{% endif %}
 </nav>
 </article>

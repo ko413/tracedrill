@@ -1,7 +1,8 @@
 id: recursion-sum-001
 title: 再帰呼出しの戻り値
-level: 2
+level: 1
 access: free
+pace: standard
 tags: [再帰, if]
 description: 関数 f は、自分自身を呼び出して値を計算する。
 

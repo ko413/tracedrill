@@ -1,0 +1,740 @@
+{
+ "version": 1,
+ "template_id": "selection-sort-002",
+ "number": 6,
+ "seed": 5,
+ "description": "関数 moveMin は、配列 data の中で最も小さい要素を探し、先頭の要素と入れ替えて返す。選択ソートの最初の1巡に当たる処理である。配列の要素番号は 1 から始まる。",
+ "call": "moveMin({4, 5, 1, 6, 2})",
+ "source": "○整数型の配列: moveMin(整数型の配列: data)\n  整数型: j, min, tmp\n  min ← 1\n  for (j を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (data[j] < data[min])\n      min ← j\n    endif\n  endfor\n  tmp ← data[1]\n  data[1] ← data[min]\n  data[min] ← tmp\n  return data",
+ "explanation": "min は「これまでに見た中で最小の要素の位置」です。最後まで見たあと、その要素を先頭と入れ替えます。\nこれを残りの部分に繰り返すと、選択ソートになります。",
+ "practice": {
+  "source": "○整数型の配列: moveMin(整数型の配列: data)\n  整数型: j, min, tmp\n  min ← 1\n  for (j を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (data[j] < data[min])\n      min ← j\n    endif\n  endfor\n  tmp ← data[1]\n  data[1] ← data[min]\n  data[min] ← tmp\n  return data",
+  "questions": [
+   {
+    "type": "var_at_line",
+    "prompt": "6行目を実行した直後の、変数 min の値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "1"
+     },
+     {
+      "label": "イ",
+      "text": "2"
+     },
+     {
+      "label": "ウ",
+      "text": "3"
+     },
+     {
+      "label": "エ",
+      "text": "4"
+     }
+    ],
+    "answer": "3",
+    "answer_label": "ウ",
+    "explain": [
+     "6行目は全部で1回実行されます。",
+     "実行した直後の min は 3 です。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": "min",
+     "step": 9,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "exec_count",
+    "prompt": "6行目が実行される回数はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "0"
+     },
+     {
+      "label": "イ",
+      "text": "1"
+     },
+     {
+      "label": "ウ",
+      "text": "2"
+     },
+     {
+      "label": "エ",
+      "text": "4"
+     }
+    ],
+    "answer": "1",
+    "answer_label": "イ",
+    "explain": [
+     "6行目が実行されるのは、5行目の条件が真になったときだけです。",
+     "5行目の条件は4回評価され、真になるのは1回です。したがって 6行目は1回実行されます。"
+    ],
+    "focus": {
+     "line": 6,
+     "variable": null,
+     "step": null,
+     "showLineBefore": true
+    }
+   },
+   {
+    "type": "return_value",
+    "prompt": "moveMin({4, 5, 1, 6, 2}) を呼び出したときの戻り値はどれか。",
+    "choices": [
+     {
+      "label": "ア",
+      "text": "{4, 5, 1, 6, 2}"
+     },
+     {
+      "label": "イ",
+      "text": "{1, 5, 4, 6, 2}"
+     },
+     {
+      "label": "ウ",
+      "text": "{1, 5, 4, 2, 6}"
+     },
+     {
+      "label": "エ",
+      "text": "{5, 4, 6, 2, 1}"
+     }
+    ],
+    "answer": "{1, 5, 4, 6, 2}",
+    "answer_label": "イ",
+    "explain": [
+     "戻り値になる data は、{4, 5, 1, 6, 2} → {1, 5, 1, 6, 2} → {1, 5, 4, 6, 2} と変わります。",
+     "12行目で返す時点の値 {1, 5, 4, 6, 2} が答えです。"
+    ],
+    "focus": {
+     "line": 12,
+     "variable": null,
+     "step": 21,
+     "showLineBefore": false
+    }
+   }
+  ]
+ },
+ "exam": {
+  "form": "program_blank",
+  "lead": "次のプログラム中の［　ａ　］に入れる正しい答えを，解答群の中から選べ。",
+  "body": [
+   "関数 moveMin は，配列 data の中で最も小さい要素を探し，先頭の要素と入れ替えて返す。選択ソートの最初の1巡に当たる処理である。配列の要素番号は 1 から始まる。",
+   "関数 moveMin を moveMin({4, 5, 1, 6, 2}) として呼び出すと，戻り値は {1, 5, 4, 6, 2} となる。"
+  ],
+  "blanks": [
+   "ａ"
+  ],
+  "choices": [
+   {
+    "label": "ア",
+    "texts": [
+     "j < min"
+    ]
+   },
+   {
+    "label": "イ",
+    "texts": [
+     "data[min] < data[j]"
+    ]
+   },
+   {
+    "label": "ウ",
+    "texts": [
+     "data[j] < data[min]"
+    ]
+   },
+   {
+    "label": "エ",
+    "texts": [
+     "data[j] > data[min]"
+    ]
+   },
+   {
+    "label": "オ",
+    "texts": [
+     "data[j] < data[j － 1]"
+    ]
+   },
+   {
+    "label": "カ",
+    "texts": [
+     "data[j] < min"
+    ]
+   }
+  ],
+  "answer_label": "ウ",
+  "answer_text": "data[j] < data[min]",
+  "explain": [
+   "それぞれの選択肢を空欄に入れて，実際に動かした結果は次のとおりです。",
+   "「j < min」→ 戻り値は {4, 5, 1, 6, 2}",
+   "「data[min] < data[j]」→ 戻り値は {6, 5, 1, 4, 2}",
+   "「data[j] < data[min]」→ 戻り値は {1, 5, 4, 6, 2}（正解）",
+   "「data[j] > data[min]」→ 戻り値は {6, 5, 1, 4, 2}",
+   "「data[j] < data[j － 1]」→ 戻り値は {2, 5, 1, 6, 4}",
+   "「data[j] < min」→ 戻り値は {4, 5, 1, 6, 2}"
+  ],
+  "source": "○整数型の配列: moveMin(整数型の配列: data)\n  整数型: j, min, tmp\n  min ← 1\n  for (j を 2 から dataの要素数 まで 1 ずつ増やす)\n    if (［　ａ　］)\n      min ← j\n    endif\n  endfor\n  tmp ← data[1]\n  data[1] ← data[min]\n  data[min] ← tmp\n  return data",
+  "markers": {},
+  "focus": {
+   "line": 5,
+   "variable": null,
+   "step": null
+  }
+ },
+ "trace": {
+  "names": [
+   "data",
+   "j",
+   "min",
+   "tmp"
+  ],
+  "rows": [
+   {
+    "index": 1,
+    "line": 2,
+    "what": "宣言",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      true
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "min": [
+      "未設定",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 2,
+    "line": 3,
+    "what": "代入",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "未設定",
+      false
+     ],
+     "min": [
+      "1",
+      true
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 3,
+    "line": 4,
+    "what": "繰返しの初期化",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "2",
+      true
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 4,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 5,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "2",
+      false
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 6,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "3",
+      true
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 7,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 8,
+    "line": 5,
+    "what": "条件判定（真）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "min": [
+      "1",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 9,
+    "line": 6,
+    "what": "代入",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "3",
+      false
+     ],
+     "min": [
+      "3",
+      true
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 10,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "4",
+      true
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 11,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "4",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 12,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "4",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 13,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "5",
+      true
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 14,
+    "line": 4,
+    "what": "条件判定（真）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "5",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 15,
+    "line": 5,
+    "what": "条件判定（偽）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "5",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 16,
+    "line": 4,
+    "what": "繰返しの更新",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "6",
+      true
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 17,
+    "line": 4,
+    "what": "条件判定（偽）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "6",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "未設定",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 18,
+    "line": 9,
+    "what": "代入",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{4, 5, 1, 6, 2}",
+      false
+     ],
+     "j": [
+      "6",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "4",
+      true
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 19,
+    "line": 10,
+    "what": "代入",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 5, 1, 6, 2}",
+      true
+     ],
+     "j": [
+      "6",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 20,
+    "line": 11,
+    "what": "代入",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 5, 4, 6, 2}",
+      true
+     ],
+     "j": [
+      "6",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   },
+   {
+    "index": 21,
+    "line": 12,
+    "what": "戻る（{1, 5, 4, 6, 2}）",
+    "proc": "moveMin",
+    "depth": 1,
+    "cells": {
+     "data": [
+      "{1, 5, 4, 6, 2}",
+      false
+     ],
+     "j": [
+      "6",
+      false
+     ],
+     "min": [
+      "3",
+      false
+     ],
+     "tmp": [
+      "4",
+      false
+     ]
+    },
+    "mark": ""
+   }
+  ]
+ }
+}

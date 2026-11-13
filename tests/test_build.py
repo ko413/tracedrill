@@ -146,12 +146,12 @@ def test_share_image_is_1200_by_630(tmp_path):
 def test_problem_page_offers_exam_format_without_line_numbers(site):
     page = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
     quiz = json.loads(re.search(r'id="quiz-data">(.*?)</script>', page, re.S).group(1))
-    assert quiz["exam"]["answer"] in "アイウエオカキク"
+    assert quiz["exam"]["answer"] in "アイウエオカ"
     exam = page.split('id="mode-exam"')[1].split('class="review"')[0]
     assert 'data-mode="exam"' in page and "本番形式" in page
     assert "解答群の中から選べ。" in exam and "，" in exam
     assert 'class="giji-code plain"' in exam and 'class="no"' not in exam
-    assert 6 <= exam.count('name="exam"') <= 8
+    assert 4 <= exam.count('name="exam"') <= 6
 
 
 def test_blank_is_filled_in_place_instead_of_swapping_programs(site):
@@ -257,3 +257,60 @@ def test_saving_refuses_to_overwrite_an_existing_file(tmp_path):
     with pytest.raises(FileExistsError):
         build.save_new_json(target, {"a": 2})
     assert json.loads(target.read_text(encoding="utf-8")) == {"a": 1}
+
+
+def test_home_shows_one_problem_first_and_keeps_a_short_description(site):
+    page = (site / "index.html").read_text(encoding="utf-8")
+    first_screen, rest = page.split('class="level-entry"')
+    assert 'id="daily-body"' in first_screen and 'class="giji-code"' in first_screen
+    assert first_screen.count('name="daily"') == 4 and "解答する" in first_screen
+    assert "このサイトについて" in rest and "トレース" in rest            # 説明文は最初の画面の下に残す
+    daily = json.loads(re.search(r'id="daily-data">(.*?)</script>', page, re.S).group(1))
+    assert len(daily) >= 7                                             # 日替わりにできるだけの数がある
+    assert all(item["answer"] in "アイウエ" and len(item["choices"]) == 4 for item in daily)
+    assert all((site / item["path"].strip("/") / "index.html").exists() for item in daily)
+    titles = [item["title"] for item in daily]
+    assert all(a != b for a, b in zip(titles, titles[1:]))             # 同じアルゴリズムが続かない
+
+
+def test_daily_problems_are_short_beginner_standard_ones(site):
+    page = (site / "index.html").read_text(encoding="utf-8")
+    daily = json.loads(re.search(r'id="daily-data">(.*?)</script>', page, re.S).group(1))
+    for item in daily:
+        assert item["level"] == "入門"
+        assert item["source_html"].count("<tr") <= 9
+
+
+def test_hints_come_before_the_questions_and_do_not_reach_the_asked_step(site):
+    page = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
+    hints = page.split('class="hints"')[1].split('data-kind="practice"')[0]
+    assert "ヒント1：トレース表の枠を見る" in hints
+    quiz = json.loads(re.search(r'id="quiz-data">(.*?)</script>', page, re.S).group(1))
+    asked = [q["step"] for q in quiz["practice"] if q.get("step")]
+    shown = [int(n) for n in re.findall(r'data-step="(\d+)"', hints)]
+    if "ヒント2" in hints:
+        assert shown and (not asked or max(shown) < min(asked))
+
+
+def test_standard_and_long_sets_share_one_explanation_page(site):
+    algo = (site / "algo/loop-sum-001/index.html").read_text(encoding="utf-8")
+    assert 'id="standard"' in algo and 'id="long"' in algo
+    assert algo.index('id="standard"') < algo.index('id="long"')       # 標準を先に並べる
+    assert 'href="/q/loop-sum-002/01/"' in algo and 'href="/q/loop-sum-001/01/"' in algo
+    assert not (site / "algo/loop-sum-002").exists()                   # 解説ページは増やさない
+
+    added = (site / "q/loop-sum-002/01/index.html").read_text(encoding="utf-8")
+    old = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
+    assert "<title>条件に合う要素の合計（標準） 問題01｜" in added
+    assert "<title>条件に合う要素の合計 問題01｜" in old               # 元からあるページのタイトルは変えない
+    assert 'class="badge pace-standard">標準' in added and 'class="badge pace-long">じっくり' in old
+    assert 'href="/algo/loop-sum-001/#standard"' in added
+
+
+def test_levels_use_the_new_names_and_assignments(site):
+    home = (site / "index.html").read_text(encoding="utf-8")
+    assert "本試験相当" not in home
+    beginner = home.split('id="level-1"')[1].split('id="level-2"')[0]
+    middle = home.split('id="level-3"')[1].split("このサイトについて")[0]
+    assert "再帰呼出しの戻り値" in beginner
+    assert "二次元配列の行ごとの合計" in middle and "同じ文字が続く最長の長さ" in middle

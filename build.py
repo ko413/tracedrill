@@ -36,7 +36,11 @@ from giji.generator import Template, generate, load_templates  # noqa: E402
 from giji.render import source_html, trace_rows, trace_table_html  # noqa: E402
 from validate_templates import check_template  # noqa: E402
 
-LEVEL_NAMES = {1: "入門", 2: "基礎", 3: "中級", 4: "本試験相当"}
+LEVEL_NAMES = {1: "入門", 2: "基礎", 3: "中級", 4: "発展"}
+PACE_NAMES = {"standard": "標準", "long": "じっくり"}
+PACE_NOTES = {"standard": "本試験と同じくらいの量", "long": "長めのトレースで力をつける"}
+DAILY_MAX_LINES = 9        # トップの「今日の1問」に載せるプログラムの長さの上限
+DAILY_PER_SET = 5          # 1つの問題セットから「今日の1問」に使う数
 CHOICE_LABELS = "アイウエオカキクケコ"
 QUESTION_ORDER = {"fill_blank": 0, "var_at_line": 1, "exec_count": 2, "return_value": 3}
 PLACEHOLDER_URL = "https://example.com"
@@ -236,6 +240,33 @@ def make_example(template: Template, seed: int) -> dict:
     }
 
 
+def hint_step_count(snap: dict) -> int:
+    """ヒントで見せる「最初の数ステップ」の数。設問が答えを聞いているステップより手前で止める。"""
+    asked = [q["focus"].get("step") for q in snap["practice"]["questions"]]
+    asked = [step for step in asked if step]
+    total = len(snap["trace"]["rows"])
+    limit = min(6, max(2, total // 4))
+    if asked:
+        limit = min(limit, min(asked) - 1)
+    return limit if limit >= 2 else 0
+
+
+def daily_item(snap: dict, title: str, level_name: str, path: str) -> dict | None:
+    """トップの「今日の1問」用に、保存済みの問題から設問を1つ取り出す。"""
+    if len(snap["source"].split("\n")) > DAILY_MAX_LINES:
+        return None
+    for question in snap["practice"]["questions"]:
+        if question["type"] != "fill_blank" and len(question["choices"]) == 4:
+            return {
+                "title": title, "level": level_name, "path": path, "call": snap["call"],
+                "source_html": source_html(snap["source"]), "prompt": question["prompt"],
+                "choices": question["choices"], "answer": question["answer_label"],
+                "answer_text": question["answer"], "explain": question["explain"],
+                "line": question["focus"].get("line") if question["focus"].get("showLineBefore") else None,
+            }
+    return None
+
+
 def view_from_snapshot(snap: dict) -> dict:
     """保存しておいたデータから、ページに埋め込む HTML と JavaScript 用のデータを作る。"""
     practice = snap["practice"]
@@ -250,7 +281,12 @@ def view_from_snapshot(snap: dict) -> dict:
         exam_quiz = {"answer": exam["answer_label"], **exam["focus"]}
         exam_html = source_html(exam["source"], numbered=False, markers=markers)
     trace = snap["trace"]
+    hint_steps = hint_step_count(snap)
     return {
+        # ヒントは保存済みのトレースを見せるだけ（保存データは変えない）
+        "hint_frame_html": trace_table_html(trace["names"], []),
+        "hint_steps": hint_steps,
+        "hint_steps_html": trace_table_html(trace["names"], trace["rows"][:hint_steps]) if hint_steps else "",
         "problem": {"description": snap["description"], "call": snap["call"],
                     "explanation": snap["explanation"]},
         "questions": views, "exam": exam_view, "exam_html": exam_html,
@@ -377,27 +413,57 @@ class Builder:
 
         default_image = self.og_image("default", site["exam_label"] or "擬似言語", site["name"], site["tagline"])
 
+        # テンプレート1つ＝問題セット1つ。variant_of で、同じアルゴリズムのセットを1つの解説ページにまとめる。
+        ids = {t.id for t in templates}
+        sets = {t.id: self.set_info(t, cfg) for t in templates}
         algos = []
-        for template in sorted(templates, key=lambda t: (t.level, t.title)):
-            algos.append(self.algo_info(template, cfg))
+        for template in templates:
+            if template.variant_of:
+                if template.variant_of not in ids:
+                    self.warnings.append(f"{template.id}: variant_of の {template.variant_of} が見つかりません")
+                continue
+            group = [sets[template.id]] + [sets[t.id] for t in templates if t.variant_of == template.id]
+            group.sort(key=lambda item: (item["pace"] != "standard", item["id"]))   # 標準を先に
+            algos.append(self.algo_info(template, group))
+        algos.sort(key=lambda a: (a["level"], a["title"]))
 
         for algo in algos:
-            self.build_algo(algo, algos, float(cfg["min_weight"]))
+            self.build_algo(algo, algos)
         guides = self.build_guides(default_image)
         self.build_simple("about", "/about/", default_image, show_contact=True)
         self.build_simple("for-teams", "/for-teams/", default_image, show_contact=True)
 
-        levels = [{"name": LEVEL_NAMES.get(level, str(level)),
-                   "algos": [a for a in algos if a["level"] == level]}
-                  for level in sorted({a["level"] for a in algos})]
-        first = algos[0]["problems"][0]["path"] if algos and algos[0]["problems"] else "/"
+        # トップ：レベルごとに問題セットを並べる（標準を先に）。同じアルゴリズムが2つのレベルに出ることがある。
+        entries = [{"title": algo["title"], "summary": algo["summary"], "level": item["level"],
+                    "pace": item["pace"], "pace_name": item["pace_name"], "count": item["count"],
+                    "path": algo["path"] + "#" + item["pace"]}
+                   for algo in algos for item in algo["sets"]]
+        entries.sort(key=lambda e: (e["level"], e["pace"] != "standard", e["title"]))
+        levels = [{"level": level, "name": LEVEL_NAMES.get(level, str(level)),
+                   "entries": [e for e in entries if e["level"] == level]}
+                  for level in sorted({e["level"] for e in entries})]
+
+        # 今日の1問：入門・標準の短い問題を、アルゴリズムが続かないように順に並べる
+        columns = []
+        for algo in algos:
+            for item in algo["sets"]:
+                if item["level"] != 1 or item["pace"] != "standard":
+                    continue
+                picked = [daily_item(e["snap"], algo["title"], item["level_name"], e["path"])
+                          for e in item["problems"][:DAILY_PER_SET]]
+                columns.append([d for d in picked if d])
+        daily = [column[i] for i in range(DAILY_PER_SET) for column in columns if i < len(column)]
+        if not daily:
+            self.warnings.append("トップの「今日の1問」に使える問題がありません")
+
         self.render("home.html", "/", title=site["name"], description=site["description"],
-                    og_image=default_image, levels=levels, guides=guides, first_problem=first)
+                    og_image=default_image, levels=levels, guides=guides, daily=daily,
+                    daily_json=json.dumps(daily, ensure_ascii=False).replace("</", "<\\/"))
         self.render("404.html", "/", filename="404.html", listed=False, title="ページが見つかりません",
                     description="お探しのページは見つかりませんでした。", og_image=default_image, noindex=True)
         self.write_extras()
 
-    def frozen_problems(self, template: Template, cfg: dict) -> tuple[list, dict]:
+    def frozen_problems(self, template: Template, cfg: dict, with_example: bool = True) -> tuple[list, dict]:
         """保存済みの問題を読み込み、足りない分だけ新しく作って保存する。
 
         保存済みのファイルは読むだけで、書き換えない。これが「公開した問題は変わらない」の仕組み。
@@ -414,7 +480,7 @@ class Builder:
             else:
                 missing.append(number)
         example_path = folder / "example.json"
-        need_example = not example_path.exists()
+        need_example = with_example and not example_path.exists()
 
         if self.frozen and (missing or need_example):
             # CI で作った問題はリポジトリに残らず、次のビルドで別の問題になり得る。作らずに知らせる。
@@ -436,30 +502,40 @@ class Builder:
         example = load_json(example_path) if example_path.exists() else None
         return [saved[number] for number in sorted(saved)], example
 
-    def algo_info(self, template: Template, cfg: dict) -> dict:
+    def set_info(self, template: Template, cfg: dict) -> dict:
+        """テンプレート1つ分の問題セット（保存済みの問題の一覧）。"""
+        counts = {**cfg, **template.publish}       # テンプレートの publish で問題数を上書きできる
+        snaps, example = self.frozen_problems(template, counts, with_example=not template.variant_of)
+        entries = [{"number": f"{snap['number']:02d}", "n": snap["number"], "snap": snap,
+                    "path": f"/q/{template.id}/{snap['number']:02d}/", "call": snap["call"]}
+                   for snap in snaps]
+        indexed = int(counts["indexed"])
+        return {
+            "template": template, "id": template.id, "example": example,
+            "pace": template.pace, "pace_name": PACE_NAMES[template.pace], "pace_note": PACE_NOTES[template.pace],
+            "level": template.level, "level_name": LEVEL_NAMES.get(template.level, str(template.level)),
+            "problems": entries[:indexed], "extras": entries[indexed:], "count": len(entries),
+        }
+
+    def algo_info(self, template: Template, group: list) -> dict:
         meta, body = {}, ""
         source = ROOT / "content" / "algo" / f"{template.id}.md"
         if source.exists():
             meta, body = read_content(source)
         else:
             self.warnings.append(f"{template.id}: 解説の原稿 content/algo/{template.id}.md がありません")
-        path = f"/algo/{template.id}/"
-        snaps, example = self.frozen_problems(template, cfg)
-
-        entries = [{"number": f"{snap['number']:02d}", "n": snap["number"], "snap": snap,
-                    "path": f"/q/{template.id}/{snap['number']:02d}/", "call": snap["call"]}
-                   for snap in snaps]
-        indexed, extras = entries[:int(cfg["indexed"])], entries[int(cfg["indexed"]):]
+        level = min(item["level"] for item in group)
+        own = next(item for item in group if item["id"] == template.id)
         return {
-            "template": template, "id": template.id, "title": template.title, "path": path,
-            "level": template.level, "level_name": LEVEL_NAMES.get(template.level, str(template.level)),
+            "template": template, "id": template.id, "title": template.title,
+            "path": f"/algo/{template.id}/", "level": level,
+            "level_name": LEVEL_NAMES.get(level, str(level)),
             "tags": template.tags, "summary": meta.get("summary", template.description),
-            "description": template.description, "body": body, "example": example,
-            "problems": indexed, "extras": extras, "count": len(entries),
+            "description": template.description, "body": body, "example": own["example"],
+            "sets": group, "count": sum(item["count"] for item in group),
         }
 
-    def build_algo(self, algo: dict, algos: list, min_weight: float) -> None:
-        template = algo["template"]
+    def build_algo(self, algo: dict, algos: list) -> None:
         home = {"name": "トップ", "path": "/"}
         crumb = {"name": algo["title"], "path": algo["path"]}
         image = self.og_image(algo["id"], f"レベル：{algo['level_name']}",
@@ -475,33 +551,38 @@ class Builder:
             example={"call": example["call"], "source_html": source_html(example["source"]),
                      "trace_html": trace_table_html(example["trace"]["names"], example["trace"]["rows"]),
                      "questions": example["questions"]},
-            problems=algo["problems"], extras=algo["extras"],
             others=[a for a in algos if a["id"] != algo["id"]])
 
-        everything = algo["problems"] + algo["extras"]
-        for position, item in enumerate(everything):
-            view = view_from_snapshot(item["snap"])
-            if not view["questions"]:
-                self.warnings.append(f"{algo['id']} 問題{item['number']}: 出せる設問がありません")
-            indexed = position < len(algo["problems"])
-            page_image = image
-            if indexed:
-                page_image = self.og_image(
-                    f"{algo['id']}-{item['number']}", f"擬似言語トレース問題　レベル：{algo['level_name']}",
-                    f"{algo['title']}　問題{item['number']}",
-                    f"{view['problem']['call'] or ''} の動きを1行ずつ追う。"
-                    f"設問{len(view['questions'])}つ・全ステップのトレース表つき")
-            call = view["problem"]["call"] or ""
-            self.render(
-                "problem.html", item["path"], title=f"{algo['title']} 問題{item['number']}｜擬似言語トレース問題",
-                description=f"{view['problem']['description']} {call} の動きを1行ずつ追う問題です。"
-                            f"設問{len(view['questions'])}つ、全ステップのトレース表と解説つき。",
-                og_image=page_image, noindex=not indexed,
-                breadcrumbs=[home, crumb, {"name": f"問題{item['number']}", "path": item["path"]}],
-                algo=algo, number=item["number"],
-                prev_path=everything[position - 1]["path"] if position else None,
-                next_path=everything[position + 1]["path"] if position + 1 < len(everything) else None,
-                **view)
+        for item in algo["sets"]:
+            # 追加した版（variant_of つき）だけ、見出しとタイトルに「（標準）」などを付けて区別する。
+            # 元からあるページのタイトルは変えない。
+            label = f"（{item['pace_name']}）" if item["template"].variant_of else ""
+            name = algo["title"] + label
+            everything = item["problems"] + item["extras"]
+            for position, entry in enumerate(everything):
+                view = view_from_snapshot(entry["snap"])
+                if not view["questions"]:
+                    self.warnings.append(f"{item['id']} 問題{entry['number']}: 出せる設問がありません")
+                indexed = position < len(item["problems"])
+                call = view["problem"]["call"] or ""
+                page_image = image
+                if indexed:
+                    page_image = self.og_image(
+                        f"{item['id']}-{entry['number']}", f"擬似言語トレース問題　レベル：{item['level_name']}",
+                        f"{name}　問題{entry['number']}",
+                        f"{call} の動きを1行ずつ追う。"
+                        f"設問{len(view['questions'])}つ・全ステップのトレース表つき")
+                self.render(
+                    "problem.html", entry["path"],
+                    title=f"{name} 問題{entry['number']}｜擬似言語トレース問題",
+                    description=f"{view['problem']['description']} {call} の動きを1行ずつ追う問題です。"
+                                f"設問{len(view['questions'])}つ、全ステップのトレース表と解説つき。",
+                    og_image=page_image, noindex=not indexed,
+                    breadcrumbs=[home, crumb, {"name": f"問題{entry['number']}", "path": entry["path"]}],
+                    algo=algo, group=item, heading=f"{name}　問題{entry['number']}", number=entry["number"],
+                    prev_path=everything[position - 1]["path"] if position else None,
+                    next_path=everything[position + 1]["path"] if position + 1 < len(everything) else None,
+                    **view)
 
     def build_guides(self, image: str) -> list:
         home = {"name": "トップ", "path": "/"}

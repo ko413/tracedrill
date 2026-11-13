@@ -2,6 +2,7 @@ id: insertion-sort-001
 title: 挿入ソート
 level: 3
 access: free
+pace: long
 tags: [for, while, and, 配列, 整列]
 array_base: 1
 max_steps: 600

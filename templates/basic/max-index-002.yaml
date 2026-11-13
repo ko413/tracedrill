@@ -1,0 +1,49 @@
+id: max-index-002
+title: 最大値の位置
+level: 1
+access: free
+pace: standard
+variant_of: max-index-001
+publish: {indexed: 5, extra: 10}
+tags: [for, if, 配列]
+array_base: 1
+description: 関数 maxIndex は、配列 data の中で最も大きい要素の要素番号を返す。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 5], range: [1, 9], unique: true}
+
+source: |
+  ○整数型: maxIndex(整数型の配列: data)
+    整数型: pos ← 1
+    整数型: i
+    for (i を 2 から dataの要素数 まで 1 ずつ増やす)
+      if (data[i] > data[pos])
+        pos ← i   // @upd
+      endif
+    endfor
+    return pos
+
+call: "maxIndex(${data})"
+
+quality:
+  - "count(upd) ≧ 1"
+
+questions:
+  # 配列を見るだけで答えが分かるので、出題されにくくしている
+  - {type: return_value, weight: 0.2, domain: {index_of: data}}
+  - {type: var_at_line, line: upd, var: pos, pass: random, domain: {index_of: data}}
+  - {type: exec_count, line: upd}
+  - type: fill_blank
+    blank: "data[i] > data[pos]"
+    distractors:
+      - "data[i] < data[pos]"
+      - "i > data[pos]"
+      - "i > pos"
+    blank_b: "pos ← i"
+    distractors_b:
+      - "pos ← data[i]"
+      - "pos ← pos ＋ 1"
+
+explanation: |
+  pos は「これまでに見た中で最大の要素の位置」です。
+  それより大きい要素が見つかるたびに pos を書き換えるので、最後の pos は ${result} になります。

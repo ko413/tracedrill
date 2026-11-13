@@ -1,0 +1,45 @@
+id: matrix-rowsum-002
+title: 二次元配列の行ごとの合計
+level: 2
+access: free
+pace: standard
+variant_of: matrix-rowsum-001
+publish: {indexed: 5, extra: 10}
+tags: [for, 二重ループ, 二次元配列]
+array_base: 1
+max_steps: 600
+description: 関数 rowSum は、二次元配列 m の行ごとの合計を求め、その並びを配列で返す。m[r, c] は r 行目の c 列目の要素を表す。配列の要素番号は 1 から始まる。
+
+params:
+  m: {type: int_matrix, rows: [2, 2], cols: [2, 3], range: [1, 9]}
+
+source: |
+  ○整数型の配列: rowSum(整数型の二次元配列: m)
+    整数型の配列: out ← {}
+    整数型: r, c, sum
+    for (r を 1 から mの行数 まで 1 ずつ増やす)
+      sum ← 0
+      for (c を 1 から mの列数 まで 1 ずつ増やす)
+        sum ← sum ＋ m[r, c]   // @add
+      endfor
+      outの末尾に sum を追加する
+    endfor
+    return out
+
+call: "rowSum(${m})"
+
+questions:
+  - {type: var_at_line, line: add, var: sum, pass: random}
+  - type: fill_blank
+    blank: "m[r, c]"
+    distractors:
+      - "m[c, r]"
+      - "m[r, 1]"
+      - "m[1, c]"
+      - "c"
+      - "r"
+      - "m[r, c] ＋ 1"
+
+explanation: |
+  外側の繰返しが行、内側の繰返しが列を進めます。行が変わるたびに sum を 0 に戻すので、行ごとの合計が求まります。
+  戻り値は ${result} です。

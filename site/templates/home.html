@@ -1,22 +1,54 @@
 {% extends "base.html" %}
+{% macro daily_card(item) %}
+<p class="daily-meta"><span class="badge">{{ item.level }}</span> {{ item.title }}</p>
+<p class="daily-call">次のプログラムを <code>{{ item.call }}</code> で呼び出す。</p>
+{{ item.source_html | safe }}
+<p class="prompt">{{ item.prompt }}</p>
+<div class="daily-choices">
+  {% for choice in item.choices %}<label><input type="radio" name="daily" value="{{ choice.label }}"> <b>{{ choice.label }}</b>　<span>{{ choice.text }}</span></label>{% endfor %}
+</div>
+<button type="button" class="button answer-button" disabled>解答する</button>
+<div class="result after-answer" aria-live="polite">
+  <p class="verdict"></p>
+  <p><strong>正解：{{ item.answer }}　{{ item.answer_text }}</strong></p>
+  <ul>{% for line in item.explain %}<li>{{ line }}</li>{% endfor %}</ul>
+  <p class="daily-next"><a class="button" href="{{ url(item.path) }}">トレース表で確かめる</a> <button type="button" class="chip" id="daily-another">別の問題を解く</button></p>
+</div>
+{% endmacro %}
 {% block content %}
-<section class="hero">
+<section class="daily" id="daily">
   <h1>{{ site.name }}</h1>
-  <p class="lead">{{ site.tagline }}</p>
-  <p>科目Bは、プログラムを頭の中で1行ずつ動かす「トレース」が正確にできるかどうかで点が決まります。このサイトでは、同じアルゴリズムを値を変えて何度も追い、全ステップのトレース表で答え合わせができます。</p>
-  <p><a class="button" href="{{ url(first_problem) }}">まず1問解いてみる</a>　<a href="{{ url('/guide/trace-table/') }}">トレース表の書き方を読む</a></p>
+  <p class="daily-lead">基本情報 科目Bの擬似言語を、1行ずつ追って解く練習。<span id="daily-label">まずは1問。</span></p>
+  {% if daily %}
+  <div class="question" id="daily-body">{{ daily_card(daily[0]) }}</div>
+  {% endif %}
 </section>
+
+<nav class="level-entry" aria-label="レベルから選ぶ">
+  {% for level in levels %}<a href="#level-{{ level.level }}"><strong>{{ level.name }}</strong><span>{{ level.entries | length }}種類</span></a>{% endfor %}
+</nav>
 
 <section id="algorithms">
   <h2>アルゴリズムから選ぶ</h2>
+  <p class="note"><span class="badge pace-standard">標準</span> は本試験と同じくらいの量、<span class="badge pace-long">じっくり</span> は長めのトレースです。</p>
   {% for level in levels %}
-  <h3>{{ level.name }}</h3>
+  <h3 id="level-{{ level.level }}">{{ level.name }}</h3>
   <ul class="cards">
-    {% for algo in level.algos %}
-    <li><a href="{{ url(algo.path) }}"><strong>{{ algo.title }}</strong><span>{{ algo.summary }}</span><em>{{ algo.count }}問＋解説</em></a></li>
+    {% for entry in level.entries %}
+    <li><a href="{{ url(entry.path) }}"><strong>{{ entry.title }}</strong> <span class="badge pace-{{ entry.pace }}">{{ entry.pace_name }}</span><span>{{ entry.summary }}</span><em>{{ entry.count }}問＋解説</em></a></li>
     {% endfor %}
   </ul>
   {% endfor %}
+</section>
+
+<section>
+  <h2>このサイトについて</h2>
+  <p>科目Bは、プログラムを頭の中で1行ずつ動かす「トレース」が正確にできるかどうかで点が決まります。{{ site.name }}は、同じアルゴリズムを値を変えて何度も追い、全ステップのトレース表で答え合わせができる無料の練習サイトです。</p>
+  <ul>
+    <li>答え・誤答の選択肢・解説は、すべてプログラムを実際に動かした結果から作っています。</li>
+    <li>書き方は、IPAが公開している「擬似言語の記述形式」に合わせています。</li>
+    <li>行番号つきの練習モードと、公開問題と同じ体裁の本番形式を切り替えられます。</li>
+  </ul>
 </section>
 
 <section>
@@ -25,13 +57,5 @@
     {% for guide in guides %}<li><a href="{{ url(guide.path) }}">{{ guide.title }}</a> — {{ guide.description }}</li>{% endfor %}
   </ul>
 </section>
-
-<section>
-  <h2>このサイトの問題について</h2>
-  <ul>
-    <li>値を変えた類題を、アルゴリズムごとに{{ site.problems.indexed + site.problems.extra }}問用意しています。</li>
-    <li>答え・誤答の選択肢・解説は、すべてプログラムを実際に動かした結果から作っています。</li>
-    <li>書き方は、IPAが公開している「擬似言語の記述形式」に合わせています。</li>
-  </ul>
-</section>
+<script type="application/json" id="daily-data">{{ daily_json | safe }}</script>
 {% endblock %}

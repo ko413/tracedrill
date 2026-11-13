@@ -1,0 +1,49 @@
+id: selection-sort-002
+title: 選択ソート
+level: 2
+access: free
+pace: standard
+variant_of: selection-sort-001
+publish: {indexed: 5, extra: 10}
+tags: [for, 配列, 交換, 整列]
+array_base: 1
+description: 関数 moveMin は、配列 data の中で最も小さい要素を探し、先頭の要素と入れ替えて返す。選択ソートの最初の1巡に当たる処理である。配列の要素番号は 1 から始まる。
+
+params:
+  data: {type: int_array, length: [4, 5], range: [1, 9], unique: true}
+
+source: |
+  ○整数型の配列: moveMin(整数型の配列: data)
+    整数型: j, min, tmp
+    min ← 1
+    for (j を 2 から dataの要素数 まで 1 ずつ増やす)
+      if (data[j] < data[min])
+        min ← j   // @upd
+      endif
+    endfor
+    tmp ← data[1]
+    data[1] ← data[min]
+    data[min] ← tmp
+    return data
+
+call: "moveMin(${data})"
+
+quality:
+  - "count(upd) ≧ 1"
+
+questions:
+  - {type: return_value}
+  - {type: var_at_line, line: upd, var: min, pass: last, domain: {index_of: data}}
+  - {type: exec_count, line: upd}
+  - type: fill_blank
+    blank: "data[j] < data[min]"
+    distractors:
+      - "data[j] > data[min]"
+      - "data[j] < min"
+      - "data[min] < data[j]"
+      - "j < min"
+      - "data[j] < data[j － 1]"
+
+explanation: |
+  min は「これまでに見た中で最小の要素の位置」です。最後まで見たあと、その要素を先頭と入れ替えます。
+  これを残りの部分に繰り返すと、選択ソートになります。

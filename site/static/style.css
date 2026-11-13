@@ -103,6 +103,33 @@ pre code { border: none; padding: 0; background: none; }
 .combo tr.is-chosen-wrong td, .combo tr.is-chosen-wrong th { background: rgba(179, 38, 30, 0.14); }
 .problem.js .noscript-only { display: none; }
 
+.badge { display: inline-block; font-size: 0.75rem; font-weight: 700; line-height: 1.5; padding: 0 0.5rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); vertical-align: 0.1em; white-space: nowrap; }
+.badge.pace-standard { border-color: var(--accent); color: var(--accent); }
+.cards a .badge { display: inline-block; }
+.hints { margin: 0.6rem 0 1rem; }
+.hint { border: 1px solid var(--line); border-radius: 6px; background: var(--card); margin: 0.4rem 0; padding: 0.3rem 0.8rem; }
+.hint summary { cursor: pointer; font-size: 0.92rem; color: var(--accent); }
+.hint .note { margin: 0.4rem 0; }
+.hint .giji-trace-wrap { margin-bottom: 0.5rem; }
+
+/* トップ：今日の1問 */
+.daily h1 { font-size: 1.25rem; margin: 0.4rem 0 0; }
+.daily-lead { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--muted); }
+.daily .question { margin: 0.4rem 0 0; padding: 0.6rem 0.9rem 0.9rem; }
+.daily-meta, .daily-call { margin: 0 0 0.3rem; font-size: 0.9rem; }
+.daily .prompt { margin: 0.6rem 0 0.4rem; font-weight: 700; }
+.daily-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-bottom: 0.7rem; }
+.daily-choices label { border: 1px solid var(--line); margin: 0; }
+.daily-choices label.is-answer { background: rgba(26, 127, 75, 0.16); }
+.daily-choices label.is-chosen-wrong { background: rgba(179, 38, 30, 0.14); }
+.daily .after-answer { display: none; }
+.daily .answered .after-answer { display: block; }
+.daily-next { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.level-entry { display: grid; grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr)); gap: 0.6rem; margin: 1.2rem 0 0; }
+.level-entry a { display: block; text-align: center; padding: 0.7rem 0.4rem; background: var(--card); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; color: var(--fg); }
+.level-entry a strong { display: block; font-size: 1.05rem; }
+.level-entry a span { font-size: 0.8rem; color: var(--muted); }
+
 /* JavaScript が動くときだけ、解答前の内容や選んでいない形式を隠す（動かない環境では全部読める） */
 .problem.js .locked,
 .problem.js .after-answer,

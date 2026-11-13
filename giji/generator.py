@@ -32,8 +32,9 @@ _RESERVED_NAMES = {"result", "steps", "output_count"}
 _TEMPLATE_KEYS = {
     "id", "title", "level", "access", "tags", "array_base", "int_div",
     "max_steps", "description", "params", "constraints", "source", "call",
-    "quality", "questions", "explanation",
+    "quality", "questions", "explanation", "pace", "variant_of", "publish",
 }
+PACES = ("standard", "long")
 # 繰返しの変数の初期化・更新は「その行の実行回数」に数えない
 _NOT_COUNTED = ("for_init", "for_step")
 
@@ -60,6 +61,9 @@ class Template:
     explanation: str = ""
     markers: dict = field(default_factory=dict)   # 目印の名前 -> 行番号
     path: str = ""
+    pace: str = "standard"      # standard=本試験と同じくらいの量 / long=じっくり追う長めの問題
+    variant_of: str | None = None   # 同じアルゴリズムの別の版なら、元になるテンプレートの id
+    publish: dict = field(default_factory=dict)   # 静的サイトでの問題数（indexed, extra）の上書き
 
 
 @dataclass
@@ -188,7 +192,15 @@ def template_from_dict(data: dict, path: str = "") -> Template:
     if array_base not in (0, 1):
         raise TemplateError(f"array_base は 0 か 1 にしてください{where}")
 
+    pace = data.get("pace", "standard")
+    if pace not in PACES:
+        raise TemplateError(f"pace は {PACES} のどちらかにしてください{where}")
+    publish = data.get("publish") or {}
+    if not isinstance(publish, dict) or set(publish) - {"indexed", "extra"}:
+        raise TemplateError(f"publish には indexed と extra だけを書けます{where}")
+
     return Template(
+        pace=pace, variant_of=data.get("variant_of"), publish=publish,
         id=str(data["id"]), title=str(data["title"]), source=source,
         questions=questions, level=int(data.get("level", 1)),
         access=str(data.get("access", "free")), tags=list(data.get("tags") or []),

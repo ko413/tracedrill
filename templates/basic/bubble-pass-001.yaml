@@ -2,6 +2,7 @@ id: bubble-pass-001
 title: 隣どうしの比較と交換（1巡）
 level: 2
 access: free
+pace: long
 tags: [for, if, 配列, 交換, 整列]
 array_base: 1
 description: 関数 onePass は、配列 data の隣り合う要素を先頭から順に比べ、左が大きければ入れ替える。配列の要素番号は 1 から始まる。

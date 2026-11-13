@@ -2,6 +2,7 @@ id: while-gcd-001
 title: 最大公約数（互除法）
 level: 1
 access: free
+pace: long
 tags: [while, mod]
 int_div: strict
 description: 関数 gcd は、二つの正の整数 a と b の最大公約数を返す。

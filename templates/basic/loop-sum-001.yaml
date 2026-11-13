@@ -2,6 +2,7 @@ id: loop-sum-001
 title: 条件に合う要素の合計
 level: 1
 access: free
+pace: long
 tags: [for, if, 配列, mod]
 array_base: 1
 int_div: strict

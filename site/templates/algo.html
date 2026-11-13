@@ -22,18 +22,21 @@
 </div>
 {% endfor %}
 
-<h2>練習問題（値を変えた{{ problems | length }}問）</h2>
+{% for group in algo.sets %}
+<h2 id="{{ group.pace }}">練習問題 <span class="badge pace-{{ group.pace }}">{{ group.pace_name }}</span>（{{ group.problems | length }}問）</h2>
+<p class="note">{{ group.pace_note }}。レベル：{{ group.level_name }}</p>
 <ol class="problem-list">
-  {% for p in problems %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
+  {% for p in group.problems %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
 </ol>
-{% if extras %}
+{% if group.extras %}
 <details class="more">
-  <summary>もっと解く（追加の{{ extras | length }}問）</summary>
-  <ol class="problem-list" start="{{ problems | length + 1 }}">
-    {% for p in extras %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
+  <summary>もっと解く（追加の{{ group.extras | length }}問）</summary>
+  <ol class="problem-list" start="{{ group.problems | length + 1 }}">
+    {% for p in group.extras %}<li><a href="{{ url(p.path) }}">問題{{ p.number }}</a>　<span>{{ p.call }}</span></li>{% endfor %}
   </ol>
 </details>
 {% endif %}
+{% endfor %}
 
 <h2>ほかのアルゴリズム</h2>
 <ul class="links">{% for other in others %}<li><a href="{{ url(other.path) }}">{{ other.title }}</a></li>{% endfor %}</ul>

@@ -25,7 +25,7 @@ def test_every_problem_gets_one_exam_question_in_the_official_layout(template):
         assert exam.lead.endswith("を，解答群の中から選べ。")
         assert ("次のプログラム中の" in exam.lead) == (exam.form == "program_blank")
         assert ("の組合せ" in exam.lead) == (len(exam.blanks) == 2)
-        assert 6 <= len(exam.choices) <= 8
+        assert 4 <= len(exam.choices) <= 6
         assert len({tuple(c) for c in exam.choices}) == len(exam.choices)
         assert all(len(c) == len(exam.blanks) for c in exam.choices)
         assert "、" not in "".join(exam.body)                 # 読点は「，」
