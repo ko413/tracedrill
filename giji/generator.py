@@ -346,7 +346,8 @@ def _same_kind(a, b) -> bool:
     if isinstance(a, str) and isinstance(b, str):
         return True
     if isinstance(a, list) and isinstance(b, list):
-        return len(a) == len(b) and UNSET not in b
+        # 未定義を含む配列は、正答にも未定義があるとき（リストのポインタ配列など）だけ誤答に使う
+        return len(a) == len(b) and (UNSET not in b or UNSET in a)
     return False
 
 

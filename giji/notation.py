@@ -29,7 +29,7 @@ REQUIRED_SYMBOLS = {
 REQUIRED_PHRASES = {
     "wo", "from", "to", "step", "inc", "dec", "output", "length", "rows", "cols",
     "append_to", "append", "count_of", "quotient", "remainder",
-    "global", "undef_value", "is", "undef", "not_undef",
+    "global", "undef_value", "is", "undef", "not_undef", "break", "value_of",
 }
 REQUIRED_TYPES = {"int", "real", "bool", "char", "string"}
 

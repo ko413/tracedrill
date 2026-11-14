@@ -408,3 +408,64 @@ def test_global_rules():
 def test_programs_without_globals_record_the_same_variables():
     result = _run("○整数型: f(整数型: n)\n  整数型: s ← n ＋ 1\n  return s\n", "f(2)")
     assert [sorted(s.vars) for s in result.steps] == [["n", "s"], ["n", "s"]]
+
+
+# ---- 繰返し処理を終了する・「の値 を追加する」 ----
+
+LIST_BREAK = """
+大域: 整数型の配列: dataList ← {10, 30, 20, 40, 未定義の値}
+大域: 整数型の配列: pointerList ← {3, 4, 2, 未定義の値, 未定義の値}
+
+○整数型の配列: orderList()
+  整数型: i, p ← 1
+  整数型の配列: out ← {}
+  for (i を 1 から dataListの要素数 まで 1 ずつ増やす)
+    outの末尾 に dataList[p]の値 を追加する
+    if (pointerList[p] が 未定義)
+      繰返し処理を終了する
+    endif
+    p ← pointerList[p]
+  endfor
+  return out
+"""
+
+
+def test_break_leaves_only_the_innermost_loop_and_is_recorded():
+    result = _run(LIST_BREAK, "orderList()")
+    assert result.return_value == [10, 20, 30, 40]
+    breaks = [s for s in result.steps if s.kind == "break"]
+    assert len(breaks) == 1 and breaks[0].line == 11
+    assert breaks[0].vars["i"] == 4                 # 抜けた時点の値のまま
+    nested = """
+○整数型: f()
+  整数型: i, j, n ← 0
+  for (i を 1 から 3 まで 1 ずつ増やす)
+    j ← 0
+    while (true)
+      j ← j ＋ 1
+      if (j > i)
+        繰返し処理を終了する
+      endif
+      n ← n ＋ 1
+    endwhile
+  endfor
+  return n
+"""
+    assert _run(nested, "f()").return_value == 1 + 2 + 3
+    do_loop = "○整数型: g()\n  整数型: k ← 0\n  do\n    k ← k ＋ 1\n    if (k ＝ 3)\n      繰返し処理を終了する\n    endif\n  while (k < 10)\n  return k\n"
+    assert _run(do_loop, "g()").return_value == 3
+
+
+def test_break_outside_a_loop_is_an_error_even_across_a_call():
+    with pytest.raises(ExecError):
+        _main("繰返し処理を終了する\n")
+    src = "○stop()\n  繰返し処理を終了する\n\n○整数型: f()\n  整数型: i\n  for (i を 1 から 3 まで 1 ずつ増やす)\n    stop()\n  endfor\n  return i\n"
+    with pytest.raises(ExecError):
+        _run(src, "f()")
+
+
+def test_append_accepts_both_wordings():
+    for line in ("aの末尾に x を追加する", "aの末尾 に x を追加する", "aの末尾 に xの値 を追加する",
+                 "aの末尾に b[1]の値 を追加する"):
+        src = f"整数型の配列: a ← {{}}\n整数型の配列: b ← {{7}}\n整数型: x ← 7\n{line}\n"
+        assert _main(src).steps[-1].vars["a"] == [7], line

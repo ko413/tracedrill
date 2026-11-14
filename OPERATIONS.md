@@ -110,8 +110,8 @@ git push
 | 月 | 会員に先行公開 | 無料公開に切り替え |
 |---|---|---|
 | 開始月 | queue-ring-001（キュー）、bracket-match-001（かっこの対応） | — |
-| 2か月目 | list-traverse-001（リストをたどる）、リストへの挿入（未作成） | queue-ring-001、bracket-match-001 |
-| 3か月目 | 二分木の走査（未作成）、隣接行列と到達可能性（未作成） | 2か月目の2本 |
+| 2か月目 | list-traverse-001（リストをたどる）、list-insert-001（リストへの挿入） | queue-ring-001、bracket-match-001 |
+| 3か月目 | tree-inorder-001（二分木をたどる）、graph-reach-001（たどれる頂点を数える） | 2か月目の2本 |
 | 4か月目以降 | 新しく作ったテンプレート（`private/templates/` に置く） | 前月の2本 |
 
 - 新しい会員向けテンプレートは、まず `private/templates/` に置きます（`access: member`）。
@@ -132,7 +132,7 @@ git push
 | 合言葉が外に漏れた・SNS に書かれた | `python tools/members.py publish --month YYYY-MM --new-passphrase` → テスト → ビルド → push → note の記事を書き換える。 |
 | `publish` が「鍵が private/keys.json にありません」で止まる | `private/` が欠けています。控えから戻すか、下の「private/ をなくした」を実行。 |
 | `private/` をなくした | `python tools/members.py recover 今の合言葉`（note の記事にある合言葉）。鍵と模試の中身が戻ります。先行公開中のテンプレートは控えから戻すか、書き直します。 |
-| `mock` が「16問そろいませんでした」 | テンプレートが足りません。通常は起きません（今は24種類以上）。`templates/basic/` を消していないか確かめる。 |
+| `mock` が「16問そろいませんでした」 | テンプレートが足りません。通常は起きません（今は27種類）。`templates/basic/` を消していないか確かめる。 |
 | `mock` や `early` が「すでにあります」 | 作り直しはしません。もう1回分ほしいときは、もう一度 `mock` を実行すれば次の回（第N+1回）ができます。 |
 | `build.py --frozen` が「保存されていない問題があります」 | `python build.py`（--frozen なし）を1回実行 → `problems/` の新しいファイルをコミット。 |
 | Actions が赤い（公開されない） | Actions の画面でどの段階かを見る。テストなら手元で `python -m pytest -q`、ビルドなら `python build.py --frozen` を実行して同じエラーを出し、直す。直るまで、サイトは前の状態のまま動き続けます。 |
@@ -149,4 +149,4 @@ git push
   `keyring.json` は公開をやめ、鍵の表は Workers のシークレットに置く。
 - `mock.js`、`tools/members.py` の `mock`・`early`、`site/members/data/` は変更不要。
 
-詳しい手順は、移行を決めた時点で別のメモ（MIGRATION_B.md）にまとめます。
+詳しい手順は `MIGRATION_B.md` にあります。

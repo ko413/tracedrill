@@ -142,6 +142,10 @@ class Parser:
             return self._do_while()
         if kind == "for":
             return self._for()
+        if kind == "break":
+            self._next()
+            self._end_of_statement()
+            return A.Break(tok.line)
         if kind == "return":
             self._next()
             value = None if self.peek.kind in ("NEWLINE", "EOF") else self._expr()
@@ -244,6 +248,7 @@ class Parser:
             stmt = A.Output(expr, line)
         elif self._accept("append_to"):
             value = self._expr()
+            self._accept("value_of")          # 「x の値 を追加する」とも書ける
             self._expect("wo", "「を」")
             self._expect("append", "「追加する」")
             stmt = A.Append(expr, value, line)

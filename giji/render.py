@@ -20,6 +20,7 @@ KIND_LABELS = {
     "return": "戻る",
     "output": "出力",
     "append": "追加",
+    "break": "繰返しを抜ける",
 }
 
 STYLE = """

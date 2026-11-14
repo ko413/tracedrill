@@ -95,6 +95,11 @@ class _ReturnSignal(Exception):
         self.value = value
 
 
+class _BreakSignal(Exception):
+    def __init__(self, line: int):
+        self.line = line
+
+
 def _is_number(v) -> bool:
     return isinstance(v, (int, float)) and not isinstance(v, bool)
 
@@ -155,6 +160,8 @@ class Interpreter:
             if call is not None:
                 self.result.return_value = self._eval(call)
             return self.result
+        except _BreakSignal as sig:
+            raise ExecError("「繰返し処理を終了する」が繰返しの外にあります", sig.line) from None
         except RecursionError:
             raise StepLimitError("呼出しまたは式の入れ子が深すぎます") from None
         finally:
@@ -240,11 +247,17 @@ class Interpreter:
             self._record(stmt.line, "cond", ok)
             if not ok:
                 return
-            self._exec_block(stmt.body)
+            try:
+                self._exec_block(stmt.body)
+            except _BreakSignal:
+                return
 
     def _exec_DoWhile(self, stmt: A.DoWhile) -> None:
         while True:
-            self._exec_block(stmt.body)
+            try:
+                self._exec_block(stmt.body)
+            except _BreakSignal:
+                return
             ok = self._truth(stmt.cond)
             self._record(stmt.cond_line, "cond", ok)
             if not ok:
@@ -270,7 +283,10 @@ class Interpreter:
             self._record(stmt.line, "cond", ok)
             if not ok:
                 return
-            self._exec_block(stmt.body)
+            try:
+                self._exec_block(stmt.body)
+            except _BreakSignal:
+                return          # 繰返しの変数は、抜けた時点の値のまま
             current = scope[stmt.var]
             scope[stmt.var] = current + step if stmt.direction == "inc" else current - step
             self._record(stmt.line, "for_step")
@@ -279,6 +295,10 @@ class Interpreter:
         value = None if stmt.value is None else self._value(stmt.value)
         self._record(stmt.line, "return", value)
         raise _ReturnSignal(value)
+
+    def _exec_Break(self, stmt: A.Break) -> None:
+        self._record(stmt.line, "break")
+        raise _BreakSignal(stmt.line)
 
     def _exec_Output(self, stmt: A.Output) -> None:
         value = self._eval(stmt.value)
@@ -516,5 +536,7 @@ class Interpreter:
             return None
         except _ReturnSignal as sig:
             return sig.value
+        except _BreakSignal as sig:      # 呼び出した側の繰返しまで抜けてしまわないように、ここで止める
+            raise ExecError("「繰返し処理を終了する」が繰返しの外にあります", sig.line) from None
         finally:
             self.frames.pop()

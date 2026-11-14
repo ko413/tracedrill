@@ -176,6 +176,12 @@ class Append:
 
 
 @dataclass
+class Break:
+    """「繰返し処理を終了する」。いちばん内側の繰返しを抜ける。"""
+    line: int
+
+
+@dataclass
 class ExprStmt:
     """手続の呼出しだけの文。"""
     call: Call

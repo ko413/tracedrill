@@ -87,6 +87,8 @@ git add site/members problems templates content && git commit && git push
 - 擬似言語の表記（記号、キーワード、「の商」「未定義」など）は `giji/notation/fe-2023.yaml` にまとめてある。
   表記を変えるときは、IPA が公開している問題冊子の「擬似言語の記述形式」を運営者に確認してもらう。記憶で決めない。
 - 仕様にない動作（負の数の割り算、未定義の扱いなど）は README.md「決めた動作」と「設計上の判断」に従う。
+- 新しいテンプレートで「が 未定義でない」は使わない（IPA の公開問題で確認できなかった書き方）。
+  `if (… が 未定義)` と `繰返し処理を終了する` の組合せで書く。例：`private/templates/list-traverse-001.yaml`。
 - 処理系（`giji/`）を直すときは、直す前後で `python build.py --frozen --no-ogp --out /tmp/a` と `/tmp/b` を作り、
   `diff -r /tmp/a /tmp/b` が空であること（公開済みページが1文字も変わらないこと）を確かめる。
 - 大きな変更（処理系の拡張、会員の確認方法の変更、ページ構成の変更）は、設計を先に文章で示して了承を得てから実装する。
