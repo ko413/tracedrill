@@ -4,6 +4,13 @@
 (function () {
   'use strict';
 
+  // 正解・不正解の表示。friendly のときだけ、やわらかい言葉と顔文字にする（文言と顔文字は kaomoji.js）。
+  function verdict(el, ok, friendly) {
+    if (friendly && window.Kaomoji) window.Kaomoji.say(el, ok ? 'correct' : 'wrong');
+    else el.textContent = ok ? '正解です。' : '不正解です。';
+  }
+
+
   function all(selector, scope) {
     return Array.prototype.slice.call((scope || document).querySelectorAll(selector));
   }
@@ -76,7 +83,7 @@
         if (!chosen) return;
         var ok = chosen.value === item.answer;
         body.classList.add('answered', ok ? 'is-correct' : 'is-wrong');
-        body.querySelector('.verdict').textContent = ok ? '正解です。' : '不正解です。';
+        verdict(body.querySelector('.verdict'), ok, true);
         all('input[type="radio"]', body).forEach(function (radio) {
           radio.disabled = true;
           if (radio.value === item.answer) radio.parentNode.classList.add('is-answer');
@@ -88,13 +95,16 @@
         offset += 1;
         show(items[(today + offset) % items.length]);
         document.getElementById('daily-label').textContent = 'もう1問';
+        if (window.Kaomoji) window.Kaomoji.decorate(document.getElementById('daily-label'), 'daily');
         markScrollable();
       });
       markScrollable();
     }
 
+    // 見出しの文字を入れ直すので、顔文字もここで付け直す（kaomoji.js が先に付けた分は上書きされる）
     document.getElementById('daily-label').textContent =
       '今日の1問（' + (now.getUTCMonth() + 1) + '/' + now.getUTCDate() + '）';
+    if (window.Kaomoji) window.Kaomoji.decorate(document.getElementById('daily-label'), 'daily');
     show(items[today % items.length]);
   })();
 
@@ -143,13 +153,13 @@
     applyFocus(quiz.practice[index], true);
   }
 
-  // 答え合わせの共通部分。正解なら true を返す。
-  function grade(section, answer) {
+  // 答え合わせの共通部分。正解なら true を返す。friendly は練習形式だけ true（本番形式は顔文字なし）。
+  function grade(section, answer, friendly) {
     var chosen = section.querySelector('input[type="radio"]:checked');
     if (!chosen) return null;
     var ok = chosen.value === answer;
     section.classList.add('answered', ok ? 'is-correct' : 'is-wrong');
-    section.querySelector('.verdict').textContent = ok ? '正解です。' : '不正解です。';
+    verdict(section.querySelector('.verdict'), ok, friendly);
     all('input[type="radio"]', section).forEach(function (radio) {
       radio.disabled = true;
       var row = radio.closest('tr') || radio.parentNode;
@@ -171,7 +181,7 @@
   practice.forEach(function (section, index) {
     var q = quiz.practice[index];
     enableButton(section).addEventListener('click', function () {
-      var ok = grade(section, q.answer);
+      var ok = grade(section, q.answer, true);
       if (ok === null) return;
       if (ok) correct += 1;
 
@@ -202,7 +212,7 @@
 
   if (examSection && quiz.exam) {
     enableButton(examSection).addEventListener('click', function () {
-      if (grade(examSection, quiz.exam.answer) === null) return;
+      if (grade(examSection, quiz.exam.answer, false) === null) return;
       root.classList.add('exam-done');
       applyFocus(quiz.exam, true);
       markScrollable();

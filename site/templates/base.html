@@ -42,6 +42,7 @@
   <p>問題はこのサイトが自動生成したオリジナル問題で、IPAの試験問題ではありません。答えと解説は、プログラムを実際に動かした結果から作っています。</p>
   <p><a href="{{ url('/about/') }}">このサイトについて</a>　<a href="{{ url('/for-teams/') }}">研修・スクールでのご利用</a></p>
 </footer>
+{% block kaomoji %}<script defer src="{{ url('/static/kaomoji.js') }}?v={{ build_id }}"></script>{% endblock %}
 <script defer src="{{ url('/static/app.js') }}?v={{ build_id }}"></script>
 {% if site.analytics.cloudflare_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics.cloudflare_token }}"}'></script>{% endif %}
 </body>

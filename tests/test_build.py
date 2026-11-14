@@ -265,7 +265,7 @@ def test_home_shows_one_problem_first_and_keeps_a_short_description(site):
     assert 'id="daily-body"' in first_screen and 'class="giji-code"' in first_screen
     assert first_screen.count('name="daily"') == 4 and "解答する" in first_screen
     # 「今日の1問」は説明文の中ではなく、問題の枠のすぐ上の独立した見出し
-    assert re.search(r'<h2 class="daily-title" id="daily-label">今日の1問</h2>\s*<div class="question" id="daily-body">', first_screen)
+    assert re.search(r'<h2 class="daily-title" id="daily-label" data-kaomoji="daily">今日の1問</h2>\s*<div class="question" id="daily-body">', first_screen)
     assert "今日の1問" not in first_screen.split('class="daily-lead"')[1].split("</p>")[0]
     assert "このサイトについて" in rest and "トレース" in rest            # 説明文は最初の画面の下に残す
     daily = json.loads(re.search(r'id="daily-data">(.*?)</script>', page, re.S).group(1))
@@ -345,3 +345,36 @@ def test_member_pages_are_built_from_prepared_files_only(site):
     sitemap = (site / "sitemap.xml").read_text(encoding="utf-8")
     assert "/mock/sample/" in sitemap and "/members/" in sitemap
     assert "無料サンプル模試" in (site / "index.html").read_text(encoding="utf-8")
+
+
+def test_kaomoji_only_in_the_agreed_places(site):
+    """顔文字：1ファイルにまとめ、決めた場所だけに出す。問題文・本番形式・会員ページには出さない。"""
+    source = (ROOT / "site" / "static" / "kaomoji.js").read_text(encoding="utf-8")
+    faces = re.findall(r"'([^']+)'", source[source.index("var FACES"):source.index("var WORDS")])
+    assert 8 <= len(set(faces)) <= 12
+
+    # 顔文字そのものは kaomoji.js にしかない（HTML・ほかの JS・問題データには書かれていない）
+    for path in list(site.rglob("*.html")) + list(site.rglob("*.json")) + list((site / "static").glob("*.js")):
+        if path.name == "kaomoji.js":
+            continue
+        text = path.read_text(encoding="utf-8")
+        assert not any(face in text for face in faces), path
+
+    home = (site / "index.html").read_text(encoding="utf-8")
+    assert 'class="daily-lead" data-kaomoji="lead"' in home and "/static/kaomoji.js" in home
+    assert sorted(set(re.findall(r'data-kaomoji="(\w+)"', home))) == ["daily", "lead"]
+
+    problem = next(p for p in sorted((site / "q").rglob("index.html")))
+    html = problem.read_text(encoding="utf-8")
+    practice, exam = html.split('id="mode-exam"')
+    assert practice.count('<summary data-kaomoji="hint">') >= 1
+    assert "data-kaomoji" not in exam                      # 本番形式には目印がない
+    assert set(re.findall(r'data-kaomoji="(\w+)"', html)) == {"hint"}
+
+    members = site / "members" / "index.html"
+    if members.exists():
+        assert "kaomoji.js" not in members.read_text(encoding="utf-8")     # 会員ページは読み込まない
+        assert "kaomoji.js" in (site / "mock" / "sample" / "index.html").read_text(encoding="utf-8")
+
+    script = (ROOT / "site" / "static" / "app.js").read_text(encoding="utf-8")
+    assert "grade(examSection, quiz.exam.answer, false)" in script   # 本番形式の答え合わせは元の文言のまま

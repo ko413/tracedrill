@@ -157,6 +157,12 @@
       timerBar.hidden = true;
       footer.hidden = true;
       summary.textContent = '';
+      // 顔文字はサンプル模試だけ（会員ページは kaomoji.js を読み込まないので、何も出ない）
+      if (window.Kaomoji) {
+        var cheer = el('p', { 'class': 'mock-cheer' });
+        window.Kaomoji.say(cheer, 'done');
+        summary.appendChild(cheer);
+      }
       summary.appendChild(el('h2', { text: '結果：' + score + ' / ' + total + ' 問正解（' + Math.round(score * 100 / total) + '%）' }));
       var parts = [];
       if (timeUp) parts.push('時間切れのため、その時点の解答で採点しました。');

@@ -21,13 +21,13 @@
 
 <div class="hints">
   <details class="hint">
-    <summary>ヒント1：トレース表の枠を見る</summary>
+    <summary data-kaomoji="hint">ヒント1：トレース表の枠を見る</summary>
     <p class="note">この列で表を作り、文を1つ実行するたびに1行足していきます。</p>
     {{ hint_frame_html | safe }}
   </details>
   {% if hint_steps %}
   <details class="hint">
-    <summary>ヒント2：最初の{{ hint_steps }}ステップを見る</summary>
+    <summary data-kaomoji="hint">ヒント2：最初の{{ hint_steps }}ステップを見る</summary>
     <p class="note">続きを同じ要領で書いていきます。太字は、その文で値が変わった変数です。</p>
     {{ hint_steps_html | safe }}
   </details>

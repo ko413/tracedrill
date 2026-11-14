@@ -160,3 +160,7 @@ pre code { border: none; padding: 0; background: none; }
 .mock-question tr.is-answer { background: rgba(26, 127, 75, 0.16); }
 .mock-question tr.is-chosen-wrong { background: rgba(179, 38, 30, 0.14); }
 .home-mock { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.2rem 1rem 0.9rem; }
+
+/* 顔文字（中身は kaomoji.js）。途中で折り返さない */
+.kaomoji { display: inline-block; white-space: nowrap; margin-left: 0.35em; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; }
+.mock-cheer { margin: 0.8rem 0 0; font-weight: 700; }
