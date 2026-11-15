@@ -470,7 +470,7 @@ class Builder:
             self.build_algo(algo, algos)
         self.build_simple("about", "/about/", default_image, show_contact=True)
         self.build_simple("for-teams", "/for-teams/", default_image, show_contact=True)
-        has_mock = self.build_members(default_image, len(algos))
+        has_mock = self.build_members(default_image, len(algos), sum(algo["count"] for algo in algos))
 
         # トップ：レベルごとに問題セットを並べる（標準を先に）。同じアルゴリズムが2つのレベルに出ることがある。
         entries = [{"title": algo["title"], "summary": algo["summary"], "level": item["level"],
@@ -654,7 +654,7 @@ class Builder:
                         children=guides, show_contact=False)
         return guides
 
-    def build_members(self, image: str, algo_count: int) -> bool:
+    def build_members(self, image: str, algo_count: int, free_count: int) -> bool:
         """会員ページとサンプル模試。中身（site/members/）は tools/members.py が作ったものをそのまま配る。
 
         ここでは暗号化も復号もしない。平文の会員向けデータは private/ にあり、ビルドは読まない。
@@ -678,15 +678,18 @@ class Builder:
                                                "16問・80分。採点後に全問のトレース表つき解説。"),
                         breadcrumbs=[home, {"name": "無料サンプル模試", "path": "/mock/sample/"}])
         if (MEMBERS_DIR / "index.json").exists() and has_sample:
-            self.step_pages("/members/")
+            self.step_pages("/members/", ("started", "graded", "join"))      # join＝「note で会員になる」を押した
+            index = json.loads((MEMBERS_DIR / "index.json").read_text(encoding="utf-8"))
+            kinds = [entry["kind"] for entry in index["bundles"]]
             self.render("members.html", "/members/", title="会員ページ（毎月の模試・先行公開ドリル）",
                         description="毎月追加される16問模試とバックナンバー、新しいアルゴリズムの先行公開ドリルを解ける会員ページです。",
                         og_image=image, breadcrumbs=[home, {"name": "会員ページ", "path": "/members/"}],
-                        mock_name=MOCK_NAME)
+                        mock_name=MOCK_NAME, algo_count=algo_count, free_count=free_count,
+                        mock_count=kinds.count("mock"), drill_count=kinds.count("drill"))
         return has_sample
 
-    def step_pages(self, parent: str) -> None:
-        """計測用のアドレス（…/started/、…/graded/）の受け皿。
+    def step_pages(self, parent: str, steps: tuple = ("started", "graded")) -> None:
+        """計測用のアドレス（…/started/、…/graded/、会員ページの …/join/）の受け皿。
 
         模試の画面は、始めたとき・採点したときにアドレスだけをここへ切り替える（mock.js の countStep）。
         その状態でページを開き直した人を、元のページへ戻すだけのページ。検索対象にもサイトマップにも入れない。
@@ -697,7 +700,7 @@ class Builder:
                 f'<meta http-equiv="refresh" content="0; url={target}">'
                 f'<link rel="canonical" href="{self.abs_url(parent)}"><title>移動します</title></head>'
                 f'<body><p><a href="{target}">模試のページへ移動します</a></p></body></html>\n')
-        for step in ("started", "graded"):
+        for step in steps:
             folder = self.out / parent.strip("/") / step
             folder.mkdir(parents=True, exist_ok=True)
             (folder / "index.html").write_text(html, encoding="utf-8")

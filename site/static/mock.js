@@ -245,8 +245,11 @@
   // ---- 会員ページ（目次と合言葉） ----
 
   function joinLink(text) {
-    return noteUrl ? el('a', { 'class': 'button', href: noteUrl, rel: 'noopener', text: text })
-                   : el('span', { 'class': 'note', text: '入会ページは準備中です。' });
+    if (!noteUrl) return el('span', { 'class': 'note', text: '入会ページは準備中です。' });
+    // 押した回数を数える（…/join/ への切り替え）。数え終わる前にページを離れないよう、note は新しいタブで開く
+    var link = el('a', { 'class': 'button', href: noteUrl, target: '_blank', rel: 'noopener', text: text });
+    link.addEventListener('click', function () { countStep('join'); });
+    return link;
   }
 
   function listNode(index, keys) {

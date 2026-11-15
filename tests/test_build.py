@@ -433,3 +433,24 @@ def test_mock_steps_are_counted_through_addresses_with_landing_pages(site):
     assert 'data-step-base="/mock/sample/"' in sample and 'data-algo-base="/algo/"' in sample
     script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
     assert "countStep('started')" in script and "countStep('graded')" in script
+
+
+def test_member_page_shows_what_members_get_now_and_counts_join_clicks(site):
+    """会員ページ：いま解ける回数と、無料と会員の比較表。入会ボタンを押した回数も数える。"""
+    members_dir = ROOT / "site" / "members"
+    if not (members_dir / "index.json").exists():
+        pytest.skip("site/members/ がまだありません")
+    kinds = [b["kind"] for b in json.loads((members_dir / "index.json").read_text(encoding="utf-8"))["bundles"]]
+    page = (site / "members" / "index.html").read_text(encoding="utf-8")
+    assert f"模試 {kinds.count('mock')}回分（{kinds.count('mock') * 16}問）" in page
+    table = page.split('<table class="compare">')[1].split("</table>")[0]
+    assert table.count("<tr>") == 7 and "月額980円" in table and f"いま{kinds.count('mock')}回分" in table
+    shown = re.search(r"練習問題（(\d+)題材・(\d+)問）", table)        # 題材数と問題数は、ビルドした実際の数から出す
+    assert shown and int(shown.group(1)) == len(list((site / "algo").iterdir())) and int(shown.group(2)) > 0
+    assert "kaomoji" not in page and "data-kaomoji" not in page        # 会員ページに顔文字は出さない
+
+    join = (site / "members" / "join" / "index.html").read_text(encoding="utf-8")
+    assert 'content="noindex"' in join and 'url=/members/"' in join
+    assert "join" not in (site / "sitemap.xml").read_text(encoding="utf-8")
+    script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
+    assert "countStep('join')" in script and "target: '_blank'" in script

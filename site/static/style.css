@@ -178,3 +178,11 @@ pre code { border: none; padding: 0; background: none; }
 .mock-breakdown tr.is-correct td:nth-child(2) { color: #1a7f4b; font-weight: 700; }
 .mock-breakdown-box h3 { margin: 1rem 0 0.3rem; }
 .mock-list .mock-single { display: inline-block; margin-top: 0.2rem; font-size: 0.9rem; }
+
+/* 会員ページ：無料と会員の比較 */
+.member-now { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.6rem 0.9rem; }
+.compare { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+.compare th, .compare td { border: 1px solid var(--line); padding: 0.4rem 0.6rem; text-align: left; vertical-align: top; }
+.compare thead th { background: var(--card); white-space: nowrap; }
+.compare tbody th { font-weight: 600; }
+.compare td:last-child, .compare thead th:last-child { background: rgba(26, 127, 75, 0.08); }

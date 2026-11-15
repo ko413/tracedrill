@@ -12,6 +12,22 @@
     <li><strong>先行公開ドリル</strong>：スタック、キュー、リストなどの新しい問題を、無料公開の1か月前に解けます。</li>
     <li>すべての問題に、行番号つきのプログラムと全ステップのトレース表が付きます。</li>
   </ul>
+  <p class="member-now">いま会員が解けるもの：<strong>模試 {{ mock_count }}回分（{{ mock_count * 16 }}問）</strong>{% if drill_count %}、<strong>先行公開ドリル {{ drill_count }}本</strong>{% endif %}。模試は毎月1回分ずつ増えます。</p>
+
+  <h2>無料と会員の違い</h2>
+  <div class="scroll-x">
+  <table class="compare">
+    <thead><tr><th></th><th>無料</th><th>会員（月額{{ site.members.price }}円）</th></tr></thead>
+    <tbody>
+      <tr><th>練習問題（{{ algo_count }}題材・{{ free_count }}問）</th><td>すべて</td><td>すべて</td></tr>
+      <tr><th>全ステップのトレース表と解説</th><td>あり</td><td>あり</td></tr>
+      <tr><th>サンプル模試（16問・80分）</th><td>1回分</td><td>1回分</td></tr>
+      <tr><th>毎月の16問模試</th><td>なし</td><td>毎月1回分を追加</td></tr>
+      <tr><th>これまでの模試（バックナンバー）</th><td>なし</td><td>すべて（いま{{ mock_count }}回分）</td></tr>
+      <tr><th>新しい題材のドリル</th><td>公開の1か月後から</td><td>1か月早く{% if drill_count %}（いま{{ drill_count }}本）{% endif %}</td></tr>
+    </tbody>
+  </table>
+  </div>
   <p>まずは無料の<a href="{{ url('/mock/sample/') }}">サンプル模試</a>をお試しください。無料の練習問題は、これまでどおりすべて無料で使えます。</p>
   <h2>使い方</h2>
   <ol>
