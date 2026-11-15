@@ -80,7 +80,7 @@ python tools/members.py mock --month YYYY-MM
 
 # 2. 先月の先行公開テンプレートを、無料公開に切り替える（公開から1か月たったもの）
 python tools/members.py release queue-ring-001          # 例。下の予定表のとおりに
-#    → content/algo/<id>.md に解説を書く（ほかの解説を写して直す）
+#    → 解説は private/drafts/content/algo/<id>.md から content/algo/ へ移す（下書きがなければ、ほかの解説を写して書く）
 python build.py                                         # 無料の問題が作られ、problems/ に固定される
 
 # 3. 今月の先行公開ドリルを作る（月2本まで）
