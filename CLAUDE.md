@@ -40,7 +40,9 @@
 - `build.py` … 静的サイトを `dist/` に出力。`site.yaml` が設定、`site/templates/` が HTML の型、`site/static/` が CSS と JS。
 - `tools/members.py` … 会員向けの模試・先行公開ドリルを作り、暗号化して `site/members/` に置く。
 - `site/static/member.js` … 会員の確認（今は合言葉）。確認方法を変えるときはこのファイルだけ差し替える。
-- `site/static/mock.js` … 模試の画面。
+- `site/static/mock.js` … 模試の画面。採点結果の題材別の表、開始・採点の計測（アドレスの切り替え）もここ。
+- `content/algo/<id>.md` … 題材の解説。先頭の `topic:` は検索で使われる呼び名で、ページのタイトルと見出しに入る。
+- `content/guide/notation.md` … 擬似言語の書き方の早見表。IPA の資料で確認できた書き方だけを載せる。
 - 公開は GitHub Actions（`.github/workflows/pages.yml`）。main に push すると、テスト → `build.py --frozen` → GitHub Pages。
 
 設計の理由は `README.md` の「設計上の判断」、毎月の作業と障害対応は `OPERATIONS.md` にある。
@@ -56,7 +58,7 @@
 2. `python tools/validate_templates.py templates/basic/新しいファイル.yaml -n 200` で **[OK]** か **[注意]** になるまで直す。
    - 「空欄補充: …でも同じ結果になる」→ その誤答（distractors）を別のものに替える。
    - 「採用率」が 20% 未満 → params の範囲か quality の条件を見直す。
-3. `content/algo/<id>.md` に解説（何をしているか／トレースのコツ／よくある間違い）を書く。
+3. `content/algo/<id>.md` に解説（何をしているか／トレースのコツ／よくある間違い）を書く。先頭に `topic:`（検索で使われる呼び名）と `summary:` を付ける。
 4. `python build.py` で問題を作って固定 → `git status` で `problems/` に新しいフォルダだけが増えたことを確かめる。
 5. 「絶対に守ること 5」の2つを通す → コミット。
 - 既存テンプレートを直すとき：公開済みの問題は変わらない。値の範囲を狭めると `--frozen` が止まることがあるので、広げる方向で直す。
@@ -70,6 +72,7 @@ python tools/members.py release 先月の先行公開のid       # 先行公開�
 python build.py                                        # ↑で無料公開したテンプレートの問題を作って固定
 python tools/members.py early 今月の先行公開のid --month YYYY-MM
 python tools/members.py publish --month YYYY-MM        # 暗号化。新しい合言葉が表示される
+# （必要なときだけ）python tools/members.py single mock-001 --url …   # 1回分だけ開ける単品用の合言葉
 python -m pytest -q && python build.py --frozen
 git add site/members problems templates content && git commit && git push
 ```

@@ -170,3 +170,61 @@ def test_recover_restores_keys_and_bundles_from_public_files(paths):
     members.cmd_mock(paths, "2026-11", count=5)
     again = members.cmd_publish(paths, "2026-11")
     assert again["passphrase"] == result["passphrase"] and again["added"] == ["mock-002"]
+
+
+def test_single_passphrase_opens_only_that_mock_and_adds_files_only(paths):
+    """単品用の合言葉：その回の鍵だけを入れた鍵束を足す。暗号化済みの模試にも会員用の鍵束にも触らない。"""
+    members.cmd_mock(paths, "2026-11", count=5)
+    members.cmd_mock(paths, "2026-11", count=5)
+    with pytest.raises(members.MemberError):               # 公開前の回には作れない
+        members.cmd_single(paths, "mock-001")
+    monthly = members.cmd_publish(paths, "2026-11")
+    before = {p.name: p.read_bytes() for p in paths.data.glob("*.json")}
+    ring_before = paths.keyring.read_bytes()
+
+    single = members.cmd_single(paths, "mock-001", url="https://note.example/n/abc")
+    assert single["changed"] and single["passphrase"] != monthly["passphrase"]
+    assert {p.name: p.read_bytes() for p in paths.data.glob("*.json")} == before       # 既存のファイルはそのまま
+    assert paths.keyring.read_bytes() == ring_before
+
+    ring = json.loads((paths.single / "mock-001.json").read_text(encoding="utf-8"))
+    assert list(members.open_keyring(single["passphrase"], ring)["keys"]) == ["mock-001"]   # この回の鍵だけ
+    with pytest.raises(Exception):
+        members.open_keyring(monthly["passphrase"], ring)
+    with pytest.raises(Exception):                         # 単品の合言葉では、会員用の鍵束は開かない
+        members.open_keyring(single["passphrase"], json.loads(paths.keyring.read_text(encoding="utf-8")))
+
+    index = {b["id"]: b for b in json.loads(paths.index.read_text(encoding="utf-8"))["bundles"]}
+    assert index["mock-001"]["single"] is True and index["mock-001"]["single_url"] == "https://note.example/n/abc"
+    assert "single" not in index["mock-002"]
+    assert single["passphrase"] not in "".join(p.read_text(encoding="utf-8") for p in paths.public.rglob("*.json"))
+
+    # もう一度実行しても、月が替わっても、単品用の合言葉は変わらない。目次の印も残る
+    assert members.cmd_single(paths, "mock-001")["passphrase"] == single["passphrase"]
+    single_file = (paths.single / "mock-001.json").read_bytes()
+    members.cmd_publish(paths, "2026-12")
+    assert (paths.single / "mock-001.json").read_bytes() == single_file
+    index = {b["id"]: b for b in json.loads(paths.index.read_text(encoding="utf-8"))["bundles"]}
+    assert index["mock-001"]["single"] is True
+    # 作り直すと変わる（漏れたとき用）
+    renewed = members.cmd_single(paths, "mock-001", new_passphrase=True)
+    assert renewed["passphrase"] != single["passphrase"] and renewed["url"] == "https://note.example/n/abc"
+
+
+def test_browser_side_script_handles_single_passphrase(paths):
+    if not shutil.which("node"):
+        pytest.skip("node がありません")
+    members.cmd_mock(paths, "2026-11", count=5)
+    members.cmd_mock(paths, "2026-11", count=5)
+    monthly = members.cmd_publish(paths, "2026-11")
+    single = members.cmd_single(paths, "mock-002")
+    done = subprocess.run(
+        ["node", str(ROOT / "tests" / "node_member_check.js"), str(paths.public), monthly["passphrase"],
+         "mock-001", str(ROOT / "site" / "static" / "member.js"), single["passphrase"], "mock-002"],
+        capture_output=True, text=True, timeout=180)
+    assert done.returncode == 0, done.stderr
+    out = json.loads(done.stdout)
+    assert out["wrong"] is False and out["singleOk"] is True
+    assert out["singleIds"] == ["mock-002"] and out["singleTitle"] == "mock-002"       # 単品ではその回だけ
+    assert out["singleExpired"] is False and out["afterSingle"] is None
+    assert out["ok"] is True and out["ids"] == ["mock-001", "mock-002"]                # 会員は全部

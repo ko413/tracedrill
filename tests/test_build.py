@@ -378,3 +378,58 @@ def test_kaomoji_only_in_the_agreed_places(site):
 
     script = (ROOT / "site" / "static" / "app.js").read_text(encoding="utf-8")
     assert "grade(examSection, quiz.exam.answer, false)" in script   # 本番形式の答え合わせは元の文言のまま
+
+
+def test_algorithm_pages_use_search_names_and_link_to_related_pages(site):
+    """解説ページ：検索で使われる呼び名をタイトルと見出しに入れ、関連する題材・ガイド・模試へつなぐ。"""
+    page = (site / "algo/stack-basic-001/index.html").read_text(encoding="utf-8")
+    title = re.search(r"<title>(.*?)</title>", page).group(1)
+    assert title.startswith("スタックの擬似言語をトレースで解説｜練習問題") and "基本情報 科目B" in title
+    description = re.search(r'<meta name="description" content="(.*?)">', page).group(1)
+    assert "擬似言語「スタック」" in description and "全ステップのトレース表つき" in description
+    assert '<h2 id="program">スタックのプログラム（擬似言語）</h2>' in page
+    assert '<h2 id="example">例題のトレース表' in page
+
+    related = page.split("関連するアルゴリズム")[1].split("読み方に迷ったら")[0]
+    links = re.findall(r'href="(/algo/[^"]+/)"', related)
+    assert len(links) == 3 and "/algo/stack-basic-001/" not in links
+    guides = page.split("読み方に迷ったら")[1].split("すべてのアルゴリズム")[0]
+    assert "/guide/trace-table/" in guides and "/guide/notation/" in guides and "/guide/arrays/" in guides
+    assert "/mock/sample/" in guides
+
+    # 題名しかない題材（topic がない）でも壊れない。問題ページからも関連へ進める
+    problem = next(iter(sorted((site / "q" / "stack-basic-001").rglob("index.html")))).read_text(encoding="utf-8")
+    block = problem.split('class="note related-links"')[1].split("</p>")[0]
+    assert block.count("/algo/") == 3 and "/guide/notation/" in block
+
+
+def test_every_algorithm_has_a_search_name():
+    for path in sorted((ROOT / "content" / "algo").glob("*.md")):
+        assert re.search(r"^topic: \S", path.read_text(encoding="utf-8"), re.M), path.name
+
+
+def test_notation_cheat_sheet_uses_confirmed_notation_only(site):
+    page = (site / "guide/notation/index.html").read_text(encoding="utf-8")
+    for text in ("擬似言語の書き方 早見表", "繰返し処理を終了する", "未定義の値", "の末尾 に", "大域:", "endwhile"):
+        assert text in page, text
+    assert "<table>" in page
+    # IPA の公開問題で確認できなかった書き方は、サイトのどの原稿にも書かない
+    for source in list((ROOT / "content").rglob("*.md")) + list((ROOT / "templates").rglob("*.yaml")):
+        assert "未定義でない" not in source.read_text(encoding="utf-8"), source
+    assert "/guide/notation/" in (site / "guide/index.html").read_text(encoding="utf-8")
+
+
+def test_mock_steps_are_counted_through_addresses_with_landing_pages(site):
+    """模試の開始・採点の計測：アドレスを切り替えて数える。切り替え先には、元へ戻すだけのページがある。"""
+    if not (ROOT / "site" / "members" / "sample.json").exists():
+        pytest.skip("site/members/ がまだありません")
+    for parent in ("mock/sample", "members"):
+        for step in ("started", "graded"):
+            html = (site / parent / step / "index.html").read_text(encoding="utf-8")
+            assert 'content="noindex"' in html and f'url=/{parent}/"' in html
+    sitemap = (site / "sitemap.xml").read_text(encoding="utf-8")
+    assert "started" not in sitemap and "graded" not in sitemap
+    sample = (site / "mock/sample/index.html").read_text(encoding="utf-8")
+    assert 'data-step-base="/mock/sample/"' in sample and 'data-algo-base="/algo/"' in sample
+    script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
+    assert "countStep('started')" in script and "countStep('graded')" in script

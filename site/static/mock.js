@@ -103,6 +103,50 @@
       el('div', { 'class': 'scroll-x', html: q.review_html })]));
   }
 
+  // 計測用。アクセス計測（Cloudflare Web Analytics）は「ページの閲覧」しか数えられないので、
+  // 模試を始めた・採点したときに、アドレスだけを専用のものに切り替えて1回の閲覧として数えさせる。
+  // 切り替え先（…/started/、…/graded/）には、開き直したときのために元のページへ戻すだけのページを置いてある。
+  function countStep(step) {
+    var stepBase = root.getAttribute('data-step-base');
+    if (!stepBase || !window.history || !window.history.pushState) return;
+    try { window.history.pushState({ step: step }, '', stepBase + step + '/'); } catch (e) { /* 数えられなくても解ける */ }
+  }
+
+  // 採点結果に付ける「題材別の正誤」。linkBase があるとき（サンプル模試）は、練習問題へのリンクも付ける。
+  function breakdownNode(bundle, correct, linkBase) {
+    var rows = bundle.questions.map(function (q, i) {
+      var name = linkBase
+        ? el('a', { href: linkBase + encodeURIComponent(q.template_id.replace(/-00[2-9]$/, '-001')) + '/', text: q.title })
+        : document.createTextNode(q.title);
+      return el('tr', { 'class': correct[i] ? 'is-correct' : 'is-wrong' }, [
+        el('td', {}, [el('a', { href: '#mock-q' + (i + 1), text: '問' + (i + 1) })]),
+        el('td', { text: correct[i] ? '○' : '×' }),       // 結果は、スマホでも見える左側に置く
+        el('td', {}, [name]),
+        el('td', { text: q.level })]);
+    });
+    var table = el('table', { 'class': 'mock-breakdown' }, [
+      el('thead', {}, [el('tr', {}, ['問', '結果', '題材', 'レベル'].map(function (h) { return el('th', { text: h }); }))]),
+      el('tbody', {}, rows)]);
+    var nodes = [el('h3', { text: '題材別の結果' }), el('div', { 'class': 'scroll-x' }, [table])];
+    var missed = bundle.questions.filter(function (q, i) { return !correct[i]; });
+    if (linkBase && missed.length) {
+      // 次に解くドリル：間違えた題材を、やさしい順に3つまで
+      var seen = {}, next = [];
+      missed.forEach(function (q) {
+        var id = q.template_id.replace(/-00[2-9]$/, '-001');
+        if (!seen[id] && next.length < 3) { seen[id] = true; next.push({ id: id, title: q.title }); }
+      });
+      nodes.push(el('h3', { text: '次に解くドリル' }));
+      nodes.push(el('p', { text: '間違えた題材から、やさしい順に選びました。値を変えた問題を続けて解くと、手順が身につきます。' }));
+      nodes.push(el('ul', { 'class': 'links' }, next.map(function (item) {
+        return el('li', {}, [el('a', { href: linkBase + encodeURIComponent(item.id) + '/', text: '「' + item.title + '」の解説と練習問題' })]);
+      })));
+    } else if (linkBase) {
+      nodes.push(el('p', { text: '全問正解です。ほかの題材や、長めのトレース（じっくり）にも挑戦してみてください。' }));
+    }
+    return el('div', { 'class': 'mock-breakdown-box' }, nodes);
+  }
+
   function play(bundle, options) {
     var isMock = bundle.kind === 'mock' && bundle.minutes > 0;
     var total = bundle.questions.length;
@@ -141,13 +185,14 @@
       if (graded) return;
       graded = true;
       if (timer) window.clearInterval(timer);
-      var score = 0, blank = 0;
+      var score = 0, blank = 0, correct = [];
       bundle.questions.forEach(function (q, index) {
         var section = document.getElementById('mock-q' + (index + 1));
         var checked = section.querySelector('input:checked');
         var chosen = checked ? checked.value : '';
         if (!chosen) blank += 1;
         if (chosen === q.answer) score += 1;
+        correct.push(chosen === q.answer);
         showReview(section, q, chosen);
       });
       var used = startedAt ? Math.round((Date.now() - startedAt) / 1000) : 0;
@@ -175,7 +220,9 @@
         return s.classList.contains('is-correct') ? null : el('a', { href: '#mock-q' + (i + 1), 'class': 'chip', text: '問' + (i + 1) });
       }).filter(Boolean);
       if (wrong.length) summary.appendChild(el('p', { 'class': 'mock-wrong' }, [document.createTextNode('見直す問題： ')].concat(wrong)));
+      summary.appendChild(breakdownNode(bundle, correct, options && options.linkBase));
       if (options && options.after) summary.appendChild(options.after());
+      countStep('graded');
       summary.scrollIntoView();
     }
 
@@ -183,6 +230,7 @@
       intro.hidden = true;
       paper.hidden = false;
       footer.hidden = false;
+      countStep('started');
       if (isMock) {
         startedAt = Date.now();
         deadline = startedAt + bundle.minutes * 60 * 1000;
@@ -207,30 +255,37 @@
       var meta = kinds[b.kind] + '・' + b.count + '問' + (b.minutes ? '・' + b.minutes + '分' : '') + '・' + b.issued.replace('-', '年') + '月';
       var last = store('mock-result:' + b.id);
       if (last) meta += '　前回 ' + last.score + ' / ' + last.total;
-      var title = keys && keys[b.id]
+      var open = keys && keys[b.id];
+      var title = open
         ? el('a', { href: base + '?id=' + encodeURIComponent(b.id), text: b.title })
         : el('span', { text: b.title });
       var extra = b.public_path ? el('span', { 'class': 'note', text: '（無料公開済み）' }) : null;
-      return el('li', {}, [title, extra, el('span', { 'class': 'mock-meta', text: meta })]);
+      // 単品で買える回：まだ開けていない人にだけ、販売ページへのリンクを出す
+      var single = !open && b.single && b.single_url
+        ? el('a', { 'class': 'mock-single', href: b.single_url, rel: 'noopener', text: 'この回だけ購入する（note）' })
+        : null;
+      return el('li', {}, [title, extra, el('span', { 'class': 'mock-meta', text: meta }), single]);
     });
     return el('ul', { 'class': 'mock-list' }, items);
   }
 
-  function loginNode(message, onDone) {
+  function loginNode(message, onDone, singleIds) {
+    var hasSingles = singleIds && singleIds.length > 0;
     var input = el('input', { type: 'text', id: 'member-pass', autocomplete: 'off', autocapitalize: 'characters',
       placeholder: '例：ABCD-EFGH-JKMN-PQRS', 'aria-describedby': 'member-pass-note' });
     var button = el('button', { type: 'submit', 'class': 'button', text: '開く' });
     var note = el('p', { 'class': 'note', id: 'member-pass-note', 'aria-live': 'polite', text: message || '' });
     var form = el('form', { 'class': 'member-login' }, [
-      el('label', { 'for': 'member-pass', text: '今月の合言葉' }), input, button, note]);
+      el('label', { 'for': 'member-pass', text: hasSingles ? '合言葉（会員の方は今月の合言葉、単品で購入した方はその回の合言葉）' : '今月の合言葉' }),
+      input, button, note]);
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       button.disabled = true;
       note.textContent = '確認しています…';
-      window.MemberAuth.login(input.value).then(function (ok) {
+      window.MemberAuth.login(input.value, singleIds || []).then(function (ok) {
         if (ok) return onDone();
         button.disabled = false;
-        note.textContent = '合言葉が違います。合言葉は毎月変わります。note の会員限定記事で、今月の合言葉を確認してください。';
+        note.textContent = '合言葉が違います。会員の合言葉は毎月変わります。note の会員限定記事で、今月の合言葉を確認してください。';
       }).catch(function () {
         button.disabled = false;
         note.textContent = '読み込みに失敗しました。通信の状態を確かめて、もう一度お試しください。';
@@ -248,37 +303,43 @@
       .then(function (values) {
         var index = values[0], keys = values[1], expired = values[2];
         status.textContent = '';
-        if (!keys) {
-          status.appendChild(loginNode(
-            expired ? '合言葉が新しくなりました。note の会員限定記事で、今月の合言葉を確認してください。' : '',
-            function () { window.location.reload(); }));
-          status.appendChild(el('p', {}, [joinLink('note で会員になる')]));
-          status.appendChild(el('h2', { text: '会員が解ける模試・ドリル' }));
-          status.appendChild(listNode(index, null));
-          return null;
+
+        // 開ける模試を指定して来た → そのまま解く画面へ
+        if (id && keys && keys[id]) {
+          return fetchJson(base + 'data/' + encodeURIComponent(id) + '.json')
+            .then(function (box) { return window.MemberAuth.open(keys[id], box); })
+            .then(function (bundle) {
+              document.getElementById('member-intro').hidden = true;
+              status.appendChild(el('p', {}, [el('a', { href: base, text: '← 模試・ドリルの一覧' })]));
+              play(bundle, null);
+            });
         }
-        if (!id) {
-          document.getElementById('member-intro').hidden = true;      // 確認済みなら、一覧をすぐ見せる
-          status.appendChild(el('h2', { text: '模試・ドリルを選ぶ' }));
+
+        // 単品用の合言葉を試す順番：指定された回があれば、それを先に
+        var singleIds = index.bundles.filter(function (b) { return b.single; }).map(function (b) { return b.id; });
+        if (id && singleIds.indexOf(id) > 0) { singleIds.splice(singleIds.indexOf(id), 1); singleIds.unshift(id); }
+        var openAll = keys && index.bundles.every(function (b) { return keys[b.id]; });
+
+        if (keys) document.getElementById('member-intro').hidden = true;      // 確認済みなら、一覧をすぐ見せる
+        if (id && !index.bundles.some(function (b) { return b.id === id; })) {
+          status.appendChild(el('p', { text: 'この模試は見つかりませんでした。' }));
+        }
+        if (!openAll) {
+          var message = expired ? '会員の合言葉が新しくなりました。note の会員限定記事で、今月の合言葉を確認してください。' : '';
+          status.appendChild(loginNode(message, function () { window.location.reload(); }, singleIds));
+          status.appendChild(el('p', {}, [joinLink('note で会員になる')]));
+        }
+        status.appendChild(el('h2', { text: keys ? '模試・ドリルを選ぶ' : '会員が解ける模試・ドリル' }));
+        if (openAll) {
           status.appendChild(el('p', { 'class': 'note', text: '過去の回（バックナンバー）も、すべて解けます。結果はこの端末に記録されます。' }));
-          status.appendChild(listNode(index, keys));
+        }
+        status.appendChild(listNode(index, keys));
+        if (keys) {
           var out = el('button', { type: 'button', 'class': 'chip', text: 'この端末の合言葉を消す' });
           out.addEventListener('click', function () { window.MemberAuth.logout(); window.location.reload(); });
           status.appendChild(el('p', {}, [out]));
-          return null;
         }
-        if (!keys[id]) {
-          status.appendChild(el('p', { text: 'この模試は見つかりませんでした。' }));
-          status.appendChild(el('p', {}, [el('a', { href: base, text: '一覧に戻る' })]));
-          return null;
-        }
-        return fetchJson(base + 'data/' + encodeURIComponent(id) + '.json')
-          .then(function (box) { return window.MemberAuth.open(keys[id], box); })
-          .then(function (bundle) {
-            document.getElementById('member-intro').hidden = true;
-            status.appendChild(el('p', {}, [el('a', { href: base, text: '← 模試・ドリルの一覧' })]));
-            play(bundle, null);
-          });
+        return null;
       })
       .catch(function () {
         status.textContent = '読み込みに失敗しました。通信の状態を確かめて、ページを開き直してください。';
@@ -287,7 +348,7 @@
 
   function samplePage() {
     fetchJson(samplePath).then(function (bundle) {
-      play(bundle, { after: function () {
+      play(bundle, { linkBase: root.getAttribute('data-algo-base'), after: function () {
         return el('div', { 'class': 'mock-upsell' }, [
           el('p', { text: '会員になると、毎月追加される模試と、これまでのすべての回を解けます。新しいアルゴリズムのドリルも先に解けます。' }),
           el('p', {}, [el('a', { 'class': 'button', href: base, text: '会員ページを見る' })])]);

@@ -2,7 +2,7 @@
 {# 会員ページには顔文字を出さない #}
 {% block kaomoji %}{% endblock %}
 {% block content %}
-<article class="members" id="members-app" data-members-base="{{ url('/members/') }}" data-note-url="{{ site.members.note_url }}">
+<article class="members" id="members-app" data-members-base="{{ url('/members/') }}" data-step-base="{{ url('/members/') }}" data-note-url="{{ site.members.note_url }}">
 <h1>会員ページ</h1>
 <div id="member-intro" class="prose">
   <p class="lead">毎月の模試と、新しいアルゴリズムの先行公開ドリルを解けます。月額{{ site.members.price }}円（税込）。</p>

@@ -164,3 +164,17 @@ pre code { border: none; padding: 0; background: none; }
 /* 顔文字（中身は kaomoji.js）。途中で折り返さない */
 .kaomoji { display: inline-block; white-space: nowrap; margin-left: 0.35em; font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; }
 .mock-cheer { margin: 0.8rem 0 0; font-weight: 700; }
+
+/* 解説ページの目次と関連リンク */
+.page-toc { font-size: 0.9rem; }
+.page-toc a { margin-right: 0.6rem; }
+.related-links { margin-top: 1.5rem; }
+
+/* 模試の結果：題材別の正誤 */
+.mock-breakdown { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+.mock-breakdown th, .mock-breakdown td { border: 1px solid var(--line); padding: 0.3rem 0.5rem; text-align: left; white-space: nowrap; }
+.mock-breakdown td:nth-child(2), .mock-breakdown th:nth-child(2) { text-align: center; }
+.mock-breakdown tr.is-wrong td:nth-child(2) { color: #b3261e; font-weight: 700; }
+.mock-breakdown tr.is-correct td:nth-child(2) { color: #1a7f4b; font-weight: 700; }
+.mock-breakdown-box h3 { margin: 1rem 0 0.3rem; }
+.mock-list .mock-single { display: inline-block; margin-top: 0.2rem; font-size: 0.9rem; }

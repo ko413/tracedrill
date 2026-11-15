@@ -85,6 +85,37 @@ def read_content(path: Path) -> tuple[dict, str]:
     return meta, body
 
 
+# ---- 解説ページどうしのつながり ----
+
+#: ほとんどの題材に付いていて、「似ている」の手がかりにならないタグ
+COMMON_TAGS = {"for", "if", "else", "while", "and", "配列"}
+#: タグ → 関係する読み方ガイド（content/guide/ のファイル名）
+GUIDE_TAGS = {
+    "arrays": {"配列", "二次元配列", "配列の操作", "交換"},
+    "loops": {"for", "while", "do-while", "二重ループ"},
+    "division": {"の商", "の余り", "mod"},
+}
+
+
+def related_algos(algo: dict, algos: list, limit: int = 3) -> list:
+    """タグが重なる題材を近い順に選ぶ。足りなければ、同じレベルの題材で埋める。"""
+    mine = set(algo["tags"]) - COMMON_TAGS
+    scored = []
+    for other in algos:
+        if other["id"] == algo["id"]:
+            continue
+        shared = len(mine & (set(other["tags"]) - COMMON_TAGS))
+        scored.append((-shared, abs(other["level"] - algo["level"]), other["title"], other))
+    scored.sort(key=lambda item: item[:3])
+    return [item[3] for item in scored[:limit]]
+
+
+def related_guides(algo: dict, guides: list) -> list:
+    """題材のタグに合う読み方ガイド。トレース表の書き方と、書き方の早見表は必ず入れる。"""
+    wanted = {name for name, tags in GUIDE_TAGS.items() if tags & set(algo["tags"])} | {"trace-table", "notation"}
+    return [g for g in guides if g["path"].strip("/").split("/")[-1] in wanted]
+
+
 # ---- 問題の選び方 ----
 
 def pick_new_seeds(template: Template, cfg: dict, frozen: list, count: int, warnings: list) -> list:
@@ -431,9 +462,12 @@ class Builder:
             algos.append(self.algo_info(template, group))
         algos.sort(key=lambda a: (a["level"], a["title"]))
 
+        guides = self.build_guides(default_image)
+        for algo in algos:
+            algo["related"] = related_algos(algo, algos)
+            algo["guides"] = related_guides(algo, guides)
         for algo in algos:
             self.build_algo(algo, algos)
-        guides = self.build_guides(default_image)
         self.build_simple("about", "/about/", default_image, show_contact=True)
         self.build_simple("for-teams", "/for-teams/", default_image, show_contact=True)
         has_mock = self.build_members(default_image, len(algos))
@@ -535,6 +569,8 @@ class Builder:
             "template": template, "id": template.id, "title": template.title,
             "path": f"/algo/{template.id}/", "level": level,
             "level_name": LEVEL_NAMES.get(level, str(level)),
+            # topic は検索で使われる呼び名（例「スタック」）。なければ題名をそのまま使う
+            "topic": meta.get("topic", template.title),
             "tags": template.tags, "summary": meta.get("summary", template.description),
             "description": template.description, "body": body, "example": own["example"],
             "sets": group, "count": sum(item["count"] for item in group),
@@ -549,9 +585,12 @@ class Builder:
         example = algo["example"] or {"call": "", "source": "", "questions": [],
                                       "trace": {"names": [], "rows": []}}
         self.render(
-            "algo.html", algo["path"], title=f"{algo['title']}のトレース解説と練習問題",
-            description=f"{algo['summary']} 考え方、トレースのコツ、よくある間違いと、"
+            "algo.html", algo["path"],
+            title=f"{algo['topic']}の擬似言語をトレースで解説｜練習問題{algo['count']}問（基本情報 科目B）",
+            description=f"基本情報技術者試験 科目Bの擬似言語「{algo['topic']}」を、1行ずつ追って理解する解説。"
+                        f"{algo['summary']} トレースのコツ、よくある間違いと、"
                         f"値を変えた練習問題{algo['count']}問。全ステップのトレース表つき。",
+            has_mock=(MEMBERS_DIR / "sample.json").exists(),
             og_image=image, breadcrumbs=[home, crumb], algo=algo, body=algo["body"],
             example={"call": example["call"], "source_html": source_html(example["source"]),
                      "trace_html": trace_table_html(example["trace"]["names"], example["trace"]["rows"]),
@@ -630,6 +669,7 @@ class Builder:
             shutil.copy(source, copy_to)
         has_sample = (MEMBERS_DIR / "sample.json").exists()
         if has_sample:
+            self.step_pages("/mock/sample/")
             title = f"無料サンプル模試｜{MOCK_NAME}"
             self.render("mock.html", "/mock/sample/", title=title, algo_count=algo_count,
                         description="基本情報技術者試験 科目Bのアルゴリズム16問を80分で解く無料の模試。"
@@ -638,11 +678,29 @@ class Builder:
                                                "16問・80分。採点後に全問のトレース表つき解説。"),
                         breadcrumbs=[home, {"name": "無料サンプル模試", "path": "/mock/sample/"}])
         if (MEMBERS_DIR / "index.json").exists() and has_sample:
+            self.step_pages("/members/")
             self.render("members.html", "/members/", title="会員ページ（毎月の模試・先行公開ドリル）",
                         description="毎月追加される16問模試とバックナンバー、新しいアルゴリズムの先行公開ドリルを解ける会員ページです。",
                         og_image=image, breadcrumbs=[home, {"name": "会員ページ", "path": "/members/"}],
                         mock_name=MOCK_NAME)
         return has_sample
+
+    def step_pages(self, parent: str) -> None:
+        """計測用のアドレス（…/started/、…/graded/）の受け皿。
+
+        模試の画面は、始めたとき・採点したときにアドレスだけをここへ切り替える（mock.js の countStep）。
+        その状態でページを開き直した人を、元のページへ戻すだけのページ。検索対象にもサイトマップにも入れない。
+        """
+        target = self.url(parent)
+        html = ('<!doctype html><html lang="ja"><head><meta charset="utf-8">'
+                '<meta name="robots" content="noindex">'
+                f'<meta http-equiv="refresh" content="0; url={target}">'
+                f'<link rel="canonical" href="{self.abs_url(parent)}"><title>移動します</title></head>'
+                f'<body><p><a href="{target}">模試のページへ移動します</a></p></body></html>\n')
+        for step in ("started", "graded"):
+            folder = self.out / parent.strip("/") / step
+            folder.mkdir(parents=True, exist_ok=True)
+            (folder / "index.html").write_text(html, encoding="utf-8")
 
     def build_simple(self, name: str, path: str, image: str, show_contact: bool) -> None:
         meta, body = read_content(ROOT / "content" / f"{name}.md")

@@ -3,14 +3,16 @@
 <article>
 <h1>{{ algo.title }}｜擬似言語のトレース解説と練習問題</h1>
 <p class="meta">レベル：{{ algo.level_name }}　／　タグ：{{ algo.tags | join('・') }}</p>
+<p class="lead">基本情報技術者試験 科目Bの擬似言語で出る「{{ algo.topic }}」を、1行ずつ追って理解するページです。{{ algo.summary }}</p>
 <p>{{ algo.description }}</p>
+<p class="page-toc"><a href="#program">プログラム</a>　<a href="#example">例題のトレース表</a>　<a href="#{{ algo.sets[0].pace }}">練習問題{{ algo.count }}問</a></p>
 
-<h2>プログラム</h2>
+<h2 id="program">{{ algo.topic }}のプログラム（擬似言語）</h2>
 {{ example.source_html | safe }}
 
 <div class="prose">{{ body | safe }}</div>
 
-<h2>例題：{{ example.call }} を最後まで追う</h2>
+<h2 id="example">例題のトレース表：{{ example.call }} を最後まで追う</h2>
 <p>上のプログラムを {{ example.call }} で呼び出したときの、全ステップのトレース表です。太字は、その文で値が変わった変数です。</p>
 {{ example.trace_html | safe }}
 <h3>この例題で問われること</h3>
@@ -38,7 +40,22 @@
 {% endif %}
 {% endfor %}
 
-<h2>ほかのアルゴリズム</h2>
+<h2>次に解くなら：関連するアルゴリズム</h2>
+<ul class="cards">
+  {% for other in algo.related %}
+  <li><a href="{{ url(other.path) }}"><strong>{{ other.title }}</strong><span>{{ other.summary }}</span><em>{{ other.level_name }}・{{ other.count }}問＋解説</em></a></li>
+  {% endfor %}
+</ul>
+
+<h2>読み方に迷ったら</h2>
+<ul class="links">
+  {% for guide in algo.guides %}<li><a href="{{ url(guide.path) }}">{{ guide.title }}</a></li>{% endfor %}
+</ul>
+{% if has_mock %}
+<p>ひととおり解けるようになったら、本番と同じ形式の<a href="{{ url('/mock/sample/') }}">無料サンプル模試（16問・80分）</a>で力を試せます。</p>
+{% endif %}
+
+<h2>すべてのアルゴリズム</h2>
 <ul class="links">{% for other in others %}<li><a href="{{ url(other.path) }}">{{ other.title }}</a></li>{% endfor %}</ul>
 </article>
 {% endblock %}

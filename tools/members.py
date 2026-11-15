@@ -6,6 +6,7 @@
     python tools/members.py early queue-ring-001    # 先行公開テンプレートのドリルを作る
     python tools/members.py publish --month 2026-12 # 暗号化して site/members/ に置く。月が変われば合言葉も変える
     python tools/members.py release queue-ring-001  # 先行公開を終えて、無料の問題として公開する準備をする
+    python tools/members.py single mock-001 --url https://…   # 模試1回分だけを開ける単品用の合言葉を作る
     python tools/members.py status                  # 今の状態を一覧する
     python tools/members.py recover 合言葉          # private/ をなくしたときの復旧
 
@@ -71,10 +72,12 @@ class Paths:
         self.keys = self.private / "keys.json"
         self.passphrase = self.private / "passphrase.json"
         self.released = self.private / "released.json"
+        self.singles = self.private / "singles.json"        # 単品用の合言葉（模試の名前 → 合言葉と販売ページ）
         self.data = self.public / "data"
         self.index = self.public / "index.json"
         self.keyring = self.public / "keyring.json"
         self.sample = self.public / "sample.json"
+        self.single = self.public / "single"                # 単品用の鍵束（その模試の鍵だけが入っている）
 
 
 # ---- 小道具 ----
@@ -300,15 +303,7 @@ def cmd_publish(paths: Paths, month: str, new_passphrase: bool = False) -> dict:
             added.append(bundle["id"])
     _write(paths.keys, keys)
 
-    entries = []
-    for bundle in bundles:
-        entry = {"id": bundle["id"], "kind": bundle["kind"], "title": bundle["title"],
-                 "issued": bundle["issued"], "count": len(bundle["questions"]), "minutes": bundle["minutes"]}
-        if bundle["id"] in released:
-            entry["public_path"] = released[bundle["id"]]
-        entries.append(entry)
-    entries.sort(key=lambda e: (e["issued"], e["id"]), reverse=True)     # 新しい月を上に
-    _write(paths.index, {"version": 1, "updated": month, "bundles": entries})
+    write_index(paths, bundles, month)
 
     state = _read(paths.passphrase, {"current": None, "history": []})
     current = state["current"]
@@ -329,6 +324,61 @@ def cmd_publish(paths: Paths, month: str, new_passphrase: bool = False) -> dict:
         _write(paths.keyring, make_keyring(current["passphrase"], keys, month))
     return {"passphrase": current["passphrase"], "month": current["month"], "changed": changed,
             "added": added, "total": len(bundles)}
+
+
+def write_index(paths: Paths, bundles: list, month: str) -> None:
+    """目次（題名と問題数だけ。中身は入れない）。単品で買える回には、その印と販売ページを付ける。"""
+    released = _read(paths.released, {})
+    singles = _read(paths.singles, {})
+    entries = []
+    for bundle in bundles:
+        entry = {"id": bundle["id"], "kind": bundle["kind"], "title": bundle["title"],
+                 "issued": bundle["issued"], "count": len(bundle["questions"]), "minutes": bundle["minutes"]}
+        if bundle["id"] in released:
+            entry["public_path"] = released[bundle["id"]]
+        if bundle["id"] in singles and (paths.single / f"{bundle['id']}.json").exists():
+            entry["single"] = True
+            if singles[bundle["id"]].get("url"):
+                entry["single_url"] = singles[bundle["id"]]["url"]
+        entries.append(entry)
+    entries.sort(key=lambda e: (e["issued"], e["id"]), reverse=True)     # 新しい月を上に
+    _write(paths.index, {"version": 1, "updated": month, "bundles": entries})
+
+
+def cmd_single(paths: Paths, bundle_id: str, url: str | None = None, new_passphrase: bool = False) -> dict:
+    """模試1回分だけを開ける「単品用の合言葉」を作る（note の有料記事などで1回ずつ売るため）。
+
+    その模試の鍵だけを入れた小さな鍵束 site/members/single/<id>.json を足す。
+    暗号化済みの模試（site/members/data/）にも、会員用の鍵束にも触らない。
+    単品用の合言葉は月が替わっても変わらない（--new-passphrase で作り直したときだけ変わる）。
+    """
+    keys = _read(paths.keys, {})
+    if bundle_id not in keys or not (paths.data / f"{bundle_id}.json").exists():
+        raise MemberError(f"{bundle_id} はまだ公開用に暗号化されていません。先に publish を実行してください")
+    singles = _read(paths.singles, {})
+    entry = singles.get(bundle_id)
+    target = paths.single / f"{bundle_id}.json"
+    changed = entry is None or new_passphrase or not target.exists()
+    if entry is None or new_passphrase:
+        entry = {"passphrase": new_passphrase_value(), "url": (entry or {}).get("url", "")}
+    if url is not None:
+        entry["url"] = url
+    singles[bundle_id] = entry
+    _write(paths.singles, singles)
+    if changed:
+        bundle = _read(paths.bundles / f"{bundle_id}.json", {"issued": ""})
+        _write(target, make_keyring(entry["passphrase"], {bundle_id: keys[bundle_id]}, bundle.get("issued", "")))
+    bundles = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(paths.bundles.glob("*.json"))]
+    index = _read(paths.index, {"updated": this_month()})
+    write_index(paths, bundles, index.get("updated", this_month()))
+    return {"id": bundle_id, "passphrase": entry["passphrase"], "url": entry["url"], "changed": changed}
+
+
+def single_text(result: dict, title: str, site_url: str) -> str:
+    return (f"【{title} の合言葉】\n{result['passphrase']}\n\n"
+            f"{site_url}/members/?id={result['id']} を開き、合言葉を入力してください。\n"
+            "この合言葉で開けるのは、この回の模試だけです。期限はありません。\n"
+            "毎月の新しい模試と、これまでのすべての回を解くには、メンバーシップをご利用ください。")
 
 
 def new_passphrase_value() -> str:      # テストで差し替えやすいように分けてある
@@ -393,6 +443,8 @@ def cmd_status(paths: Paths) -> list[str]:
     waiting = sorted(p.stem for p in paths.private_templates.glob("*.yaml")) if paths.private_templates.exists() else []
     lines.append("先行公開中（まだ無料公開していない）テンプレート: " + ("、".join(waiting) or "なし"))
     lines.append("サンプル模試: " + ("あり" if paths.sample.exists() else "なし（sample を実行）"))
+    for bundle_id, entry in sorted(_read(paths.singles, {}).items()):
+        lines.append(f"単品用の合言葉: {bundle_id}  {entry['passphrase']}  販売ページ: {entry.get('url') or '未設定'}")
     return lines
 
 
@@ -417,6 +469,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--new-passphrase", action="store_true", help="月の途中でも合言葉を変える（漏れたとき用）")
     p = sub.add_parser("release", help="先行公開を終えて templates/basic/ に移す")
     p.add_argument("template_id")
+    p = sub.add_parser("single", help="模試1回分だけを開ける単品用の合言葉を作る")
+    p.add_argument("bundle_id", help="例 mock-001")
+    p.add_argument("--url", help="販売ページ（note の有料記事など）の URL。会員ページの一覧に出る")
+    p.add_argument("--new-passphrase", action="store_true", help="単品用の合言葉を作り直す（漏れたとき用）")
     sub.add_parser("status", help="今の状態を表示する")
     p = sub.add_parser("recover", help="private/ をなくしたとき、今の合言葉で鍵と模試を取り戻す")
     p.add_argument("passphrase")
@@ -439,6 +495,15 @@ def main(argv: list[str] | None = None) -> int:
             print("合言葉は" + ("新しくなりました。" if result["changed"] else "前回と同じです。"))
             print("---- note の会員限定記事に貼る文面 ----")
             print(note_text(result, site["base_url"] + site["base_path"]))
+            print("----")
+            print("このあと: python build.py --frozen → site/members/ をコミットして push")
+        elif args.command == "single":
+            result = cmd_single(paths, args.bundle_id, args.url, args.new_passphrase)
+            site = build.load_config(ROOT / "site.yaml")
+            title = _read(paths.bundles / f"{args.bundle_id}.json", {}).get("title", args.bundle_id)
+            print("単品用の合言葉を" + ("作りました。" if result["changed"] else "確認しました（前回と同じ）。"))
+            print("---- 有料記事の有料部分に貼る文面 ----")
+            print(single_text(result, title, site["base_url"] + site["base_path"]))
             print("----")
             print("このあと: python build.py --frozen → site/members/ をコミットして push")
         elif args.command == "release":
