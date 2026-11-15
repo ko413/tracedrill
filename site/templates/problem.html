@@ -108,6 +108,10 @@
 
 <p class="note related-links">関連：{% for other in algo.related %}<a href="{{ url(other.path) }}">{{ other.title }}</a>{% if not loop.last %}　／　{% endif %}{% endfor %}　／　<a href="{{ url('/guide/notation/') }}">擬似言語の書き方 早見表</a></p>
 
+{% if has_mock_nav %}
+<p class="mock-cta">力試し：本番と同じ形式の<a href="{{ url('/mock/sample/') }}">無料サンプル模試（16問・80分）</a>もあります。</p>
+{% endif %}
+
 <nav class="pager">
   {% if prev_path %}<a href="{{ url(prev_path) }}">← 前の問題</a>{% else %}<span></span>{% endif %}
   <a href="{{ url(algo.path) }}#{{ group.pace }}">{{ algo.title }}の一覧</a>

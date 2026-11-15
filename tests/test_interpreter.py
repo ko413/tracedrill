@@ -469,3 +469,9 @@ def test_append_accepts_both_wordings():
                  "aの末尾に b[1]の値 を追加する"):
         src = f"整数型の配列: a ← {{}}\n整数型の配列: b ← {{7}}\n整数型: x ← 7\n{line}\n"
         assert _main(src).steps[-1].vars["a"] == [7], line
+
+
+def test_output_accepts_the_value_of_wording():
+    """「x の値 を出力する」（IPA のサンプル問題の書き方）。「の値」がなくても同じ。"""
+    src = "整数型: n ← 3\nnの値 を出力する\n(n ＋ 1) を出力する\nn を出力する\n"
+    assert _main(src).outputs == [3, 4, 3]

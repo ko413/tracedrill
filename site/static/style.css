@@ -186,3 +186,36 @@ pre code { border: none; padding: 0; background: none; }
 .compare thead th { background: var(--card); white-space: nowrap; }
 .compare tbody th { font-weight: 600; }
 .compare td:last-child, .compare thead th:last-child { background: rgba(26, 127, 75, 0.08); }
+
+/* ---- 2026-11-16 見直し：ヘッダー、押しやすさ、キーボード操作 ---- */
+/* キーボードで操作している人に、今どこにいるかをはっきり見せる */
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.mock-summary:focus, .mock-question:focus { outline: none; }
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--accent); color: var(--accent-fg); padding: 0.5rem 0.9rem; z-index: 10; }
+.skip-link:focus { left: 0; }
+/* ヘッダー：スマホで2段に収め、リンクを押しやすい高さにする */
+.site-header { gap: 0 1.2rem; padding: 0.3rem 1.1rem; align-items: center; }
+.site-header .brand { padding: 0.45rem 0; }
+.site-header nav { gap: 0 1.1rem; }
+.site-header nav a { display: inline-block; padding: 0.55rem 0; }
+.site-footer a { display: inline-block; padding: 0.5rem 0.2rem; }
+.breadcrumbs a { display: inline-block; padding: 0.35rem 0; }
+/* ページ上部の「次にすること」 */
+.page-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin: 1rem 0; }
+.page-cta .chip, .mock-start .chip { text-decoration: none; display: inline-block; padding: 0.45rem 0.9rem; }
+.page-cta .button { padding: 0.65rem 1.2rem; }
+.mock-cta { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 1.2rem; }
+/* 模試：始めるボタン、未解答の案内 */
+.mock-start { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.mock-start .button { padding: 0.7rem 1.6rem; font-size: 1.05rem; }
+.mock-pending { display: block; margin-bottom: 0.6rem; font-size: 0.9rem; color: var(--muted); }
+.mock-pending .chip { text-decoration: none; display: inline-block; margin: 0.15rem; padding: 0.35rem 0.8rem; }
+.mock-wrong .chip { padding: 0.35rem 0.8rem; }
+.mock-timer { padding: 0.35rem; }
+/* 選択肢は行全体を押せるようにする（模試・本番形式） */
+#mode-exam .exam-choices label { display: block; padding: 0.45rem 0.3rem; cursor: pointer; }
+#mode-exam .combo label { display: block; padding: 0.35rem 0.2rem; cursor: pointer; }
+.hint summary { padding: 0.4rem 0; }
+.mode-switch .chip { padding: 0.45rem 1rem; }
+.pager a { display: inline-block; padding: 0.5rem 0.3rem; }
+.pager a.button { padding: 0.5rem 1.1rem; }

@@ -29,6 +29,13 @@
   {% for level in levels %}<a href="#level-{{ level.level }}"><strong>{{ level.name }}</strong><span>{{ level.entries | length }}種類</span></a>{% endfor %}
 </nav>
 
+{% if has_mock %}
+<section class="home-mock">
+  <h2>模試で力を試す</h2>
+  <p>本番と同じ形式の16問を80分で解く<a href="{{ url('/mock/sample/') }}">無料サンプル模試</a>があります。採点後は、全問のトレース表つき解説を確認できます。</p>
+</section>
+{% endif %}
+
 <section id="algorithms">
   <h2>アルゴリズムから選ぶ</h2>
   <p class="note"><span class="badge pace-standard">標準</span> は本試験と同じくらいの量、<span class="badge pace-long">じっくり</span> は長めのトレースです。</p>
@@ -42,12 +49,6 @@
   {% endfor %}
 </section>
 
-{% if has_mock %}
-<section class="home-mock">
-  <h2>模試で力を試す</h2>
-  <p>本番と同じ形式の16問を80分で解く<a href="{{ url('/mock/sample/') }}">無料サンプル模試</a>があります。採点後は、全問のトレース表つき解説を確認できます。</p>
-</section>
-{% endif %}
 
 <section>
   <h2>このサイトについて</h2>

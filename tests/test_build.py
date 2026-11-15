@@ -454,3 +454,26 @@ def test_member_page_shows_what_members_get_now_and_counts_join_clicks(site):
     assert "join" not in (site / "sitemap.xml").read_text(encoding="utf-8")
     script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
     assert "countStep('join')" in script and "target: '_blank'" in script
+
+
+def test_entry_pages_put_the_next_action_first(site):
+    """入口のページ：次にすること（解く・始める・入会する）を、説明より前に置く。"""
+    algo = (site / "algo/binary-search-001/index.html").read_text(encoding="utf-8")
+    cta = algo.index('class="page-cta"')
+    assert 'href="/q/binary-search-001/01/">練習問題を解く' in algo[cta:cta + 300]
+    assert cta < algo.index('id="program"')                         # プログラムや解説より前
+    header = algo.split('<header class="site-header">')[1].split("</header>")[0]
+    assert header.count("<a ") <= 5 and 'class="skip-link" href="#main"' in algo and '<main id="main">' in algo
+
+    problem = next(iter(sorted((site / "q" / "binary-search-001").rglob("index.html")))).read_text(encoding="utf-8")
+    if (ROOT / "site" / "members" / "sample.json").exists():
+        assert 'class="mock-cta"' in problem and "/mock/sample/" in problem.split('class="mock-cta"')[1][:200]
+        sample = (site / "mock/sample/index.html").read_text(encoding="utf-8")
+        assert sample.index('id="mock-app"') < sample.index("この模試について")     # 始めるボタンの枠が、説明より前
+        assert sample.count("data-hide-on-start") == 3
+        home = (site / "index.html").read_text(encoding="utf-8")
+        assert home.index('class="home-mock"') < home.index('id="algorithms"')      # 模試の案内は、長い一覧より前
+        assert 'href="/members/">会員</a>' in header
+    script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
+    for needle in ("mock-progress:", "続きから再開する", "未解答：", "summary.focus("):
+        assert needle in script, needle

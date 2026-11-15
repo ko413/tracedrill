@@ -4,6 +4,9 @@
 <h1>{{ algo.title }}｜擬似言語のトレース解説と練習問題</h1>
 <p class="meta">レベル：{{ algo.level_name }}　／　タグ：{{ algo.tags | join('・') }}</p>
 <p class="lead">基本情報技術者試験 科目Bの擬似言語で出る「{{ algo.topic }}」を、1行ずつ追って理解するページです。{{ algo.summary }}</p>
+{% if algo.sets and algo.sets[0].problems %}
+<p class="page-cta"><a class="button" href="{{ url(algo.sets[0].problems[0].path) }}">練習問題を解く（全{{ algo.count }}問）</a> <a class="chip" href="#program">先に解説を読む</a></p>
+{% endif %}
 <p>{{ algo.description }}</p>
 <p class="page-toc"><a href="#program">プログラム</a>　<a href="#example">例題のトレース表</a>　<a href="#{{ algo.sets[0].pace }}">練習問題{{ algo.count }}問</a></p>
 

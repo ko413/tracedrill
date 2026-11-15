@@ -24,10 +24,12 @@
     return node;
   }
 
+  // 端末の中への保存。store(key) で読む、store(key, 値) で書く、store(key, null) で消す
   function store(key, value) {
     try {
       if (value === undefined) return JSON.parse(window.localStorage.getItem(key));
-      window.localStorage.setItem(key, JSON.stringify(value));
+      if (value === null) window.localStorage.removeItem(key);
+      else window.localStorage.setItem(key, JSON.stringify(value));
     } catch (e) { /* 保存できなくても解ける */ }
     return null;
   }
@@ -151,33 +153,76 @@
     var isMock = bundle.kind === 'mock' && bundle.minutes > 0;
     var total = bundle.questions.length;
     var resultKey = 'mock-result:' + bundle.id;
-    var timer = null, deadline = 0, startedAt = 0, graded = false;
+    var progressKey = 'mock-progress:' + bundle.id;      // 途中の解答と開始時刻（開き直しても続けられるように）
+    var timer = null, deadline = 0, startedAt = 0, graded = false, left = 0;
 
     app.textContent = '';
     app.hidden = false;
-    var summary = el('div', { 'class': 'mock-summary', 'aria-live': 'polite' });
+    var summary = el('div', { 'class': 'mock-summary', 'aria-live': 'polite', tabindex: '-1' });
     var timerBar = el('div', { 'class': 'mock-timer', hidden: '' });
     var paper = el('div', { id: 'mode-exam', hidden: '' }, bundle.questions.map(questionNode));
     var gradeButton = el('button', { type: 'button', 'class': 'button', text: '採点する' });
-    var footer = el('p', { 'class': 'mock-actions', hidden: '' }, [gradeButton]);
+    var pending = el('span', { 'class': 'mock-pending', 'aria-live': 'polite' });
+    var footer = el('div', { 'class': 'mock-actions', hidden: '' }, [pending, el('p', {}, [gradeButton])]);
 
     var intro = el('div', { 'class': 'mock-intro' }, [
       el('h2', { text: bundle.title }),
       el('p', { text: isMock
         ? total + '問・' + bundle.minutes + '分。本番と同じく、行番号のないプログラムを読んで解答群から選びます。'
-          + '「始める」を押すと時間を計り始めます。'
+          + '「始める」を押すと時間を計り始めます。途中でページを閉じても、同じ端末なら続きから再開できます。'
         : total + '問。時間は計りません。すべて選んでから「採点する」を押してください。' })
     ]);
     var last = store(resultKey);
     if (last) intro.appendChild(el('p', { 'class': 'note', text: '前回の結果：' + last.score + ' / ' + last.total + ' 問正解（' + last.date + '）' }));
+
+    // 途中まで解いた記録があれば、続きから再開できる（模試は、制限時間が残っているときだけ）
+    var saved = store(progressKey);
+    var savedCount = saved && saved.answers ? Object.keys(saved.answers).length : 0;
+    var canResume = saved && (!isMock || (saved.startedAt && saved.startedAt + bundle.minutes * 60000 > Date.now()));
     var startButton = el('button', { type: 'button', 'class': 'button', text: isMock ? '始める' : '問題を表示する' });
-    intro.appendChild(el('p', {}, [startButton]));
+    var resumeButton = null;
+    if (canResume && (savedCount || isMock)) {
+      var remain = isMock ? '・残り ' + clock(Math.round((saved.startedAt + bundle.minutes * 60000 - Date.now()) / 1000)) : '';
+      resumeButton = el('button', { type: 'button', 'class': 'button', text: '続きから再開する' });
+      intro.appendChild(el('p', { 'class': 'note', text: '途中まで解いた記録があります（解答済み ' + savedCount + '問' + remain + '）。' }));
+      startButton.className = 'chip';
+      startButton.textContent = '最初からやり直す';
+    }
+    // ボタンは説明文より前に置く（スマホの最初の画面に入るように）
+    intro.insertBefore(el('p', { 'class': 'mock-start' }, [resumeButton, startButton]), intro.children[1]);
 
     [intro, summary, timerBar, paper, footer].forEach(function (node) { app.appendChild(node); });
 
+    function answers() {
+      var map = {};
+      bundle.questions.forEach(function (q, index) {
+        var checked = document.querySelector('#mock-q' + (index + 1) + ' input:checked');
+        if (checked) map[index] = checked.value;
+      });
+      return map;
+    }
+
+    // 上に固定する帯（残り時間と解答済みの数）と、採点ボタンの上の「未解答」の案内
+    function refresh() {
+      var done = Object.keys(answers()).length;
+      timerBar.textContent = (isMock ? '残り ' + clock(left) + '　' : '') + '解答 ' + done + ' / ' + total;
+      pending.textContent = '';
+      var missing = bundle.questions.map(function (q, i) { return i; })
+        .filter(function (i) { return !document.querySelector('#mock-q' + (i + 1) + ' input:checked'); });
+      if (missing.length) {
+        pending.appendChild(document.createTextNode('未解答：'));
+        missing.slice(0, 8).forEach(function (i) {
+          pending.appendChild(el('a', { href: '#mock-q' + (i + 1), 'class': 'chip', text: '問' + (i + 1) }));
+        });
+        if (missing.length > 8) pending.appendChild(document.createTextNode(' ほか' + (missing.length - 8) + '問'));
+      } else {
+        pending.textContent = 'すべて解答済みです。';
+      }
+    }
+
     function tick() {
-      var left = Math.max(0, Math.round((deadline - Date.now()) / 1000));
-      timerBar.textContent = '残り ' + clock(left);
+      left = Math.max(0, Math.round((deadline - Date.now()) / 1000));
+      refresh();
       if (left <= 0) grade(true);
     }
 
@@ -199,6 +244,7 @@
       var today = new Date();
       store(resultKey, { score: score, total: total,
         date: today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate() });
+      store(progressKey, null);                      // 採点したら、途中の記録は消す
       timerBar.hidden = true;
       footer.hidden = true;
       summary.textContent = '';
@@ -224,21 +270,47 @@
       if (options && options.after) summary.appendChild(options.after());
       countStep('graded');
       summary.scrollIntoView();
+      summary.focus({ preventScroll: true });        // キーボード・読み上げの人が、結果から読み始められるように
     }
 
-    startButton.addEventListener('click', function () {
+    function begin(resume) {
       intro.hidden = true;
       paper.hidden = false;
       footer.hidden = false;
-      countStep('started');
-      if (isMock) {
+      timerBar.hidden = false;
+      // 説明文をたたんで、問題をすぐ見せる
+      Array.prototype.forEach.call(document.querySelectorAll('[data-hide-on-start]'), function (node) { node.hidden = true; });
+      if (resume && saved) {
+        Object.keys(saved.answers || {}).forEach(function (index) {
+          var input = document.querySelector('#mock-q' + (Number(index) + 1) + ' input[value="' + saved.answers[index] + '"]');
+          if (input) input.checked = true;
+        });
+        startedAt = saved.startedAt || Date.now();
+      } else {
         startedAt = Date.now();
+        countStep('started');                        // 再開は、もう一度数えない
+      }
+      store(progressKey, { startedAt: startedAt, answers: answers() });
+      if (isMock) {
         deadline = startedAt + bundle.minutes * 60 * 1000;
-        timerBar.hidden = false;
         tick();
         timer = window.setInterval(tick, 1000);
+      } else {
+        refresh();
       }
+      var first = document.getElementById('mock-q1');
+      first.setAttribute('tabindex', '-1');
+      first.focus({ preventScroll: true });
+      (isMock ? timerBar : first).scrollIntoView();
+    }
+
+    paper.addEventListener('change', function () {
+      if (graded) return;
+      store(progressKey, { startedAt: startedAt, answers: answers() });
+      refresh();
     });
+    startButton.addEventListener('click', function () { begin(false); });
+    if (resumeButton) resumeButton.addEventListener('click', function () { begin(true); });
     gradeButton.addEventListener('click', function () { grade(false); });
   }
 
@@ -367,5 +439,9 @@
     warn.hidden = false;
     if (!samplePath) { warn.textContent = 'このブラウザでは会員ページを開けません。新しいブラウザで、https のアドレスから開いてください。'; return; }
   }
+  // HTML に書いてある入会ボタン（会員ページの上部）も、押した回数を数える
+  Array.prototype.forEach.call(document.querySelectorAll('[data-join]'), function (link) {
+    link.addEventListener('click', function () { countStep('join'); });
+  });
   if (samplePath) samplePage(); else membersPage();
 })();

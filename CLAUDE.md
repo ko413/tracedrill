@@ -101,3 +101,6 @@ git add site/members problems templates content && git commit && git push
 - 処理系（`giji/`）を直すときは、直す前後で `python build.py --frozen --no-ogp --out /tmp/a` と `/tmp/b` を作り、
   `diff -r /tmp/a /tmp/b` が空であること（公開済みページが1文字も変わらないこと）を確かめる。
 - 大きな変更（処理系の拡張、会員の確認方法の変更、ページ構成の変更）は、設計を先に文章で示して了承を得てから実装する。
+- 見た目や導線を変えたら、スマホ（幅360px）・タブレット（768px）・PC（1280px以上）で、横にはみ出さないこと、
+  主なボタン（解答する／練習問題を解く／始める／note で会員になる）が最初の画面の近くにあること、
+  Tab と Enter だけで模試を最後まで解けることを確かめる。

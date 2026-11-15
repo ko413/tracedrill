@@ -430,7 +430,9 @@ class Builder:
         }
         html = self.env.get_template(template).render(
             site=site, page=page, url=self.url, build_id=self.build_id,
-            has_mock_nav=(MEMBERS_DIR / "sample.json").exists(), **context)
+            has_mock_nav=(MEMBERS_DIR / "sample.json").exists(),
+            has_members_nav=(MEMBERS_DIR / "sample.json").exists() and (MEMBERS_DIR / "index.json").exists(),
+            **context)
         target = self.out / path.strip("/") / filename
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(html, encoding="utf-8")

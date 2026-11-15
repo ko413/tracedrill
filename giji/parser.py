@@ -246,6 +246,11 @@ class Parser:
         elif self._accept("wo"):
             self._expect("output", "「出力する」")
             stmt = A.Output(expr, line)
+        elif self._accept("value_of"):
+            # 「x の値 を出力する」（IPA のサンプル問題の書き方。「の値」がなくても同じ意味）
+            self._expect("wo", "「を」")
+            self._expect("output", "「出力する」")
+            stmt = A.Output(expr, line)
         elif self._accept("append_to"):
             value = self._expr()
             self._accept("value_of")          # 「x の値 を追加する」とも書ける

@@ -21,16 +21,17 @@
 {% if page.breadcrumbs %}<script type="application/ld+json">{{ page.breadcrumb_json | safe }}</script>{% endif %}
 </head>
 <body>
+<a class="skip-link" href="#main">本文へ移動</a>
 <header class="site-header">
   <a class="brand" href="{{ url('/') }}">{{ site.name }}</a>
   <nav>
     <a href="{{ url('/') }}#algorithms">アルゴリズム</a>
     <a href="{{ url('/guide/') }}">読み方ガイド</a>
     {% if has_mock_nav %}<a href="{{ url('/mock/sample/') }}">模試</a>{% endif %}
-    <a href="{{ url('/about/') }}">このサイトについて</a>
+    {% if has_members_nav %}<a href="{{ url('/members/') }}">会員</a>{% endif %}
   </nav>
 </header>
-<main>
+<main id="main">
 {% if page.breadcrumbs %}
 <nav class="breadcrumbs" aria-label="パンくず">
   {% for crumb in page.breadcrumbs %}{% if not loop.last %}<a href="{{ url(crumb.path) }}">{{ crumb.name }}</a> <span>›</span> {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}{% endfor %}
