@@ -430,9 +430,11 @@ class Builder:
 
     def render(self, template: str, path: str, *, title: str, description: str,
                og_image: str, breadcrumbs: list | None = None, noindex: bool = False,
-               filename: str = "index.html", listed: bool = True, **context) -> None:
+               filename: str = "index.html", listed: bool = True, short_suffix: bool = False,
+               **context) -> None:
         site = self.site
-        suffix = f"（{site['exam_label']}）" if site["exam_label"] else ""
+        # short_suffix: 題名にすでに「基本情報 科目B」が入っているページは、サイト名の後ろに重ねない
+        suffix = f"（{site['exam_label']}）" if site["exam_label"] and not short_suffix else ""
         full_title = f"{site['name']}｜{site['tagline']}" if path == "/" else f"{title}｜{site['name']}{suffix}"
         crumbs = breadcrumbs or []
         crumb_json = json.dumps({
@@ -498,7 +500,7 @@ class Builder:
         # トップ：レベルごとに問題セットを並べる（標準を先に）。同じアルゴリズムが2つのレベルに出ることがある。
         entries = [{"title": algo["title"], "summary": algo["summary"], "level": item["level"],
                     "pace": item["pace"], "pace_name": item["pace_name"], "count": item["count"],
-                    "path": algo["path"] + "#" + item["pace"]}
+                    "path": algo["path"] + "#" + item["pace"], "id": item["id"]}
                    for algo in algos for item in algo["sets"]]
         entries.sort(key=lambda e: (e["level"], e["pace"] != "standard", e["title"]))
         levels = [{"level": level, "name": LEVEL_NAMES.get(level, str(level)),
@@ -641,9 +643,13 @@ class Builder:
                         f"設問{len(view['questions'])}つ・全ステップのトレース表つき")
                 self.render(
                     "problem.html", entry["path"],
-                    title=f"{name} 問題{entry['number']}｜擬似言語トレース問題",
-                    description=f"{view['problem']['description']} {call} の動きを1行ずつ追う問題です。"
-                                f"設問{len(view['questions'])}つ、全ステップのトレース表と解説つき。",
+                    # 解説ページと同じく、検索で使われる呼び名（topic）を先頭に置く。
+                    # 例「スタックの擬似言語トレース 練習問題02｜基本情報 科目B｜擬似言語トレースドリル」
+                    title=f"{algo['topic']}の擬似言語トレース 練習問題{entry['number']}{label}｜基本情報 科目B",
+                    short_suffix=True,
+                    description=f"基本情報技術者試験 科目Bの擬似言語「{algo['topic']}」の練習問題{entry['number']}{label}。"
+                                f"{call} を1行ずつトレースして、設問{len(view['questions'])}つに答えます。"
+                                f"全ステップのトレース表と解説つき。{view['problem']['description']}",
                     og_image=page_image, noindex=not indexed,
                     breadcrumbs=[home, crumb, {"name": f"問題{entry['number']}", "path": entry["path"]}],
                     algo=algo, group=item, heading=f"{name}　問題{entry['number']}", number=entry["number"],

@@ -49,7 +49,12 @@ def test_every_kind_of_page_is_written(site):
 
 def test_problem_page_has_title_description_ogp_and_numbered_program(site):
     page = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
-    assert "<title>条件に合う要素の合計 問題01｜擬似言語トレース問題｜テストサイト（科目B）</title>" in page
+    # 解説ページと同じく、検索で使われる呼び名を先頭に置く。「基本情報 科目B」は1回だけ（サイト名の後ろには重ねない）
+    title = re.search(r"<title>(.*?)</title>", page).group(1)
+    assert re.fullmatch(r".+の擬似言語トレース 練習問題01｜基本情報 科目B｜テストサイト", title), title
+    assert '<h1>条件に合う要素の合計　問題01</h1>' in page                 # ページの中の見出しは変えていない
+    description = re.search(r'<meta name="description" content="([^"]*)">', page).group(1)
+    assert description.startswith("基本情報技術者試験 科目Bの擬似言語「") and "練習問題01" in description[:60]
     assert '<link rel="canonical" href="https://drill.example/q/loop-sum-001/01/">' in page
     assert 'property="og:image" content="https://drill.example/ogp/loop-sum-001-01.png"' in page
     assert 'name="twitter:card" content="summary_large_image"' in page
@@ -304,8 +309,10 @@ def test_standard_and_long_sets_share_one_explanation_page(site):
 
     added = (site / "q/loop-sum-002/01/index.html").read_text(encoding="utf-8")
     old = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
-    assert "<title>条件に合う要素の合計（標準） 問題01｜" in added
-    assert "<title>条件に合う要素の合計 問題01｜" in old               # 元からあるページのタイトルは変えない
+    # 追加した版だけ「（標準）」が付く。元からあるページには付けない（2026-11-16 に、題名の形そのものは検索向けに変えた）
+    assert re.search(r"<title>[^<]+の擬似言語トレース 練習問題01（標準）｜基本情報 科目B｜", added)
+    assert re.search(r"<title>[^<（]+の擬似言語トレース 練習問題01｜基本情報 科目B｜", old)
+    assert "<h1>条件に合う要素の合計（標準）　問題01</h1>" in added and "<h1>条件に合う要素の合計　問題01</h1>" in old
     assert 'class="badge pace-standard">標準' in added and 'class="badge pace-long">じっくり' in old
     assert 'href="/algo/loop-sum-001/#standard"' in added
 
@@ -496,12 +503,12 @@ def test_home_lists_algorithms_in_collapsed_groups_that_keep_their_links(site):
     assert len(groups) >= 3 and [name for _, name, _, _ in groups][:3] == ["入門", "基礎", "中級"]
     assert "<details class=\"level-group\" open" not in page and " open>" not in page   # 最初はすべて閉じている
     for level, _, count, body in groups:
-        links = re.findall(r'<li><a href="([^"]+)">', body)
+        links = re.findall(r'<li data-progress-set="[a-z0-9-]+" data-progress-total="\d+"><a href="([^"]+)">', body)
         assert len(links) == int(count) > 0                              # 見出しの数と中身が合う。閉じていても HTML に残る
         assert f'href="#level-{level}"' in page                          # 上の入口のリンクの行き先がある
     listed = sum(int(count) for _, _, count, _ in groups)
     section = page.split('id="algorithms"')[1].split("</section>")[0]
-    assert listed == section.count('<li><a href=')                        # 分類の外に置き去りの題材がない
+    assert listed == section.count('<li data-progress-set=')                        # 分類の外に置き去りの題材がない
     # 一覧より上の順番は変えない：今日の1問 → レベルの入口 → 模試の案内 → 一覧
     order = [page.index(mark) for mark in ('id="daily"', 'class="level-entry"', 'id="algorithms"')]
     assert order == sorted(order)
@@ -568,3 +575,62 @@ def test_plan_b_cannot_be_switched_on_without_api_url_or_legal_pages(tmp_path, m
             if (tmp_path / "b").mkdir() is None else None
     with pytest.raises(SystemExit, match="members.method"):
         _members_page(tmp_path / "c", monkeypatch, {"method": "paypal"}) if (tmp_path / "c").mkdir() is None else None
+
+
+def test_problem_page_titles_are_unique_and_match_the_algo_page_wording(site):
+    titles = {}
+    for page in sorted((site / "q").glob("*/*/index.html")):
+        title = re.search(r"<title>(.*?)</title>", page.read_text(encoding="utf-8")).group(1)
+        assert title not in titles, f"{page} と {titles.get(title)} の題名が同じ: {title}"
+        titles[title] = page
+        assert re.fullmatch(r".+の擬似言語トレース 練習問題\d{2}(（標準）|（じっくり）)?｜基本情報 科目B｜[^｜]+", title), title
+    algo = (site / "algo" / "loop-sum-001" / "index.html").read_text(encoding="utf-8")
+    topic = re.search(r"<title>(.+?)の擬似言語をトレースで解説", algo).group(1)
+    first = re.search(r"<title>(.*?)</title>", (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")).group(1)
+    assert first.startswith(topic + "の擬似言語トレース 練習問題01")
+
+
+def test_learning_record_hooks_line_tip_and_share_row_are_in_the_pages(site):
+    home = (site / "index.html").read_text(encoding="utf-8")
+    algo = (site / "algo" / "loop-sum-001" / "index.html").read_text(encoding="utf-8")
+    problem = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
+    for page in (home, algo, problem):
+        assert page.index("/static/progress.js") < page.index("/static/app.js")
+    assert 'id="progress-box" data-progress-scope="" hidden' in home
+    assert re.search(r'<li data-progress-set="loop-sum-001" data-progress-total="\d+">', home)
+    assert re.search(r'id="progress-box" data-progress-scope="[^"]*loop-sum-001/ [^"]*" hidden', algo)
+    assert 'data-problem-id="loop-sum-001/01"' in problem and 'id="review-bar" hidden' in problem
+    assert 'id="share-row" hidden' in problem and problem.count('class="note line-tip"') >= 1
+    # 共有は、押したときにだけ開くリンク。ページに X のスクリプトや自動投稿は入れない
+    for page in (home, algo, problem):
+        assert "platform.twitter.com" not in page and "twitter.com/intent" not in page
+    app = (ROOT / "site" / "static" / "app.js").read_text(encoding="utf-8")
+    assert "https://twitter.com/intent/tweet?text=" in app and "noopener" in app
+    # 会員ページの模試には共有を出さない（共有の指定は、無料サンプルの呼び出しにだけある）
+    mock = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
+    assert mock.count("share:") == 1 and "play(bundle, null)" in mock
+    assert mock.index("function samplePage") < mock.index("share:")
+
+
+def test_problem_page_is_ready_for_two_columns_step_trace_and_answer_time(site):
+    problem = (site / "q/loop-sum-001/01/index.html").read_text(encoding="utf-8")
+    home = (site / "index.html").read_text(encoding="utf-8")
+    algo = (site / "algo" / "loop-sum-001" / "index.html").read_text(encoding="utf-8")
+    # 2列にするのは問題ページだけ（広い画面で、左にプログラム・右に設問）
+    assert '<main id="main" class="wide">' in problem and '<main id="main">' in home and '<main id="main">' in algo
+    practice = problem[problem.index('id="mode-practice"'):problem.index("</section>\n\n", problem.index('id="mode-practice"'))]
+    assert practice.index('<div class="two-col">') < practice.index('<div class="col-program">') \
+        < practice.index('<div class="program">') < practice.index('<div class="col-questions">') \
+        < practice.index('<div class="hints">') < practice.index('data-kind="practice"')
+    assert problem.count('<div class="two-col">') == problem.count('<div class="col-program">') == problem.count('<div class="col-questions">')
+    style = (ROOT / "site" / "static" / "style.css").read_text(encoding="utf-8")
+    assert ".two-col, .col-program, .col-questions { display: contents; }" in style      # 狭い画面では今までどおり1列
+    wide = style[style.index("@media (min-width: 64rem)"):]
+    assert ".problem.js .two-col { display: grid;" in wide and "position: sticky" in wide
+    # 1ステップずつ表示と解答時間は、表の HTML を変えずに画面側で行う
+    app = (ROOT / "site" / "static" / "app.js").read_text(encoding="utf-8")
+    for text in ("1ステップずつ表示", "← 前へ", "次へ →", "すべて表示", "かかった時間：", "解答までの時間：", "visibilitychange"):
+        assert text in app, text
+    assert "step-controls" not in problem and 'class="giji-trace"' in problem
+    mock = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
+    assert "stopwatch" not in mock and "解答までの時間" not in mock                    # 模試の時間表示とは別のもの

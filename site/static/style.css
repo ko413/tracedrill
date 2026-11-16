@@ -1,11 +1,12 @@
 :root {
   --bg: #fbfaf7; --fg: #1d2330; --muted: #5d6675; --line: #d9dce3; --card: #ffffff;
   --accent: #1f5fbf; --accent-fg: #ffffff; --ok: #1a7f4b; --ng: #b3261e;
+  --mark-line: rgba(31, 95, 191, 0.16);
   --hl-line: rgba(255, 200, 0, 0.28); --hl-pass: rgba(255, 170, 0, 0.55); --hl-col: rgba(80, 160, 255, 0.18);
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Noto Sans Mono CJK JP", monospace;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #14171d; --fg: #e7e9ee; --muted: #a2abba; --line: #343a46; --card: #1c2029; --accent: #7fb0ff; --accent-fg: #0d1524; --ok: #5fd39a; --ng: #ff8a80; }
+  :root { --bg: #14171d; --fg: #e7e9ee; --muted: #a2abba; --line: #343a46; --card: #1c2029; --accent: #7fb0ff; --accent-fg: #0d1524; --ok: #5fd39a; --ng: #ff8a80; --mark-line: rgba(127, 176, 255, 0.24); }
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -242,3 +243,57 @@ pre code { border: none; padding: 0; background: none; }
 .member-notice { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.6rem 0.9rem; }
 .member-account p { margin: 0.6rem 0; }
 .member-join .button, .member-login .button { min-height: 2.75rem; }
+
+/* 行の印：プログラムの行を押すと付く（設問が指す行の黄色とは別の色・左の帯で区別する） */
+.program .giji-code tr { cursor: pointer; }
+.program .giji-code tr.marked td { background: var(--mark-line); }
+.program .giji-code tr.marked td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.program .giji-code tr.marked.focus td { background: linear-gradient(var(--mark-line), var(--mark-line)), var(--hl-line); }
+.program .giji-code tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.line-tip { margin-top: 0.3rem; font-size: 0.8rem; }
+.problem:not(.js) .line-tip { display: none; }
+
+/* 学習記録（端末の中だけ） */
+.progress-box { border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 0.5rem 0.9rem; margin: 0.8rem 0; font-size: 0.9rem; }
+.progress-box p { margin: 0.3rem 0; }
+.progress-mark { display: inline-block; margin-left: 0.5rem; font-size: 0.72rem; font-weight: 700; line-height: 1.5; padding: 0 0.45rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-family: inherit; white-space: nowrap; }
+.progress-mark.progress-ok { border-color: #1a7f4b; color: #1a7f4b; }
+.progress-mark.progress-ok::before { content: "○ "; }
+.progress-mark.progress-ng { border-color: #b45309; color: #b45309; }
+.progress-mark.progress-ng::before { content: "△ "; }
+.cards a .progress-count { display: block; font-size: 0.75rem; color: var(--muted); font-style: normal; }
+.cards a .progress-count.has-review { color: #b45309; }
+.review-bar { border: 1px solid var(--accent); border-radius: 8px; background: var(--card); padding: 0.5rem 0.9rem; margin: 0 0 1rem; font-size: 0.9rem; }
+.share-row { margin: 1.2rem 0 0; }
+.share-row .chip { min-height: 2.5rem; display: inline-flex; align-items: center; }
+@media (prefers-color-scheme: dark) {
+  .progress-mark.progress-ok { border-color: #4ade80; color: #4ade80; }
+  .progress-mark.progress-ng, .cards a .progress-count.has-review { border-color: #fbbf24; color: #fbbf24; }
+}
+
+/* 問題ページの2列表示（幅1024px以上だけ）：左にプログラム（スクロールしても見える）、右にヒントと設問。
+   それより狭い画面では、2つの枠は「ないもの」として扱い、今までどおりの1列になる。 */
+.two-col, .col-program, .col-questions { display: contents; }
+@media (min-width: 64rem) {
+  main.wide { max-width: 78rem; }
+  main.wide > .breadcrumbs, .problem > h1, .problem > .meta, .problem > .mode-switch,
+  .problem .mode > p, .problem > .review, .problem > .related-links, .problem > .mock-cta,
+  .problem > .pager, .problem > .share-row, .problem > .review-bar { max-width: 52rem; }
+  .problem .review .giji-trace-wrap { max-width: none; }
+  .problem.js .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2rem; align-items: start; margin-top: 0.6rem; }
+  .problem.js .col-program, .problem.js .col-questions { display: block; min-width: 0; }
+  .problem.js .col-program { position: sticky; top: 0.5rem; max-height: calc(100vh - 1rem); overflow: auto; }
+  .problem.js .col-program .program { position: static; max-height: none; padding: 0; overflow: visible; }
+  .problem.js .col-program > h2, .problem.js .col-program > .exam-heading { margin-top: 0; }
+  .problem.js .col-questions > .hints:first-child, .problem.js .col-questions > .question:first-child { margin-top: 0; }
+  .problem.js .col-questions > .question:first-child > h2 { margin-top: 0; }
+}
+
+/* トレース表の「1ステップずつ表示」 */
+.step-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.6rem 0; }
+.step-controls .chip { min-height: 2.5rem; padding: 0.3rem 0.9rem; }
+.step-controls .step-label { font-size: 0.9rem; margin: 0 0.3rem; font-variant-numeric: tabular-nums; }
+.giji-trace tr.step-now td { box-shadow: inset 0 2px 0 var(--accent), inset 0 -2px 0 var(--accent); }
+.giji-code tr.step-line td { background: var(--mark-line); }
+.giji-code tr.step-line td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.time-note { margin: 0.4rem 0 0; }

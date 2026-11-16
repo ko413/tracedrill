@@ -284,6 +284,11 @@
       }).filter(Boolean);
       if (wrong.length) summary.appendChild(el('p', { 'class': 'mock-wrong' }, [document.createTextNode('見直す問題： ')].concat(wrong)));
       summary.appendChild(breakdownNode(bundle, correct, options && options.linkBase));
+      // 共有ボタンは無料のサンプル模試だけ（会員向けの模試には出さない）。押したときだけ X の投稿画面が開く
+      if (options && options.share && window.ShareX) {
+        summary.appendChild(el('p', { 'class': 'share-row' }, [window.ShareX.link(
+          '擬似言語トレースドリルの無料サンプル模試（基本情報 科目B）：' + total + '問中' + score + '問正解', options.share)]));
+      }
       if (options && options.after) summary.appendChild(options.after());
       countStep('graded');
       summary.scrollIntoView();
@@ -308,6 +313,7 @@
         countStep('started');                        // 再開は、もう一度数えない
       }
       store(progressKey, { startedAt: startedAt, answers: answers() });
+      if (window.LineMarks) window.LineMarks.setup(paper);     // プログラムの行に印を付けられるようにする（キーボードでも）
       if (isMock) {
         deadline = startedAt + bundle.minutes * 60 * 1000;
         tick();
@@ -518,7 +524,9 @@
 
   function samplePage() {
     fetchJson(samplePath).then(function (bundle) {
-      play(bundle, { linkBase: root.getAttribute('data-algo-base'), after: function () {
+      play(bundle, { linkBase: root.getAttribute('data-algo-base'),
+        share: (document.querySelector('link[rel="canonical"]') || {}).href || window.location.href.split('?')[0],
+        after: function () {
         return el('div', { 'class': 'mock-upsell' }, [
           el('p', { text: '会員になると、毎月追加される模試と、これまでのすべての回を解けます。新しいアルゴリズムのドリルも先に解けます。' }),
           el('p', {}, [el('a', { 'class': 'button', href: base, text: '会員ページを見る' })])]);

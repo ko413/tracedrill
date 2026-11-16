@@ -39,13 +39,14 @@
 <section id="algorithms">
   <h2>アルゴリズムから選ぶ</h2>
   <p class="note"><span class="badge pace-standard">標準</span> は本試験と同じくらいの量、<span class="badge pace-long">じっくり</span> は長めのトレースです。</p>
+  <div class="progress-box" id="progress-box" data-progress-scope="" hidden></div>
   <p class="note">分類の名前を押すと、一覧が開きます。</p>
   {% for level in levels %}
   <details class="level-group" id="level-{{ level.level }}">
     <summary><h3>{{ level.name }}</h3><span class="level-count">{{ level.entries | length }}種類</span></summary>
     <ul class="cards">
       {% for entry in level.entries %}
-      <li><a href="{{ url(entry.path) }}"><strong>{{ entry.title }}</strong> <span class="badge pace-{{ entry.pace }}">{{ entry.pace_name }}</span><span>{{ entry.summary }}</span><em>{{ entry.count }}問＋解説</em></a></li>
+      <li data-progress-set="{{ entry.id }}" data-progress-total="{{ entry.count }}"><a href="{{ url(entry.path) }}"><strong>{{ entry.title }}</strong> <span class="badge pace-{{ entry.pace }}">{{ entry.pace_name }}</span><span>{{ entry.summary }}</span><em>{{ entry.count }}問＋解説</em></a></li>
       {% endfor %}
     </ul>
   </details>

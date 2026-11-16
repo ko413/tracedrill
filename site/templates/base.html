@@ -31,7 +31,7 @@
     {% if has_members_nav %}<a href="{{ url('/members/') }}">会員</a>{% endif %}
   </nav>
 </header>
-<main id="main">
+<main id="main"{% block main_attrs %}{% endblock %}>
 {% if page.breadcrumbs %}
 <nav class="breadcrumbs" aria-label="パンくず">
   {% for crumb in page.breadcrumbs %}{% if not loop.last %}<a href="{{ url(crumb.path) }}">{{ crumb.name }}</a> <span>›</span> {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}{% endfor %}
@@ -44,6 +44,7 @@
   <p><a href="{{ url('/about/') }}">このサイトについて</a>　<a href="{{ url('/for-teams/') }}">研修・スクールでのご利用</a>{% if "tokushoho" in legal_pages %}　<a href="{{ url('/tokushoho/') }}">特定商取引法に基づく表記</a>{% endif %}{% if "privacy" in legal_pages %}　<a href="{{ url('/privacy/') }}">プライバシーポリシー</a>{% endif %}</p>
 </footer>
 {% block kaomoji %}<script defer src="{{ url('/static/kaomoji.js') }}?v={{ build_id }}"></script>{% endblock %}
+<script defer src="{{ url('/static/progress.js') }}?v={{ build_id }}"></script>
 <script defer src="{{ url('/static/app.js') }}?v={{ build_id }}"></script>
 {% if site.analytics.cloudflare_token %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ site.analytics.cloudflare_token }}"}'></script>{% endif %}
 </body>

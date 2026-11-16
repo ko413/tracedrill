@@ -27,6 +27,7 @@
 </div>
 {% endfor %}
 
+<div class="progress-box" id="progress-box" data-progress-scope="{% for group in algo.sets %}{{ group.id }}/ {% endfor %}" hidden></div>
 {% for group in algo.sets %}
 <h2 id="{{ group.pace }}">練習問題 <span class="badge pace-{{ group.pace }}">{{ group.pace_name }}</span>（{{ group.problems | length }}問）</h2>
 <p class="note">{{ group.pace_note }}。レベル：{{ group.level_name }}</p>

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% block main_attrs %} class="wide"{% endblock %}
 {% block content %}
-<article class="problem" id="problem" data-mode="practice">
+<article class="problem" id="problem" data-mode="practice" data-problem-id="{{ group.id }}/{{ number }}" data-topic="{{ algo.topic }}">
+<div class="review-bar" id="review-bar" hidden></div>
 <h1>{{ heading }}</h1>
 <p class="meta"><span class="badge pace-{{ group.pace }}">{{ group.pace_name }}</span> レベル：{{ group.level_name }}　／　<a href="{{ url(algo.path) }}">このアルゴリズムの解説を読む</a></p>
 
@@ -16,9 +18,13 @@
 <p>{{ problem.description }}</p>
 {% if problem.call %}<p>次のプログラムを <code>{{ problem.call }}</code> で呼び出す。</p>{% endif %}
 
+<div class="two-col">
+<div class="col-program">
 <h2>〔プログラム〕</h2>
 <div class="program">{{ practice_html | safe }}</div>
-
+<p class="note line-tip">プログラムの行を押すと、印が付きます（もう一度押すと消えます）。今どこを追っているかの目印に使えます。</p>
+</div>
+<div class="col-questions">
 <div class="hints">
   <details class="hint">
     <summary data-kaomoji="hint">ヒント1：トレース表の枠を見る</summary>
@@ -52,6 +58,8 @@
   </div>
 </section>
 {% endfor %}
+</div>
+</div>
 </section>
 
 {% if exam %}
@@ -60,9 +68,13 @@
 <p class="exam-lead"><b>問</b>　{{ exam.lead }}</p>
 {% for paragraph in exam.body %}<p>{{ paragraph }}</p>{% endfor %}
 
+<div class="two-col">
+<div class="col-program">
 <p class="exam-heading">〔プログラム〕</p>
 <div class="program">{{ exam_html | safe }}</div>
-
+<p class="note line-tip">プログラムの行を押すと、印が付きます（もう一度押すと消えます）。</p>
+</div>
+<div class="col-questions">
 <section class="question" data-kind="exam">
   <p class="exam-heading">解答群</p>
   {% if exam.blanks | length > 1 %}
@@ -89,6 +101,8 @@
     {% if exam.marker_line %}<p class="note">α の行は，下のトレース表（行番号つき）では {{ exam.marker_line }} 行目です。</p>{% endif %}
   </div>
 </section>
+</div>
+</div>
 </section>
 {% endif %}
 
@@ -111,6 +125,8 @@
 {% if has_mock_nav %}
 <p class="mock-cta">力試し：本番と同じ形式の<a href="{{ url('/mock/sample/') }}">無料サンプル模試（16問・80分）</a>もあります。</p>
 {% endif %}
+
+<p class="share-row" id="share-row" hidden></p>
 
 <nav class="pager">
   {% if prev_path %}<a href="{{ url(prev_path) }}">← 前の問題</a>{% else %}<span></span>{% endif %}
