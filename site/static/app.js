@@ -270,3 +270,22 @@
   }
   setMode(initial);
 })();
+
+/* トップの問題一覧：上の「入門・基礎・中級」のリンクから来たとき、その分類を開く。
+   開閉そのものは details・summary の機能で、このスクリプトがなくても動く。 */
+(function () {
+  function openTarget() {
+    var id = window.location.hash.slice(1);
+    var target = id ? document.getElementById(id) : null;
+    if (target && target.tagName === 'DETAILS' && target.classList.contains('level-group')) {
+      target.open = true;
+      target.scrollIntoView();
+    }
+  }
+  window.addEventListener('hashchange', openTarget);
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest ? event.target.closest('.level-entry a') : null;
+    if (link && link.hash === window.location.hash) openTarget();   // 同じリンクをもう一度押したとき
+  });
+  openTarget();
+})();

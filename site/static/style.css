@@ -222,3 +222,15 @@ pre code { border: none; padding: 0; background: none; }
 /* 組合せ表は、行のどこを押しても選べる（app.js / mock.js の pickComboRow） */
 .combo tbody tr { cursor: pointer; }
 .combo tbody tr:has(input:disabled) { cursor: default; }
+
+/* トップの問題一覧：分類ごとに折りたたむ（details・summary。JavaScript なしで開閉できる） */
+.level-group { border: 1px solid var(--line); border-radius: 8px; background: var(--card); margin: 0.6rem 0; scroll-margin-top: 0.5rem; }
+.level-group > summary { display: flex; align-items: center; gap: 0.6rem; min-height: 3.25rem; padding: 0.4rem 1rem; cursor: pointer; list-style: none; border-radius: 8px; }
+.level-group > summary::-webkit-details-marker { display: none; }
+.level-group > summary::before { content: "▶"; flex: none; width: 1.2em; font-size: 0.85rem; color: var(--muted); }
+.level-group[open] > summary::before { content: "▼"; }
+.level-group > summary h3 { margin: 0; font-size: 1.1rem; }
+.level-group > summary .level-count { margin-left: auto; font-size: 0.85rem; color: var(--muted); }
+.level-group > summary:hover { background: rgba(127, 127, 127, 0.08); }
+.level-group > summary:focus-visible { outline: 3px solid var(--accent, #2563eb); outline-offset: 2px; }
+.level-group > .cards { margin: 0; padding: 0.2rem 0.8rem 0.8rem; }

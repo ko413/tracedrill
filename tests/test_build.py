@@ -487,3 +487,21 @@ def test_combination_table_rows_are_clickable_in_both_scripts():
         assert "function pickComboRow(event)" in script and hook in script, name
         assert "closest('input, label, a')" in script          # 丸・ラベルを直接押したときは、ブラウザの動きのまま
         assert "new Event('change', { bubbles: true })" in script
+
+
+def test_home_lists_algorithms_in_collapsed_groups_that_keep_their_links(site):
+    page = (site / "index.html").read_text(encoding="utf-8")
+    groups = re.findall(r'<details class="level-group" id="level-(\d+)">\s*<summary><h3>(.+?)</h3>'
+                        r'<span class="level-count">(\d+)種類</span></summary>(.*?)</details>', page, re.S)
+    assert len(groups) >= 3 and [name for _, name, _, _ in groups][:3] == ["入門", "基礎", "中級"]
+    assert "<details class=\"level-group\" open" not in page and " open>" not in page   # 最初はすべて閉じている
+    for level, _, count, body in groups:
+        links = re.findall(r'<li><a href="([^"]+)">', body)
+        assert len(links) == int(count) > 0                              # 見出しの数と中身が合う。閉じていても HTML に残る
+        assert f'href="#level-{level}"' in page                          # 上の入口のリンクの行き先がある
+    listed = sum(int(count) for _, _, count, _ in groups)
+    section = page.split('id="algorithms"')[1].split("</section>")[0]
+    assert listed == section.count('<li><a href=')                        # 分類の外に置き去りの題材がない
+    # 一覧より上の順番は変えない：今日の1問 → レベルの入口 → 模試の案内 → 一覧
+    order = [page.index(mark) for mark in ('id="daily"', 'class="level-entry"', 'id="algorithms"')]
+    assert order == sorted(order)
