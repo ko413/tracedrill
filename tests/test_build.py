@@ -477,3 +477,13 @@ def test_entry_pages_put_the_next_action_first(site):
     script = (ROOT / "site" / "static" / "mock.js").read_text(encoding="utf-8")
     for needle in ("mock-progress:", "続きから再開する", "未解答：", "summary.focus("):
         assert needle in script, needle
+
+
+def test_combination_table_rows_are_clickable_in_both_scripts():
+    """組合せ表：行のどこを押しても選べる処理が、問題ページ（app.js）と模試（mock.js）の両方にある。"""
+    for name, hook in (("app.js", "document.addEventListener('click', pickComboRow)"),
+                       ("mock.js", "paper.addEventListener('click', pickComboRow)")):
+        script = (ROOT / "site" / "static" / name).read_text(encoding="utf-8")
+        assert "function pickComboRow(event)" in script and hook in script, name
+        assert "closest('input, label, a')" in script          # 丸・ラベルを直接押したときは、ブラウザの動きのまま
+        assert "new Event('change', { bubbles: true })" in script

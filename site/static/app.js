@@ -4,6 +4,24 @@
 (function () {
   'use strict';
 
+  // 組合せ表（空欄が2つある問題）：行のどこを押しても、その行の選択肢を選ぶ。
+  // 丸やラベルを直接押したときはブラウザに任せる（キーボードの Tab・矢印・Space もそのまま）。
+  function pickComboRow(event) {
+    if (event.comboRowDone || !event.target || !event.target.closest) return;
+    var row = event.target.closest('.combo tbody tr');
+    if (!row || event.target.closest('input, label, a')) return;
+    var input = row.querySelector('input[type="radio"]');
+    if (!input || input.disabled) return;
+    event.comboRowDone = true;                  // 同じクリックを2回処理しない（mock.js と app.js の両方にあるため）
+    if (!input.checked) {
+      input.checked = true;
+      input.dispatchEvent(new Event('change', { bubbles: true }));     // 解答の保存や「解答する」ボタンの有効化を動かす
+    }
+    input.focus({ preventScroll: true });
+  }
+  document.addEventListener('click', pickComboRow);
+
+
   // 正解・不正解の表示。friendly のときだけ、やわらかい言葉と顔文字にする（文言と顔文字は kaomoji.js）。
   function verdict(el, ok, friendly) {
     if (friendly && window.Kaomoji) window.Kaomoji.say(el, ok ? 'correct' : 'wrong');

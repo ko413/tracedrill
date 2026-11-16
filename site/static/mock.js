@@ -6,6 +6,23 @@
 (function () {
   'use strict';
 
+  // 組合せ表（空欄が2つある問題）：行のどこを押しても、その行の選択肢を選ぶ。
+  // 丸やラベルを直接押したときはブラウザに任せる（キーボードの Tab・矢印・Space もそのまま）。
+  function pickComboRow(event) {
+    if (event.comboRowDone || !event.target || !event.target.closest) return;
+    var row = event.target.closest('.combo tbody tr');
+    if (!row || event.target.closest('input, label, a')) return;
+    var input = row.querySelector('input[type="radio"]');
+    if (!input || input.disabled) return;
+    event.comboRowDone = true;                  // 同じクリックを2回処理しない（mock.js と app.js の両方にあるため）
+    if (!input.checked) {
+      input.checked = true;
+      input.dispatchEvent(new Event('change', { bubbles: true }));     // 解答の保存や「解答する」ボタンの有効化を動かす
+    }
+    input.focus({ preventScroll: true });
+  }
+
+
   var root = document.getElementById('members-app');
   if (!root) return;
   var base = root.getAttribute('data-members-base');
@@ -304,6 +321,7 @@
       (isMock ? timerBar : first).scrollIntoView();
     }
 
+    paper.addEventListener('click', pickComboRow);
     paper.addEventListener('change', function () {
       if (graded) return;
       store(progressKey, { startedAt: startedAt, answers: answers() });
