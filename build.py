@@ -682,7 +682,8 @@ class Builder:
         if (MEMBERS_DIR / "index.json").exists() and has_sample:
             self.step_pages("/members/", ("started", "graded", "join"))      # join＝「note で会員になる」を押した
             index = json.loads((MEMBERS_DIR / "index.json").read_text(encoding="utf-8"))
-            kinds = [entry["kind"] for entry in index["bundles"]]
+            # 先行公開ドリルは、まだ無料公開していないものだけを数える
+            kinds = [entry["kind"] for entry in index["bundles"] if not entry.get("public_path")]
             self.render("members.html", "/members/", title="会員ページ（毎月の模試・先行公開ドリル）",
                         description="毎月追加される16問模試とバックナンバー、新しいアルゴリズムの先行公開ドリルを解ける会員ページです。",
                         og_image=image, breadcrumbs=[home, {"name": "会員ページ", "path": "/members/"}],

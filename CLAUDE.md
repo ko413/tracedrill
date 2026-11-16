@@ -12,18 +12,30 @@
 3. **`.gitignore` の `.venv/` と `private/` の行を消さない。**
 4. **秘密をリポジトリに入れない。** `private/`（模試の平文・鍵・合言葉・先行公開中のテンプレート）はコミットしない。
    合言葉、鍵、API キー、Stripe や Cloudflare のシークレットを、コード・設定・コミットメッセージ・Issue・PDCA_LOG.md に書かない。
-5. **変更したら、コミットの前に次の2つを通す。** 通らないままコミット・push しない。
+5. **変更したら、コミットの前に次の1行を通す。** 「すべて OK です。」と出ないままコミット・push しない。
    ```
-   python -m pytest -q
-   python build.py --frozen
+   python tools/preflight.py
    ```
+   中身は `python -m pytest -q`、`python build.py --frozen`、会員向けファイルの確認、この一覧の 1〜4 の確認。
+   NG が出たら、その内容を直す（確認のほうを緩めない）。途中の確認だけなら `python tools/preflight.py --quick`（数秒）。
    `--frozen` が「problems/ に保存されていない問題があります」で止まったら、`python build.py`（--frozen なし）を1回実行して
    新しい問題を作り、`problems/` の**新しいファイルだけ**が増えたことを `git status` で確かめてからコミットする。
 6. **1回の作業で変えるのは1つのことだけ。** 終わったら `PDCA_LOG.md` に1行足す。
 
+## 作業を始めるとき（毎回）
+
+1. このファイルを最後まで読む。`PDCA_LOG.md` の最後の5行と、`BACKLOG.md` を読む。
+2. `git status` が「nothing to commit」であること、`git pull` 済みであることを確かめる。変更が残っていたら、運営者に確認する。
+3. `python tools/preflight.py --quick` が「すべて OK」であることを確かめる（始める前から NG なら、まずそれを報告する）。
+4. 頼まれたことを1文で言い直し、変えるファイルと変えないファイルを先に示してから始める。
+5. 終わったら、`python tools/preflight.py` → コミット → `PDCA_LOG.md` に1行。push は運営者に確認してから。
+
 ## してはいけないこと
 
 - `git push --force`、履歴の書換え、`git clean`、`rm -rf` で `problems/`・`private/`・`site/members/` を消すこと。
+  （例外は `OPERATIONS.md`「4-1. 途中で止まったとき」の戻し方だけ。運営者が、そこに書いてあるとおりに実行する。Claude Code は実行しない。）
+- 合言葉を表示するコマンド（`members.py status`・`publish`・`single`）の出力を、返答・ファイル・コミットメッセージに写すこと。
+  状態を確かめたいときは `python tools/members.py check`（合言葉を表示しない）を使う。
 - テストを通すために、テストを消す・緩める・skip にすること（テストが間違っていると考えたら、理由を添えて確認する）。
 - リポジトリを private にする前提の変更（GitHub Pages の無料枠を使うため public のまま）。
 - 運営者の氏名・住所・電話番号・個人のメールアドレスをサイトやリポジトリに書くこと。
@@ -63,27 +75,22 @@
 5. 「絶対に守ること 5」の2つを通す → コミット。
 - 既存テンプレートを直すとき：公開済みの問題は変わらない。値の範囲を狭めると `--frozen` が止まることがあるので、広げる方向で直す。
 
-### C. 毎月の模試と先行公開（月初・約30分）
-`OPERATIONS.md` の「毎月の作業」をその順番どおりに実行する。要点だけ：
-```
-python tools/members.py status                         # 今の状態を確認
-python tools/members.py mock --month YYYY-MM           # 今月の模試を1回分作る
-python tools/members.py release 先月の先行公開のid       # 先行公開を終えて無料公開へ（1か月たったもの）
-python build.py                                        # ↑で無料公開したテンプレートの問題を作って固定
-python tools/members.py early 今月の先行公開のid --month YYYY-MM
-python tools/members.py publish --month YYYY-MM        # 暗号化。新しい合言葉が表示される
-# （必要なときだけ）python tools/members.py single mock-001 --url …   # 1回分だけ開ける単品用の合言葉
-python -m pytest -q && python build.py --frozen
-git add site/members problems templates content && git commit && git push
-```
-- `publish` が表示する合言葉は、**運営者が note の会員限定記事に貼る**。Claude Code は合言葉をどこにも書き写さない。
-- push して公開された時点で、先月の合言葉は使えなくなる。note の記事の更新は公開の直後に行う（運営者の作業）。
+### C. 毎月の模試と先行公開（月初・30〜40分）
+**運営者が、`OPERATIONS.md`「4. 毎月の作業」を A〜G の順に自分で実行する**（合言葉が画面に出るため）。Claude Code が手伝うのは次だけ。
+- 前の週まで：その月に無料公開する2本の解説の下書き（`private/drafts/content/algo/<id>.md`）があるか確かめ、なければ書く。
+  その月に先行公開する2本を `python tools/validate_templates.py private/templates/<id>.yaml -n 200` で確かめる。
+- 当日：`python tools/preflight.py` が NG になったときの原因調べ。直し方を示し、運営者の了承を得てから直す。
+- `tools/members.py` の `mock`・`early`・`release`・`publish`・`single` は、運営者に頼まれたときだけ実行する
+  （`mock` を2回実行すると、次の回までできてしまう）。
 
-### D. 週1回の改善（PDCA）
-1. 運営者から、その週の数字（Cloudflare Web Analytics、note、Search Console）をもらう。数字を推測で作らない。
-2. `PDCA_LOG.md` の直近の行を読み、前回の変更の結果を「結果」欄に書く。
-3. 改善案を2〜3個、効果の見込みと作業量つきで示し、運営者が選んだ1つだけを実施する。
-4. 実施 → テストとビルド → コミット → `PDCA_LOG.md` に1行足す。
+### D. 週1回の改善（PDCA・1時間以内）
+1. 運営者から、その週の数字をもらう（`OPERATIONS.md`「4-3. 数字の見方」の5段階。Search Console、Cloudflare Web Analytics、note）。
+   **数字を推測で作らない。** もらえなかった段階は「未取得」と書く。
+2. `PDCA_LOG.md` の直近の行の「結果」欄を、もらった数字で埋める。
+3. 5段階のうち、目安から最も離れている段階を1つ選ぶ。その段階に効く案を `BACKLOG.md` から2〜3個選び（なければ新しく考える）、
+   「見込み（推定と明記）／作業量／危なさ」を付けて示す。**運営者が選んだ1つだけ**を実施する。
+4. 実施 → `python tools/preflight.py` → コミット → `PDCA_LOG.md` に1行（日付・変えたこと・ねらい・次に見る数字）→ `BACKLOG.md` の該当行を消す。
+5. 表示回数が週100未満の間は、数字の上下で判断しない（少なすぎて偶然と区別できない）。その間は `BACKLOG.md` の「検索の土台」を上から進める。
 
 ## 判断に迷いやすい点
 

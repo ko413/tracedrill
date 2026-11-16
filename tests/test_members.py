@@ -49,7 +49,7 @@ def paths(tmp_path):
     for name in ("loop-sum-001", "digit-sum-001", "max-index-001", "tally-001"):
         shutil.copy(ROOT / "templates" / "basic" / f"{name}.yaml", public_templates)
     p = members.Paths(private=tmp_path / "private", public=tmp_path / "public",
-                      templates=public_templates, problems=tmp_path / "problems")
+                      templates=public_templates, problems=tmp_path / "problems", content=tmp_path / "content")
     p.private_templates.mkdir(parents=True)
     (p.private_templates / "secret-sum-001.yaml").write_text(PRIVATE_TEMPLATE, encoding="utf-8")
     return p
@@ -228,3 +228,35 @@ def test_browser_side_script_handles_single_passphrase(paths):
     assert out["singleIds"] == ["mock-002"] and out["singleTitle"] == "mock-002"       # 単品ではその回だけ
     assert out["singleExpired"] is False and out["afterSingle"] is None
     assert out["ok"] is True and out["ids"] == ["mock-001", "mock-002"]                # 会員は全部
+
+
+def test_release_moves_the_explanation_draft_too(paths, tmp_path):
+    members.cmd_early(paths, "secret-sum-001", "2026-11")
+    draft = paths.private / "drafts" / "content" / "algo" / "secret-sum-001.md"
+    draft.parent.mkdir(parents=True)
+    draft.write_text("---\ntopic: 合計\nsummary: 説明\n---\n本文\n", encoding="utf-8")
+    members.cmd_release(paths, "secret-sum-001")
+    page = tmp_path / "content" / "algo" / "secret-sum-001.md"
+    assert page.read_text(encoding="utf-8").startswith("---\ntopic: 合計") and not draft.exists()
+
+
+def test_check_passes_on_a_good_publish_and_catches_problems(paths):
+    members.cmd_mock(paths, "2026-11", count=5)
+    with pytest.raises(members.MemberError):               # publish の前は通らない
+        members.cmd_check(paths)
+    members.cmd_publish(paths, "2026-11")
+    members.cmd_single(paths, "mock-001")
+    before = {p: p.read_bytes() for p in list(paths.public.rglob("*.json")) + list(paths.private.rglob("*.json"))}
+    lines = members.cmd_check(paths)
+    assert any("1 件すべてが開き" in line for line in lines) and any("単品用の合言葉で mock-001 だけが開く" in line for line in lines)
+    assert {p: p.read_bytes() for p in before} == before             # 何も書き換えない
+
+    members.cmd_mock(paths, "2026-12", count=5)            # 作ったのに publish していない
+    with pytest.raises(members.MemberError):
+        members.cmd_check(paths)
+    members.cmd_publish(paths, "2026-12")
+    assert any("前の合言葉 1 個では開かない" in line for line in members.cmd_check(paths))
+
+    (paths.data / "mock-001.json").write_text((paths.data / "mock-002.json").read_text(encoding="utf-8"), encoding="utf-8")
+    with pytest.raises(members.MemberError):               # 暗号化ファイルが壊れている・入れ替わっている
+        members.cmd_check(paths)

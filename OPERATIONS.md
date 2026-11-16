@@ -69,57 +69,147 @@
 
 ## 4. 毎月の作業（月初・30〜40分）
 
-`YYYY-MM` はその月（例 `2026-12`）。上から順に実行します。
+2026-11-16 に、2026-12 の分を試しの環境で最初から最後まで実行して確かめた手順です（コマンドの実行は合計3〜4分、
+残りは画面の確認と note の作業）。`YYYY-MM` はその月（例 `2026-12`）、`YYYYMM` は同じ月をつなげたもの（例 `202612`）。
+**上から順に、1かたまりずつ**実行します。途中でエラーが出たら先へ進まず、「4-1. 途中で止まったとき」を見ます。
+
+### A. 準備（3分）
 
 ```
-# 0. 状態の確認と、private/ の控え
+cd ~/giji-trainer
+source .venv/bin/activate
+git pull
+git status
 python tools/members.py status
+cp -R private ~/private-before-YYYYMM
+```
 
-# 1. 今月の模試を1回分作る（第N回の番号は自動）
+- `git status` が「nothing to commit」であること。変更が残っていたら、先に片付けます。
+- `status` に、先月の合言葉と、暗号化済みの模試の一覧が出ること。
+- 最後の行は、失敗したときに戻すための一時的な控えです（G で消します）。
+
+### B. 作る（5分）
+
+その月の内容は、下の「先行公開の予定」の表で確かめます。2026-12 の場合：
+
+```
 python tools/members.py mock --month YYYY-MM
-
-# 2. 先月の先行公開テンプレートを、無料公開に切り替える（公開から1か月たったもの）
-python tools/members.py release queue-ring-001          # 例。下の予定表のとおりに
-#    → 解説は private/drafts/content/algo/<id>.md から content/algo/ へ移す（下書きがなければ、ほかの解説を写して書く）
-python build.py                                         # 無料の問題が作られ、problems/ に固定される
-
-# 3. 今月の先行公開ドリルを作る（月2本まで）
-python tools/members.py early list-traverse-001 --month YYYY-MM      # 例
-
-# 4. 暗号化して公開用フォルダに置く。新しい合言葉が表示される（控えておく）
+python tools/members.py release queue-ring-001
+python tools/members.py release bracket-match-001
+python build.py
+python tools/members.py early list-traverse-001 --month YYYY-MM
+python tools/members.py early list-insert-001 --month YYYY-MM
 python tools/members.py publish --month YYYY-MM
+```
 
-# 5. 検査してから公開
-python -m pytest -q
-python build.py --frozen
+- `mock`：今月の模試を1回分作ります（第N回の番号は自動）。**1回だけ**実行します。2回実行すると次の回までできてしまいます
+  （その場合は、`publish` の前なら `private/bundles/` の余分な `mock-00N.json` を消せば元に戻ります）。
+- `release`：先行公開から1か月たったテンプレートを無料公開に切り替えます。解説の下書き
+  （`private/drafts/content/algo/<id>.md`）があれば、自動で `content/algo/` へ移ります。「解説 … がありません」と出たら、
+  ほかの解説を写して書きます（先頭に `topic:` と `summary:`）。
+- `python build.py`：無料公開した題材の問題が作られ、`problems/` に固定されます（「新しく作って保存した問題: 60 問」のように出ます）。
+- `early`：今月の先行公開ドリルを作ります（月2本まで。題材がない月は飛ばしてかまいません）。
+- `publish`：暗号化し、**新しい合言葉**と note に貼る文面を表示します。「合言葉は新しくなりました。」と出ること。
+  「前回と同じです。」と出たら、`--month` の月が先月のままです。正しい月でもう一度実行します。
+
+### C. 確かめる（5分）
+
+```
+python tools/preflight.py
+git status
+```
+
+- `preflight` は、テスト、ビルド、会員向けファイルの確認（今の合言葉で全部開く・前の合言葉では開かない）、
+  公開済みの問題を変えていないこと、合言葉が公開用のファイルに入っていないことを、まとめて確かめます。
+  **「すべて OK です。」と出るまで先へ進みません。**
+- `git status` に `private/` と `site.yaml` が出ていないこと。増えているのは `site/members/`、`problems/` の新しいフォルダ、
+  `templates/basic/` の2本、`content/algo/` の2本だけであること。
+
+### D. note の記事を用意する（5分・まだ公開しない）
+
+note で、今月の合言葉の記事（会員限定）を**下書きのまま**用意します。B の `publish` が表示した文面を、有料（会員限定）の部分に貼ります。
+無料で見える部分には合言葉を書きません。文面を見失ったら `python tools/members.py status` で合言葉を表示できます。
+
+### E. 公開する（3分）
+
+```
 git add site/members problems templates content
-git status                                              # private/ が出ていないこと
 git commit -m "YYYY-MM の模試と先行公開"
 git push
 ```
 
-6. 公開されたら（2〜3分後）、https://tracedrill.com/members/ に**新しい合言葉**を入れて、今月の模試が開くことを確かめる。
-7. **すぐに** note の会員限定記事を新しい合言葉に書き換える。push した時点で先月の合言葉は使えなくなるので、
-   6 と 7 は続けて行います（会員が開けない時間を短くするため）。
-8. `PDCA_LOG.md` に1行足し、`private/` の控えを取る。
+GitHub の Actions が緑になるまで待ちます（2〜3分）。
+
+### F. 公開後の確認と、note の公開（5分・続けて行う）
+
+1. https://tracedrill.com/members/ を開き、**新しい合言葉**を入れる。今月の模試（第N回）と、過去の回が1つ開くこと。
+2. 開いたら**すぐに**、D で用意した note の記事を公開する（先月の記事には「合言葉は新しい記事に移りました」と書き足す）。
+3. 先月の合言葉を入れて、「合言葉が違います」と出ることを確かめる。
+4. 無料公開した題材のページ（例 https://tracedrill.com/algo/queue-ring-001/ ）が開くこと。
+
+**会員が入れない時間**：サイトが新しくなった瞬間から、note の記事を公開するまでの間、先月の合言葉は使えず、新しい合言葉はまだ誰も知りません。
+D で記事を用意しておけば、この時間は F の 1 と 2 にかかる1〜3分です。先月の合言葉を端末に保存している会員には、
+会員ページに「合言葉が新しくなりました。note の会員限定記事で確認してください」と表示されます。
+作業は、利用の少ない時間帯（午前中など）に行います。
+
+### G. 片付け（5分）
+
+`PDCA_LOG.md` に1行足し、`private/` の控え（暗号化した dmg）を取り直します（控えのコマンドは、パスワードを聞かれるので1行だけで実行します）。
+控えが開けることを確かめてから、A で作った一時的な控えを消します。
+
+```
+rm -rf ~/private-before-YYYYMM
+```
+
+### 4-1. 途中で止まったとき（戻し方）
+
+**push の前**なら、いつでも A の直後の状態に戻せます（試しの環境で確認済み）。
+
+```
+git reset
+git checkout -- .
+git clean -fd problems templates content site/members
+rm -rf private
+cp -R ~/private-before-YYYYMM private
+python tools/members.py status
+git status
+```
+
+- `status` に先月の合言葉が出て、`git status` が「nothing to commit」なら、元に戻っています。原因を直して A からやり直します。
+- `git clean` は、今回増えたファイル（新しい問題、暗号化した模試など）だけを消します。**この4つのフォルダ以外には使いません。**
+
+**push のあと**に問題が見つかったときは、戻さずに直して進めます。
+
+| 起きたこと | 対処 |
+|---|---|
+| Actions が赤い（公開されていない） | サイトは前の状態のまま動いています。会員は先月の合言葉で入れます。手元で `python tools/preflight.py` を実行して原因を直し、もう一度コミット・push |
+| 新しい合言葉で開かない | `python tools/members.py check` を実行。NG の内容に従う。直らなければ `python tools/members.py publish --month YYYY-MM --new-passphrase` → C からやり直し |
+| note に貼る合言葉を間違えた | note の記事を直すだけ（サイトは変えなくてよい）。正しい合言葉は `python tools/members.py status` |
+| 今月の模試の中身に誤りがあった | 配布済みの模試は書き換えません。note の記事に訂正を書き、原因のテンプレートを直します |
 
 ### 先行公開の予定
 
 月2本を会員に先に出し、1か月後に無料公開します。
 
-| 月 | 会員に先行公開 | 無料公開に切り替え |
-|---|---|---|
-| 開始月 | queue-ring-001（キュー）、bracket-match-001（かっこの対応） | — |
-| 2か月目 | list-traverse-001（リストをたどる）、list-insert-001（リストへの挿入） | queue-ring-001、bracket-match-001 |
-| 3か月目 | tree-inorder-001（二分木をたどる）、graph-reach-001（たどれる頂点を数える） | 2か月目の2本 |
-| 4か月目 | hash-probe-001（ハッシュ表への格納）、heap-insert-001（ヒープへの挿入） | 3か月目の2本 |
-| 5か月目 | quick-partition-001（クイックソートの分割）、list-delete-001（リストからの削除） | 4か月目の2本 |
-| 6か月目 | tree-height-001（二分木の高さ）、sieve-001（エラトステネスのふるい） | 5か月目の2本 |
-| 7か月目以降 | 新しく作ったテンプレート（`private/templates/` に置く） | 前月の2本 |
+| 月 | 会員に先行公開（`early`） | 無料公開に切り替え（`release`） | 解説の下書き |
+|---|---|---|---|
+| 2026-11（開始月） | queue-ring-001、bracket-match-001 | — | — |
+| 2026-12 | list-traverse-001、list-insert-001 | queue-ring-001、bracket-match-001 | あり |
+| 2027-01 | tree-inorder-001、graph-reach-001 | list-traverse-001、list-insert-001 | あり |
+| 2027-02 | hash-probe-001、heap-insert-001 | tree-inorder-001、graph-reach-001 | あり |
+| 2027-03 | quick-partition-001、list-delete-001 | hash-probe-001、heap-insert-001 | あり |
+| 2027-04 | tree-height-001、sieve-001 | quick-partition-001、list-delete-001 | あり |
+| 2027-05 | 新しく作ったテンプレート | tree-height-001、sieve-001 | あり |
+| その後 | 新しく作ったテンプレート（`private/templates/` に置く） | 前月の2本 | そのつど書く |
+
+- 12本とも、解説の下書きは `private/drafts/content/algo/` にあります。`release` のときに自動で `content/algo/` へ移ります。
+- 無料公開したときの問題数は、ふつう1本あたり30問です。tree-inorder-001 と tree-height-001 は20問、sieve-001 は7問です
+  （入力の種類が少なく、30問を作れないため。テンプレートの `publish:` で指定済み。2026-11-16 に、12本すべてを無料公開まで試して確認）。
+- 2027-01 以降の月の B は、上の表の id に読み替えます。
 
 - 新しい会員向けテンプレートは、まず `private/templates/` に置きます（`access: member`）。
   検査は `python tools/validate_templates.py private/templates/ファイル.yaml -n 200`。
-- 先行公開する題材がない月は、手順 2・3 を飛ばしてかまいません。模試だけでも成立します。
+- 先行公開する題材がない月は、B の `early` を飛ばしてかまいません。模試だけでも成立します。
 
 ### 模試の中身について
 

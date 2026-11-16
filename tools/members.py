@@ -7,6 +7,7 @@
     python tools/members.py publish --month 2026-12 # 暗号化して site/members/ に置く。月が変われば合言葉も変える
     python tools/members.py release queue-ring-001  # 先行公開を終えて、無料の問題として公開する準備をする
     python tools/members.py single mock-001 --url https://…   # 模試1回分だけを開ける単品用の合言葉を作る
+    python tools/members.py check                   # 公開前の確認（会員と同じ手順で全部開いてみる。書き換えない）
     python tools/members.py status                  # 今の状態を一覧する
     python tools/members.py recover 合言葉          # private/ をなくしたときの復旧
 
@@ -62,11 +63,12 @@ class MemberError(Exception):
 
 class Paths:
     def __init__(self, root: Path = ROOT, private: Path | None = None, public: Path | None = None,
-                 templates: Path | None = None, problems: Path | None = None):
+                 templates: Path | None = None, problems: Path | None = None, content: Path | None = None):
         self.private = private or root / "private"
         self.public = public or root / "site" / "members"
         self.templates = templates or root / "templates" / "basic"
         self.problems = problems or root / "problems"
+        self.content = content or root / "content"          # 解説の原稿（content/algo/<id>.md）
         self.private_templates = self.private / "templates"
         self.bundles = self.private / "bundles"
         self.keys = self.private / "keys.json"
@@ -396,6 +398,12 @@ def cmd_release(paths: Paths, template_id: str) -> Path:
     text = source.read_text(encoding="utf-8").replace("access: member", "access: free", 1)
     target.write_text(text, encoding="utf-8")
     source.unlink()
+    # 解説の下書き（private/drafts/content/algo/<id>.md）があれば、一緒に content/algo/ へ移す
+    draft = paths.private / "drafts" / "content" / "algo" / f"{template_id}.md"
+    page = paths.content / "algo" / f"{template_id}.md"
+    if draft.exists() and not page.exists():
+        page.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(draft), str(page))
     released = _read(paths.released, {})
     released[f"early-{template_id}"] = f"/algo/{template_id}/"
     _write(paths.released, released)
@@ -429,6 +437,68 @@ def cmd_recover(paths: Paths, passphrase: str) -> list[str]:
         text = "-".join(normalize_passphrase(passphrase)[i:i + 4] for i in range(0, 16, 4))
         _write(paths.passphrase, {"current": {"month": opened["issued"], "passphrase": text}, "history": []})
     return restored
+
+
+def cmd_check(paths: Paths) -> list[str]:
+    """公開前の確認。公開用フォルダの中身を、会員と同じ手順で実際に開いて確かめる（何も書き換えない）。
+
+    問題があれば MemberError。なければ、確かめた内容の一覧を返す。
+    """
+    state = _read(paths.passphrase, {"current": None, "history": []})
+    current = state["current"]
+    if not current:
+        raise MemberError("合言葉がまだありません。先に publish を実行してください")
+    if not paths.keyring.exists():
+        raise MemberError(f"{paths.keyring} がありません。publish を実行してください")
+    ring = _read(paths.keyring, {})
+    try:
+        keys = open_keyring(current["passphrase"], ring)["keys"]
+    except Exception:
+        raise MemberError("今の合言葉で鍵束を開けません。publish をやり直してください") from None
+    lines = [f"今の合言葉（{current['month']} 分）で鍵束が開く"]
+    bundle_ids = sorted(p.stem for p in paths.bundles.glob("*.json"))
+    missing = [b for b in bundle_ids if b not in keys]
+    if missing:
+        raise MemberError("鍵束に入っていない模試があります: " + "、".join(missing) + "。publish を実行してください")
+    for bundle_id in bundle_ids:
+        source = paths.data / f"{bundle_id}.json"
+        if not source.exists():
+            raise MemberError(f"{source} がありません。publish を実行してください")
+        try:
+            opened = json.loads(decrypt(base64.b64decode(keys[bundle_id]), _read(source, {})).decode("utf-8"))
+        except Exception:
+            raise MemberError(f"{bundle_id} を開けません（鍵と暗号化ファイルが合っていません）。private/ を控えから戻してください") from None
+        if opened != _read(paths.bundles / f"{bundle_id}.json", None):
+            raise MemberError(f"{bundle_id}: 公開用のファイルと private/bundles/ の中身が違います")
+    lines.append(f"模試・ドリル {len(bundle_ids)} 件すべてが開き、中身が private/bundles/ と一致する（バックナンバーを含む）")
+    listed = sorted(b["id"] for b in _read(paths.index, {"bundles": []})["bundles"])
+    if listed != bundle_ids:
+        raise MemberError("目次（index.json）と模試の一覧が合っていません。publish を実行してください")
+    lines.append("目次（index.json）に全件が載っている")
+    for old in state.get("history", []):
+        try:
+            open_keyring(old["passphrase"], ring)
+        except Exception:
+            continue
+        raise MemberError(f"前の合言葉（{old['month']} 分）でも鍵束が開いてしまいます。publish --new-passphrase を実行してください")
+    lines.append(f"前の合言葉 {len(state.get('history', []))} 個では開かない")
+    public_text = "".join(p.read_text(encoding="utf-8") for p in paths.public.rglob("*.json"))
+    secrets_found = [name for name, text in [("今の合言葉", current["passphrase"])]
+                     + [(f"単品の合言葉（{k}）", v["passphrase"]) for k, v in _read(paths.singles, {}).items()]
+                     if text in public_text]
+    if secrets_found:
+        raise MemberError("公開用フォルダに合言葉そのものが入っています: " + "、".join(secrets_found))
+    lines.append("公開用フォルダに合言葉は入っていない")
+    for bundle_id, entry in sorted(_read(paths.singles, {}).items()):
+        target = paths.single / f"{bundle_id}.json"
+        try:
+            one = open_keyring(entry["passphrase"], _read(target, {}))["keys"]
+        except Exception:
+            raise MemberError(f"単品用の合言葉で {target} を開けません。single をやり直してください") from None
+        if list(one) != [bundle_id] or one[bundle_id] != keys[bundle_id]:
+            raise MemberError(f"単品用の鍵束 {target} の中身が正しくありません")
+        lines.append(f"単品用の合言葉で {bundle_id} だけが開く")
+    return lines
 
 
 def cmd_status(paths: Paths) -> list[str]:
@@ -474,6 +544,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--url", help="販売ページ（note の有料記事など）の URL。会員ページの一覧に出る")
     p.add_argument("--new-passphrase", action="store_true", help="単品用の合言葉を作り直す（漏れたとき用）")
     sub.add_parser("status", help="今の状態を表示する")
+    sub.add_parser("check", help="公開前の確認：今の合言葉で全部の模試が開くか、前の合言葉で開かないかを確かめる")
     p = sub.add_parser("recover", help="private/ をなくしたとき、今の合言葉で鍵と模試を取り戻す")
     p.add_argument("passphrase")
     args = parser.parse_args(argv)
@@ -508,7 +579,14 @@ def main(argv: list[str] | None = None) -> int:
             print("このあと: python build.py --frozen → site/members/ をコミットして push")
         elif args.command == "release":
             target = cmd_release(paths, args.template_id)
-            print(f"{target} に移しました。python build.py を実行し、problems/ と templates/ をコミットしてください")
+            page = ROOT / "content" / "algo" / f"{args.template_id}.md"
+            print(f"{target} に移しました。")
+            print(f"解説: {page} " + ("を下書きから移しました。" if page.exists() else "がありません。ほかの解説を写して書いてください。"))
+            print("このあと: python build.py を実行し、problems/・templates/・content/ をコミットしてください")
+        elif args.command == "check":
+            for line in cmd_check(paths):
+                print("OK  " + line)
+            print("公開用のファイルに問題はありません。")
         elif args.command == "recover":
             restored = cmd_recover(paths, args.passphrase)
             print(f"鍵を private/keys.json に戻しました。模試の中身を {len(restored)} 件戻しました: {'、'.join(restored) or 'なし'}")
