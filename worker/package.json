@@ -1,0 +1,8 @@
+{
+  "name": "tracedrill-members",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-reporter=tap test/worker.test.js"
+  }
+}

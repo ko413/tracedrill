@@ -6,3 +6,8 @@ __pycache__/
 .venv/
 # 会員向けコンテンツの平文・鍵・合言葉。リポジトリに入れない（消さないこと）
 private/
+# B案（Cloudflare Workers）：手元用の秘密の値と、道具が作るフォルダ。リポジトリに入れない
+.dev.vars
+.env
+node_modules/
+.wrangler/

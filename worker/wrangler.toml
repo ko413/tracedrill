@@ -1,0 +1,20 @@
+# Cloudflare Workers の設定。秘密の値はここに書かない（MIGRATION_B.md の「秘密の値」を参照）。
+# 【　】の2か所は、MIGRATION_B.md の手順 C で埋める。KV の id と価格の ID は秘密ではない。
+name = "tracedrill-members"
+workers_dev = false
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[[kv_namespaces]]
+binding = "MEMBERS"
+id = "【KV の id】"
+
+[vars]
+SITE_URL = "https://tracedrill.com"
+MAIL_FROM = "擬似言語トレースドリル <login@tracedrill.com>"
+PLANS = '{"member": {"price": "【Stripe の価格 ID（price_…）】", "mode": "subscription"}}'
+
+# 公開するとき（MIGRATION_B.md の E）に、下の3行の「# 」を外す。それまでは、どのドメインにも公開されない
+# [[routes]]
+# pattern = "api.tracedrill.com"
+# custom_domain = true

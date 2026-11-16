@@ -234,3 +234,11 @@ pre code { border: none; padding: 0; background: none; }
 .level-group > summary:hover { background: rgba(127, 127, 127, 0.08); }
 .level-group > summary:focus-visible { outline: 3px solid var(--accent, #2563eb); outline-offset: 2px; }
 .level-group > .cards { margin: 0; padding: 0.2rem 0.8rem 0.8rem; }
+
+/* 会員ページ・B案（サイトで入会・メールでログイン）。members.method が both・stripe のときだけ使う */
+.member-join { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 0.8rem 1rem; margin: 1rem 0; }
+.member-join .note { margin: 0.5rem 0 0; }
+.member-login input[type="email"] { font-family: inherit; }
+.member-notice { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 6px; padding: 0.6rem 0.9rem; }
+.member-account p { margin: 0.6rem 0; }
+.member-join .button, .member-login .button { min-height: 2.75rem; }

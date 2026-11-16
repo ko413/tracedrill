@@ -80,3 +80,30 @@ def test_unconfirmed_notation_and_site_yaml_changes_are_caught(repo):
     assert preflight.check_notation() == ["templates/b-001.yaml に「未定義でない」があります"]
     (repo / "site.yaml").write_text("name: y\n", encoding="utf-8")
     assert len(preflight.check_site_yaml(preflight.changed_files())) == 1
+
+
+def test_service_secrets_and_local_secret_files_are_caught(repo):
+    assert preflight.check_service_secrets() == []
+    key = "sk_" + "live_" + "A1b2C3d4E5f6G7h8I9j0"            # テストの中でも、つなげて書く（この確認に自分が掛からないように）
+    (repo / "worker").mkdir()
+    (repo / "worker" / "wrangler.toml").write_text(f'STRIPE_SECRET_KEY = "{key}"\n', encoding="utf-8")
+    (repo / "worker" / ".dev.vars").write_text("STRIPE_WEBHOOK_SECRET=x\n", encoding="utf-8")
+    (repo / "notes.md").write_text("署名の鍵は " + "whsec_" + "0123456789abcdefABCDEF" + " です\n", encoding="utf-8")
+    problems = preflight.check_service_secrets()
+    assert any(p.startswith("worker/wrangler.toml に秘密の値らしいもの") for p in problems)
+    assert any(p.startswith("worker/.dev.vars はコミットしてはいけない") for p in problems)
+    assert any(p.startswith("notes.md に秘密の値らしいもの") for p in problems)
+    assert not any("A1b2C3d4E5f6G7h8I9j0" in p for p in problems)          # 報告に、値そのものを出さない
+    (repo / "price.md").write_text("価格の ID は price_1AbCdEfGhIjKlMnOpQrStUv、テスト用の決済は cs_test_a1b2c3d4e5f6g7h8\n", encoding="utf-8")
+    assert not any(p.startswith("price.md") for p in preflight.check_service_secrets())   # 価格の ID などは秘密ではない
+
+
+def test_unfilled_legal_drafts_are_caught_only_when_published(repo):
+    (repo / "drafts" / "legal").mkdir(parents=True)
+    (repo / "drafts" / "legal" / "tokushoho.md").write_text("| メール | 【連絡先】 |\n", encoding="utf-8")
+    assert preflight.check_drafts() == []                                   # 下書きの置き場にある間は、何も言わない
+    (repo / "content").mkdir()
+    (repo / "content" / "tokushoho.md").write_text("| メール | 【連絡先】 |\n<!-- ---8<--- -->\n", encoding="utf-8")
+    assert len(preflight.check_drafts()) == 2
+    (repo / "content" / "tokushoho.md").write_text("| メール | info@example.com |\n", encoding="utf-8")
+    assert preflight.check_drafts() == []

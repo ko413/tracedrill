@@ -12,6 +12,8 @@
   5. site.yaml を書き換えていない（運営者の手元の版が正しい）
   6. 会員向けのファイルが、今の合言葉で全部開く（tools/members.py check）
   7. python -m pytest -q と python build.py --frozen が通る
+  8. Stripe などの秘密の値（sk_live_… whsec_… など）や .dev.vars が、コミットの対象に入っていない
+  9. 公開するページ（content/）に、下書きの【　】や「公開しない」の印が残っていない
 
 1つでも NG があれば、終了コード 1 で終わる。NG のままコミット・push しない。
 何も書き換えない（ビルドの出力先 dist/ を除く）。
@@ -21,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -28,6 +31,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FROZEN = ("problems/", "site/members/data/")          # 既存のファイルを変えてはいけない場所
 FORBIDDEN_NOTATION = "未定義でない"
+#: 外部サービスの秘密の値の形（Stripe のシークレットキー・制限付きキー・Webhook の署名の鍵、Resend のキー）
+SECRET_PATTERNS = re.compile(r"\b(?:sk|rk)_(?:live|test)_[0-9A-Za-z]{16,}|\bwhsec_[0-9A-Za-z]{16,}|\bre_[0-9A-Za-z]{8,}_[0-9A-Za-z]{16,}")
+#: 秘密の値を入れるファイル（手元にだけ置く。コミットしない）
+SECRET_FILES = (".dev.vars", ".env")
+DRAFT_MARKS = ("【", "---8<---")
 
 
 def git(*args: str) -> str:
@@ -108,6 +116,42 @@ def check_secrets() -> list[str]:
     return problems
 
 
+def committable_files() -> list[str]:
+    return sorted(set(git("ls-files").splitlines()) | set(git("ls-files", "--others", "--exclude-standard").splitlines()))
+
+
+def check_service_secrets() -> list[str]:
+    problems = []
+    for name in committable_files():
+        path = ROOT / name
+        if Path(name).name in SECRET_FILES or Path(name).name.startswith(".dev.vars"):
+            problems.append(f"{name} はコミットしてはいけないファイルです（.gitignore に入れてください）")
+            continue
+        if not path.is_file() or path.stat().st_size > 5_000_000:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        found = SECRET_PATTERNS.search(text)
+        if found:
+            problems.append(f"{name} に秘密の値らしいものがあります（{found.group(0)[:10]}…）")
+    return problems
+
+
+def check_drafts() -> list[str]:
+    """公開するページに、下書きの印が残っていないか（drafts/legal/ から content/ に移したときの埋め忘れ）。"""
+    problems = []
+    for name in ("tokushoho.md", "privacy.md"):
+        path = ROOT / "content" / name
+        if path.exists():
+            text = path.read_text(encoding="utf-8")
+            for mark in DRAFT_MARKS:
+                if mark in text:
+                    problems.append(f"content/{name} に「{mark}」が残っています（{text.count(mark)} か所）")
+    return problems
+
+
 def check_notation() -> list[str]:
     problems = []
     for folder in ("templates", "content", "private/templates", "private/drafts"):
@@ -137,6 +181,8 @@ def run(label: str, command: list[str]) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="コミット・push の前の確認")
     parser.add_argument("--quick", action="store_true", help="テストとビルドを省く")
+    parser.add_argument("--allow-site-yaml", action="store_true",
+                        help="site.yaml の変更を認める（運営者が意図して設定を変えたときだけ。MIGRATION_B.md の F・G）")
     args = parser.parse_args(argv)
     try:
         changes = changed_files()
@@ -149,7 +195,9 @@ def main(argv: list[str] | None = None) -> int:
         ("private/ がコミットの対象になっていない", check_ignore()),
         ("合言葉・鍵がコミットの対象のファイルに入っていない", check_secrets()),
         ("確認できていない書き方を使っていない", check_notation()),
-        ("site.yaml を書き換えていない", check_site_yaml(changes)),
+        ("site.yaml を書き換えていない", [] if args.allow_site_yaml else check_site_yaml(changes)),
+        ("外部サービスの秘密の値がコミットの対象に入っていない", check_service_secrets()),
+        ("公開するページに下書きの印が残っていない", check_drafts()),
     ]
     if (ROOT / "private" / "passphrase.json").exists():
         checks.append(("会員向けのファイルが今の合言葉で全部開く",

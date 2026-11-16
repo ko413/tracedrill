@@ -92,6 +92,20 @@
 4. 実施 → `python tools/preflight.py` → コミット → `PDCA_LOG.md` に1行（日付・変えたこと・ねらい・次に見る数字）→ `BACKLOG.md` の該当行を消す。
 5. 表示回数が週100未満の間は、数字の上下で判断しない（少なすぎて偶然と区別できない）。その間は `BACKLOG.md` の「検索の土台」を上から進める。
 
+## B案（Stripe＋Cloudflare Workers）について
+
+コードとテストはできていて、**公開していない**（`worker/`、`site/static/member-b.js`、下書きは `drafts/legal/`）。
+設定・公開・移行は `MIGRATION_B.md` の A〜G を、運営者と一緒に、その順番で進める。
+
+- `site.yaml` の `members.method` を変えるのは運営者（`MIGRATION_B.md` の F・G）。Claude Code は変えない。既定の `passphrase` の間、B案のコードはどのページからも読み込まれない。
+- **秘密の値（Stripe の鍵、Webhook の署名の値、メール送信のキー）を見ない・書かない・聞かない。** 登録は、運営者が `npx wrangler secret put 名前` を1行だけで実行する。
+  `.dev.vars` を開かない。記録やエラーに値が出ていたら、写さずに「値が出ている」とだけ伝える。
+- `npx wrangler deploy`、Stripe の設定、Webhook の登録、本物の決済は、運営者がその場で「実行してよい」と言ったときだけ手伝う。
+- wrangler・Stripe のコマンドや画面は変わる。`MIGRATION_B.md` のコマンドをそのまま信じず、`npx wrangler --help` と公式ドキュメントで確かめてから示す。
+- `worker/src/index.js` を直したら、`node --test worker/test/worker.test.js` を通す（`preflight` にも入っている）。
+  「会員でなければ鍵を返さない」「署名の合わない Webhook は拒否する」「会員でないメールにも同じ返事」のテストは、消さない・緩めない。
+- `drafts/legal/` の文面の法律上の判断はしない。根拠の資料を示して、運営者に確かめてもらう。
+
 ## 判断に迷いやすい点
 
 - `site.yaml` は運営者の手元の版が正しい（note の URL、計測のトークンなどが入っている）。項目を足すとき以外は書き換えない。

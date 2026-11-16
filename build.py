@@ -53,8 +53,12 @@ DEFAULTS = {
     "analytics": {"cloudflare_token": ""},
     "search_console": {"google_verification": ""},
     "ogp": {"font": "site/fonts/NotoSansJP-Bold.otf"},
-    "members": {"note_url": "", "price": 980},
+    # method: 会員の確認方法。passphrase＝note＋合言葉（今の方式）、both＝合言葉とサイトでの入会の両方、stripe＝サイトでの入会だけ
+    # api_url: both・stripe のときに使う Workers の URL（例 https://api.tracedrill.com）。MIGRATION_B.md を参照
+    "members": {"note_url": "", "price": 980, "method": "passphrase", "api_url": ""},
 }
+SIMPLE_DIR = ROOT / "content"                 # about.md など、1枚もののページの置き場（テストで差し替える）
+LEGAL_PAGES = ("tokushoho", "privacy")        # 特定商取引法に基づく表記、プライバシーポリシー（content/ にあるときだけ出す）
 MEMBERS_DIR = ROOT / "site" / "members"      # 暗号化済みの会員向けファイル（tools/members.py が作る）
 MOCK_NAME = "アルゴリズム16問模試（トレース中心）"
 
@@ -387,6 +391,20 @@ class Builder:
         self.make_ogp = make_ogp
         self.pages: list[dict] = []        # 出力したページ（sitemap とリンク検査に使う）
         self.warnings: list[str] = []
+        # 会員の確認方法（既定は合言葉）。both・stripe は、Workers の URL と、特商法・プライバシーのページがそろったときだけ有効
+        members = site.get("members", {})
+        self.member_method = members.get("method") or "passphrase"
+        if self.member_method not in ("passphrase", "both", "stripe"):
+            raise SystemExit(f"site.yaml の members.method が正しくありません: {self.member_method}（passphrase・both・stripe のどれか）")
+        self.member_api = (members.get("api_url") or "").rstrip("/") if self.member_method != "passphrase" else ""
+        self.legal_pages = [name for name in LEGAL_PAGES if (SIMPLE_DIR / f"{name}.md").exists()]
+        if self.member_method != "passphrase":
+            if not self.member_api.startswith(("https://", "http://localhost:")):      # http は手元の確認用だけ
+                raise SystemExit("site.yaml の members.method が both・stripe のときは、members.api_url（https://…）が必要です")
+            missing = [name for name in LEGAL_PAGES if name not in self.legal_pages]
+            if missing:
+                raise SystemExit("サイトで決済を受けるには、content/ に " + "・".join(f"{n}.md" for n in missing)
+                                 + " が必要です（下書きは drafts/legal/。MIGRATION_B.md を参照）")
         self.env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(ROOT / "site" / "templates"),
             autoescape=True, undefined=jinja2.StrictUndefined)
@@ -432,6 +450,7 @@ class Builder:
             site=site, page=page, url=self.url, build_id=self.build_id,
             has_mock_nav=(MEMBERS_DIR / "sample.json").exists(),
             has_members_nav=(MEMBERS_DIR / "sample.json").exists() and (MEMBERS_DIR / "index.json").exists(),
+            legal_pages=self.legal_pages,
             **context)
         target = self.out / path.strip("/") / filename
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -472,6 +491,8 @@ class Builder:
             self.build_algo(algo, algos)
         self.build_simple("about", "/about/", default_image, show_contact=True)
         self.build_simple("for-teams", "/for-teams/", default_image, show_contact=True)
+        for name in self.legal_pages:
+            self.build_simple(name, f"/{name}/", default_image, show_contact=False)
         has_mock = self.build_members(default_image, len(algos), sum(algo["count"] for algo in algos))
 
         # トップ：レベルごとに問題セットを並べる（標準を先に）。同じアルゴリズムが2つのレベルに出ることがある。
@@ -688,7 +709,8 @@ class Builder:
                         description="毎月追加される16問模試とバックナンバー、新しいアルゴリズムの先行公開ドリルを解ける会員ページです。",
                         og_image=image, breadcrumbs=[home, {"name": "会員ページ", "path": "/members/"}],
                         mock_name=MOCK_NAME, algo_count=algo_count, free_count=free_count,
-                        mock_count=kinds.count("mock"), drill_count=kinds.count("drill"))
+                        mock_count=kinds.count("mock"), drill_count=kinds.count("drill"),
+                        member_method=self.member_method, member_api=self.member_api)
         return has_sample
 
     def step_pages(self, parent: str, steps: tuple = ("started", "graded")) -> None:
@@ -709,7 +731,7 @@ class Builder:
             (folder / "index.html").write_text(html, encoding="utf-8")
 
     def build_simple(self, name: str, path: str, image: str, show_contact: bool) -> None:
-        meta, body = read_content(ROOT / "content" / f"{name}.md")
+        meta, body = read_content(SIMPLE_DIR / f"{name}.md")
         title = meta.get("title", name)
         self.render("page.html", path, title=title, description=meta.get("description", ""),
                     og_image=image, breadcrumbs=[{"name": "トップ", "path": "/"}, {"name": title, "path": path}],

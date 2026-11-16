@@ -48,6 +48,18 @@ for q in problem.questions:
 
 テンプレートを検査する：`python tools/validate_templates.py -n 300`
 
+### 29. 会員の確認方法は、設定1つで切り替える（B案は作ってあるが、公開していない）
+
+会員の確認は `site/static/member.js`（合言葉）に閉じ込めてあり、模試の画面（`mock.js`）は「鍵の表をもらう」ことしか知りません。
+B案（Stripe の定期課金＋Cloudflare Workers）は、同じ形の `site/static/member-b.js` と `worker/` として作ってあります。
+`site.yaml` の `members.method` が `passphrase`（既定）の間は、B案のファイルはどのページからも読み込まれず、
+公開されるページは1文字も変わりません。`both` にすると合言葉とサイトでの入会が並び、`stripe` で合言葉の欄が消えます。
+`both`・`stripe` は、Workers の URL と、特定商取引法に基づく表記・プライバシーポリシーのページがないとビルドが止まります。
+
+Workers は「Webhook に書いてあること」ではなく「Stripe に聞き直した今の状態」を保存します（届く順番や重複に左右されないため）。
+メールアドレスはハッシュだけを持ち、鍵の表は会員と確かめたときだけ返します。秘密の値はすべて環境変数で、リポジトリにはありません。
+手順は `MIGRATION_B.md`、入口の一覧は `worker/README.md`。
+
 ## ファイルの役割
 
 | ファイル | 役割 |
@@ -70,6 +82,9 @@ for q in problem.questions:
 | `problems/` | 公開する問題の生成結果（プログラム・設問・選択肢・正解・解説・トレース）。一度作ったら書き換えない |
 | `app.py` | Streamlit 版の画面（会員版の土台として残している） |
 | `templates/` | 問題テンプレート（YAML）。`basic/` が無料版 |
+| `tools/preflight.py` | コミットの前の確認を1行で（テスト、ビルド、公開済みの問題・秘密の値・下書きの印の確認） |
+| `worker/` | 会員の確認・B案（Stripe＋Cloudflare Workers）。未公開。`MIGRATION_B.md` |
+| `drafts/legal/` | 特定商取引法に基づく表記・プライバシーポリシーの下書き（公開されない） |
 | `tools/validate_templates.py` | 各テンプレートから数百問を作り、出題して問題ないか検査する |
 | `tests/` | 構文ごとの単体テストと、代表的なアルゴリズムの実行テスト |
 

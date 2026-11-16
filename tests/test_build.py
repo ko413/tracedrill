@@ -505,3 +505,66 @@ def test_home_lists_algorithms_in_collapsed_groups_that_keep_their_links(site):
     # 一覧より上の順番は変えない：今日の1問 → レベルの入口 → 模試の案内 → 一覧
     order = [page.index(mark) for mark in ('id="daily"', 'class="level-entry"', 'id="algorithms"')]
     assert order == sorted(order)
+
+
+# ---- 会員の確認方法（A案＝合言葉、B案＝サイトで入会）の切り替え ----
+
+def _members_page(tmp_path, monkeypatch, members, legal=True):
+    if not (ROOT / "site" / "members" / "index.json").exists():
+        pytest.skip("site/members/ がまだありません")
+    simple = tmp_path / "content"
+    simple.mkdir()
+    for name in ("about.md", "for-teams.md"):
+        (simple / name).write_text((ROOT / "content" / name).read_text(encoding="utf-8"), encoding="utf-8")
+    if legal:
+        for name in ("tokushoho.md", "privacy.md"):
+            (simple / name).write_text((ROOT / "drafts" / "legal" / name).read_text(encoding="utf-8"), encoding="utf-8")
+    monkeypatch.setattr(build, "SIMPLE_DIR", simple)
+    code, dist = run_build(tmp_path, members=members)
+    assert code == 0
+    return dist, (dist / "members" / "index.html").read_text(encoding="utf-8")
+
+
+def test_default_member_page_is_the_passphrase_one_and_has_no_trace_of_plan_b(site):
+    page = site / "members" / "index.html"
+    if not page.exists():
+        pytest.skip("site/members/ がまだありません")
+    html = page.read_text(encoding="utf-8")
+    assert "/static/member.js" in html and "member-b.js" not in html and "data-member-api" not in html
+    assert "合言葉" in html and "Stripe" not in html
+    home = (site / "index.html").read_text(encoding="utf-8")
+    assert "/tokushoho/" not in home and "/privacy/" not in home            # 下書きのうちは、リンクもページも出ない
+    assert not (site / "tokushoho").exists() and not (site / "privacy").exists()
+    assert (site / "static" / "member-b.js").exists()                       # ファイルは置いてあるが、どのページも読み込まない
+    assert not [p for p in site.rglob("*.html") if "member-b.js" in p.read_text(encoding="utf-8")]
+
+
+def test_both_mode_loads_passphrase_and_plan_b_side_by_side(tmp_path, monkeypatch):
+    dist, html = _members_page(tmp_path, monkeypatch,
+                               {"note_url": "https://note.com/x/membership", "price": 980, "method": "both",
+                                "api_url": "https://api.drill.example/"})
+    assert html.index("/static/member.js") < html.index("/static/member-b.js") < html.index("/static/mock.js")
+    assert 'data-member-api="https://api.drill.example"' in html and 'data-price="980"' in html
+    assert "サイトで入会する" in html and "今月の合言葉" in html                    # 両方の案内が出る
+    assert 'href="/tokushoho/"' in html and 'href="/privacy/"' in html
+    assert "kaomoji.js" not in html
+    for name, title in (("tokushoho", "特定商取引法に基づく表記"), ("privacy", "プライバシーポリシー")):
+        assert f"<h1>{title}</h1>" in (dist / name / "index.html").read_text(encoding="utf-8")
+    assert "/tokushoho/" in (dist / "index.html").read_text(encoding="utf-8")       # フッターからも行ける
+    assert "/tokushoho/" in (dist / "sitemap.xml").read_text(encoding="utf-8")
+
+
+def test_stripe_mode_drops_the_passphrase_module(tmp_path, monkeypatch):
+    _, html = _members_page(tmp_path, monkeypatch, {"price": 980, "method": "stripe", "api_url": "https://api.drill.example"})
+    assert "/static/member.js" not in html and "/static/member-b.js" in html
+    assert "サイトで入会する" in html and "今月の合言葉" not in html and "note で会員になる" not in html
+
+
+def test_plan_b_cannot_be_switched_on_without_api_url_or_legal_pages(tmp_path, monkeypatch):
+    with pytest.raises(SystemExit, match="api_url"):
+        _members_page(tmp_path / "a", monkeypatch, {"method": "stripe", "api_url": ""}) if (tmp_path / "a").mkdir() is None else None
+    with pytest.raises(SystemExit, match="tokushoho.md"):
+        _members_page(tmp_path / "b", monkeypatch, {"method": "both", "api_url": "https://api.drill.example"}, legal=False) \
+            if (tmp_path / "b").mkdir() is None else None
+    with pytest.raises(SystemExit, match="members.method"):
+        _members_page(tmp_path / "c", monkeypatch, {"method": "paypal"}) if (tmp_path / "c").mkdir() is None else None

@@ -387,7 +387,73 @@
     return form;
   }
 
+  // ---- B案（サイトで入会・メールでログイン）。member-b.js が読み込まれているときだけ使う ----
+
+  function billingJoinNode(price) {
+    var button = el('button', { type: 'button', 'class': 'button', text: 'サイトで入会する（月額' + price + '円）' });
+    var note = el('p', { 'class': 'note', 'aria-live': 'polite', text: 'クレジットカードで支払います。決済は Stripe のページで行います。解約はいつでもできます。' });
+    button.addEventListener('click', function () {
+      button.disabled = true;
+      countStep('join');
+      window.MemberBilling.checkout().catch(function () {
+        button.disabled = false;
+        note.textContent = '決済ページを開けませんでした。少し待って、もう一度お試しください。';
+      });
+    });
+    return el('div', { 'class': 'member-join' }, [button, note]);
+  }
+
+  function emailLoginNode() {
+    var input = el('input', { type: 'email', id: 'member-email', autocomplete: 'email', inputmode: 'email',
+      placeholder: '入会したときのメールアドレス', 'aria-describedby': 'member-email-note' });
+    var button = el('button', { type: 'submit', 'class': 'button', text: 'ログイン用のリンクを送る' });
+    var note = el('p', { 'class': 'note', id: 'member-email-note', 'aria-live': 'polite', text: '' });
+    var form = el('form', { 'class': 'member-login' }, [
+      el('label', { 'for': 'member-email', text: 'サイトで入会した方：メールアドレス' }), input, button, note]);
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      button.disabled = true;
+      note.textContent = '送っています…';
+      window.MemberBilling.sendLink(input.value).then(function (result) {
+        button.disabled = false;
+        note.textContent = result === 'bad_email'
+          ? 'メールアドレスの形を確かめてください。'
+          : '会員のメールアドレスであれば、ログイン用のリンクを送りました。15分以内に、メールのリンクを開いてください。届かないときは、迷惑メールの中と、アドレスの打ち間違いを確かめてください。';
+      }).catch(function () {
+        button.disabled = false;
+        note.textContent = '送れませんでした。通信の状態を確かめて、もう一度お試しください。';
+      });
+    });
+    return form;
+  }
+
+  function billingAccountNode(billing) {
+    var state = billing.status();
+    var text = !state.member && state.state === 'past_due' ? 'お支払いを確認できませんでした。「支払い・解約」からカードを確かめてください。'
+      : !state.member ? '会員の期間が終わっています。もう一度入会すると、すべての模試を解けます。'
+      : state.cancels && state.period_end ? '解約の手続き済みです。' + new Date(state.period_end * 1000).toLocaleDateString('ja-JP') + ' まで解けます。'
+      : '';
+    var manage = el('button', { type: 'button', 'class': 'chip', text: '支払い・解約' });
+    var note = el('span', { 'class': 'note', 'aria-live': 'polite', text: '' });
+    manage.addEventListener('click', function () {
+      manage.disabled = true;
+      billing.portal().catch(function () { manage.disabled = false; note.textContent = '　開けませんでした。もう一度お試しください。'; });
+    });
+    var out = el('button', { type: 'button', 'class': 'chip', text: 'ログアウト' });
+    out.addEventListener('click', function () {
+      Promise.resolve(window.MemberAuth.logout()).then(function () { window.location.reload(); });
+    });
+    return el('div', { 'class': 'member-account' }, [text ? el('p', { text: text }) : null, el('p', {}, [manage, document.createTextNode(' '), out, note])]);
+  }
+
   function membersPage() {
+    var billing = window.MemberBilling || null;
+    // 決済のあと・メールのリンクで戻ってきたときは、先にログインを済ませる
+    var ready = billing ? billing.finish().catch(function () { return 'failed'; }) : Promise.resolve(null);
+    ready.then(function (arrived) { membersList(billing, arrived); });
+  }
+
+  function membersList(billing, arrived) {
     var id = new URLSearchParams(window.location.search).get('id');
     var status = document.getElementById('member-status');
     status.textContent = '読み込んでいます…';
@@ -396,6 +462,10 @@
       .then(function (values) {
         var index = values[0], keys = values[1], expired = values[2];
         status.textContent = '';
+        var passphraseOn = window.MemberAuth.method !== 'email';        // 合言葉の欄を出すか（B案だけのときは出さない）
+        var signedIn = billing ? billing.status().signedIn : false;
+        if (arrived === 'joined') status.appendChild(el('p', { 'class': 'member-notice', text: 'ご入会ありがとうございます。下の一覧から、模試を始められます。' }));
+        if (arrived === 'failed' && !signedIn) status.appendChild(el('p', { 'class': 'member-notice', text: 'ログインできませんでした。リンクは15分間、1回だけ使えます。もう一度、メールアドレスを入力してリンクを受け取ってください。' }));
 
         // 開ける模試を指定して来た → そのまま解く画面へ
         if (id && keys && keys[id]) {
@@ -417,17 +487,24 @@
         if (id && !index.bundles.some(function (b) { return b.id === id; })) {
           status.appendChild(el('p', { text: 'この模試は見つかりませんでした。' }));
         }
-        if (!openAll) {
+        if (billing && signedIn) status.appendChild(billingAccountNode(billing));
+        // 支払いの確認待ち（past_due など）の人には、入会ボタンを出さない（二重の契約を防ぐ。「支払い・解約」から直してもらう）
+        var unpaid = signedIn && ['past_due', 'unpaid', 'incomplete'].indexOf(billing.status().state) >= 0;
+        if (billing && !openAll && !(signedIn && billing.status().member)) {
+          if (!unpaid) status.appendChild(billingJoinNode(root.getAttribute('data-price') || ''));
+          if (!signedIn) status.appendChild(emailLoginNode());
+        }
+        if (!openAll && passphraseOn) {
           var message = expired ? '会員の合言葉が新しくなりました。note の会員限定記事で、今月の合言葉を確認してください。' : '';
           status.appendChild(loginNode(message, function () { window.location.reload(); }, singleIds));
-          status.appendChild(el('p', {}, [joinLink('note で会員になる')]));
+          if (!billing) status.appendChild(el('p', {}, [joinLink('note で会員になる')]));
         }
         status.appendChild(el('h2', { text: keys ? '模試・ドリルを選ぶ' : '会員が解ける模試・ドリル' }));
         if (openAll) {
           status.appendChild(el('p', { 'class': 'note', text: '過去の回（バックナンバー）も、すべて解けます。結果はこの端末に記録されます。' }));
         }
         status.appendChild(listNode(index, keys));
-        if (keys) {
+        if (keys && passphraseOn && !signedIn) {
           var out = el('button', { type: 'button', 'class': 'chip', text: 'この端末の合言葉を消す' });
           out.addEventListener('click', function () { window.MemberAuth.logout(); window.location.reload(); });
           status.appendChild(el('p', {}, [out]));

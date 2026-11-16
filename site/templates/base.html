@@ -41,7 +41,7 @@
 </main>
 <footer class="site-footer">
   <p>問題はこのサイトが自動生成したオリジナル問題で、IPAの試験問題ではありません。答えと解説は、プログラムを実際に動かした結果から作っています。</p>
-  <p><a href="{{ url('/about/') }}">このサイトについて</a>　<a href="{{ url('/for-teams/') }}">研修・スクールでのご利用</a></p>
+  <p><a href="{{ url('/about/') }}">このサイトについて</a>　<a href="{{ url('/for-teams/') }}">研修・スクールでのご利用</a>{% if "tokushoho" in legal_pages %}　<a href="{{ url('/tokushoho/') }}">特定商取引法に基づく表記</a>{% endif %}{% if "privacy" in legal_pages %}　<a href="{{ url('/privacy/') }}">プライバシーポリシー</a>{% endif %}</p>
 </footer>
 {% block kaomoji %}<script defer src="{{ url('/static/kaomoji.js') }}?v={{ build_id }}"></script>{% endblock %}
 <script defer src="{{ url('/static/app.js') }}?v={{ build_id }}"></script>
